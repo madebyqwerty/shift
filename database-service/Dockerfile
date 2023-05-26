@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . ./
 
-RUN deno cache main.ts
+RUN deno cache src/main.ts
 
-CMD ["task", "start"]
+CMD ["deno", "task", "start"]

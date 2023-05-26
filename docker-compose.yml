@@ -1,11 +1,22 @@
 version: "3"
 services:
-  deno-express-api:
-    container_name: deno-express-api
+  database-service:
+    container_name: database-service
     image: deno
     restart: always
     build:
-      context: .
+      context: ./database-service
+      dockerfile: Dockerfile
+      target: base
+    ports:
+      - "5000:5000"
+
+  frontend:
+    container_name: frontend
+    image: node:18-alpine
+    restart: always
+    build:
+      context: ./frontend
       dockerfile: Dockerfile
       target: base
     ports:

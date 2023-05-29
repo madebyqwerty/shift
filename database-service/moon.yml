@@ -1,7 +1,0 @@
-tasks:
-  start:
-    command:
-      - deno
-      - run
-      - --allow-read --allow-net --allow-env --allow-write --lock=deno.lock --lock-write
-      - src/main.ts

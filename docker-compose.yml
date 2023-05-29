@@ -1,5 +1,16 @@
 version: "3"
 services:
+  frontend:
+    container_name: frontend
+    image: node:18-alpine
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: base
+    ports:
+      - "3000:3000"
+
   database-service:
     container_name: database-service
     image: deno
@@ -11,16 +22,14 @@ services:
     ports:
       - "5000:5000"
 
-  frontend:
-    container_name: frontend
-    image: node:18-alpine
+  ocr-service:
+    container_name: ocr-service
     restart: always
     build:
-      context: ./frontend
+      context: ./ocr-service
       dockerfile: Dockerfile
-      target: base
     ports:
-      - "3000:3000"
+      - 5001:5001
 
   postgres:
     image: postgres:latest

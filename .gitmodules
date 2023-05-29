@@ -1,6 +1,9 @@
 [submodule "frontend"]
 	path = frontend
 	url = git@github.com:madebyqwerty/frontend.git
+[submodule "database-service"]
+	path = database-service
+	url = https://github.com/madebyqwerty/database-service
 [submodule "ocr-service"]
 	path = ocr-service
 	url = https://github.com/madebyqwerty/ocr-service

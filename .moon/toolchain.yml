@@ -1,10 +1,20 @@
 # https://moonrepo.dev/docs/config/toolchain
 $schema: "https://moonrepo.dev/schemas/toolchain.json"
 
-# Extend and inherit an external configuration file. Must be a valid HTTPS URL or file system path.
-# extends: './shared/toolchain.yml'
 node:
-  version: "18.0.0"
-  packageManager: "npm"
+  version: "20.0.0"
+  packageManager: "pnpm"
+  pnpm: {}
+  addEnginesConstraint: true
+  dedupeOnLockfileChange: true
+  inferTasksFromScripts: true
+
+typescript:
+  createMissingConfig: true
+  routeOutDirToCache: true
+  syncProjectReferences: true
+  syncProjectReferencesToPaths: true
+
 deno:
   lockfile: true
+  depsFile: "src/deps.ts"

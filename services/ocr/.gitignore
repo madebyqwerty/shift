@@ -1,0 +1,8 @@
+__pycache__/
+imgs/
+.pytest_cache/
+
+*-temp.py
+
+tempCodeRunnerFile.py
+.env

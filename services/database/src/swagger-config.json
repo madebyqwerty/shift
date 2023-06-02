@@ -1,0 +1,19 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Database service API",
+    "version": "0.0.1",
+    "description": "This is a REST API for the database service.",
+    "license": {
+      "name": "Proprietary"
+    },
+    "contact": {
+      "name": "Tomáš Kebrle"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api"
+    }
+  ]
+}

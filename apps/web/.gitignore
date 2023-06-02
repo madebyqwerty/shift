@@ -1,17 +1,5 @@
-
-# moon
-.moon/cache
-.moon/docker
-
-# moon
-.moon/cache
-.moon/docker
-
-# node
-node_modules
-
-# SvelteKit
 .DS_Store
+node_modules
 /build
 /.svelte-kit
 /package

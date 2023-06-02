@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Install OpenAPI CLI
         run: npm install @openapitools/openapi-generator-cli -g
@@ -25,6 +27,14 @@ jobs:
 
       - name: Install Moon
         run: npm install -g @moonrepo/cli
+
+      - name: Setup CLI
+        run: moon ci
+
+      - uses: "moonrepo/run-report-action@v1"
+        if: success() || failure()
+        with:
+          access-token: ${{ secrets.PAT }}
 
       - name: Generate client
         run: moon run database:generate

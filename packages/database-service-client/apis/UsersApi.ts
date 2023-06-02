@@ -77,7 +77,7 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a user by ID.
+     * A user by id
      */
     async usersIdGetRaw(requestParameters: UsersIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -99,7 +99,7 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a user by ID.
+     * A user by id
      */
     async usersIdGet(requestParameters: UsersIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
         const response = await this.usersIdGetRaw(requestParameters, initOverrides);

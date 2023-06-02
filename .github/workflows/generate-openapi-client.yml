@@ -1,7 +1,7 @@
 name: Generate OpenAPI client
 
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - main
 
@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Install OpenAPI CLI
         run: npm install @openapitools/openapi-generator-cli -g
@@ -26,13 +28,23 @@ jobs:
       - name: Install Moon
         run: npm install -g @moonrepo/cli
 
+      - name: Setup CLI
+        run: moon ci
+
+      - uses: "moonrepo/run-report-action@v1"
+        if: success() || failure()
+        with:
+          access-token: ${{ secrets.PAT }}
+
       - name: Generate client
         run: moon run database:generate
 
       - name: Commit generated client
         run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git add .
-          git commit -m "Generate OpenAPI client"
-          git push
+          git config --global user.email "dev@tomaskebrle.cz"
+          git config --global user.name "Tomáš Kebrle"
+          if [[ -n $(git status -s) ]]; then
+            git add .
+            git commit --quiet -m "Generate OpenAPI client"
+            git push origin HEAD:${{ github.head_ref }}
+          fi

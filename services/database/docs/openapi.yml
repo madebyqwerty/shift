@@ -209,10 +209,10 @@ components:
       properties:
         name:
           type: string
-          description: The user's name.
+          description: The user's name
         userId:
           type: string
-          description: The user's id.
+          description: The user's id
         id:
           type: string
           description: The absence's id.

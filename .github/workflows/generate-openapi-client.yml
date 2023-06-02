@@ -41,8 +41,8 @@ jobs:
 
       - name: Commit generated client
         run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
+          git config --global user.email "dev@tomaskebrle.cz"
+          git config --global user.name "Tomáš Kebrle"
           git add .
           git commit -m "Generate OpenAPI client"
           git push origin HEAD:${{ github.head_ref }}

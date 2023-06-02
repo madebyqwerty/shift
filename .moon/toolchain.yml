@@ -15,3 +15,7 @@ typescript:
   routeOutDirToCache: true
   syncProjectReferences: true
   syncProjectReferencesToPaths: true
+
+deno:
+  lockfile: true
+  version: "1.34.1"

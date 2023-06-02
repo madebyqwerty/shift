@@ -43,6 +43,8 @@ jobs:
         run: |
           git config --global user.email "dev@tomaskebrle.cz"
           git config --global user.name "Tomáš Kebrle"
-          git add .
-          git commit -m "Generate OpenAPI client"
-          git push origin HEAD:${{ github.head_ref }}
+          if [[ -n $(git status -s) ]]; then
+            git add .
+            git commit --quiet -m "Generate OpenAPI client"
+            git push origin HEAD:${{ github.head_ref }}
+          fi

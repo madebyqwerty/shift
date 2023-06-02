@@ -30,6 +30,7 @@ services:
     build:
       context: ./ocr-service
       dockerfile: Dockerfile
+      target: base
     ports:
       - 5001:5001
 

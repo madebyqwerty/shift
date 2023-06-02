@@ -4,15 +4,14 @@ on:
   push:
     branches:
       - main
-
+permissions:
+  contents: write
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PAT }}
 
       - name: Install OpenAPI CLI
         run: npm install @openapitools/openapi-generator-cli -g

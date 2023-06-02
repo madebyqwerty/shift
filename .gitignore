@@ -6,3 +6,17 @@
 # moon
 .moon/cache
 .moon/docker
+
+# node
+node_modules
+
+# SvelteKit
+.DS_Store
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

@@ -25,6 +25,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@shift/database-service-client": "workspace:^",
 		"daisyui": "^2.51.6",
 		"lucide-svelte": "^0.233.0"
 	}

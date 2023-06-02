@@ -10,3 +10,10 @@ tasks:
     command: "deno cache src/deps.ts --lock-write && deno cache src/main.ts --lock-write"
   test:
     command: "deno test --allow-read --allow-net --allow-env"
+  generate:
+    platform: "system"
+    command: "openapi-generator-cli generate -i ./docs/openapi.yml -g typescript-fetch -o ../../packages/database-service-client"
+    inputs:
+      - "docs/openapi.yml"
+    outputs:
+      - "/packages/database-service-client"

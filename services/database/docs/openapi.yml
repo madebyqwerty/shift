@@ -157,7 +157,7 @@ paths:
                         - required
   "/users/{id}":
     get:
-      summary: Returns a user by ID.
+      summary: A user by id
       tags:
         - Users
       parameters:

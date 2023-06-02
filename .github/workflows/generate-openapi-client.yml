@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.ref }}
 
       - name: Install OpenAPI CLI
         run: npm install @openapitools/openapi-generator-cli -g
@@ -37,4 +37,4 @@ jobs:
           git config --global user.name "GitHub Actions"
           git add .
           git commit -m "Generate OpenAPI client"
-          git push origin HEAD:${{ github.head_ref }}
+          git push origin HEAD:${{ github.ref }}

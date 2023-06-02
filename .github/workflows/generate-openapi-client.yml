@@ -45,4 +45,4 @@ jobs:
           git config --global user.name "GitHub Actions"
           git add .
           git commit -m "Generate OpenAPI client"
-          git push origin HEAD:${{ github.ref }}
+          git push origin HEAD:${{ github.head_ref }}

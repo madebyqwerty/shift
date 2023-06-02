@@ -46,7 +46,7 @@ export interface AbsencesUserIdPostOperationRequest {
 export class AbsencesApi extends runtime.BaseAPI {
 
     /**
-     * Returns a list of absences for a given user.
+     * List of all absences for a user
      */
     async absencesUserIdGetRaw(requestParameters: AbsencesUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Absence>>> {
         if (requestParameters.userId === null || requestParameters.userId === undefined) {
@@ -68,7 +68,7 @@ export class AbsencesApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of absences for a given user.
+     * List of all absences for a user
      */
     async absencesUserIdGet(requestParameters: AbsencesUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Absence>> {
         const response = await this.absencesUserIdGetRaw(requestParameters, initOverrides);

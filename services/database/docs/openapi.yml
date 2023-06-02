@@ -71,7 +71,7 @@ paths:
                   example: 2023-05-14
       responses:
         "200":
-          description: The absence was successfully created.
+          description: The absence was successfully created
           content:
             application/json:
               schema:

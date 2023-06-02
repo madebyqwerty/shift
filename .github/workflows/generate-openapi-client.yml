@@ -1,11 +1,13 @@
 name: Generate OpenAPI client
 
 on:
-  push:
+  pull_request_target:
     branches:
       - main
+
 permissions:
   contents: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest

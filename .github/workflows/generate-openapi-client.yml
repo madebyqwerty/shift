@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.ref }}
 
       - name: Install OpenAPI CLI
         run: npm install @openapitools/openapi-generator-cli -g

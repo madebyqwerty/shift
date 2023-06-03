@@ -4,11 +4,15 @@ language: "typescript"
 tasks:
   start:
     command: "deno run --allow-read --allow-net --allow-env --allow-write src/main.ts"
+    local: true
   dev:
     command: "deno run --allow-read --allow-net --allow-env --allow-write --watch  src/main.ts"
+    local: true
   install:
     command: "deno cache src/deps.ts --lock-write && deno cache src/main.ts --lock-write"
+    local: true
   test:
+    local: true
     command: "deno test --allow-read --allow-net --allow-env"
   generate:
     platform: "system"

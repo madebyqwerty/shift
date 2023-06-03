@@ -1,40 +1,15 @@
-import { db } from "../../kysely.ts";
-import { isValidUUID } from "../../utils/isValidUUID.ts";
-import { Router } from "../../deps.ts";
-import { z } from "../../deps.ts";
+import { db } from "../kysely.ts";
+import { isValidUUID } from "../utils/isValidUUID.ts";
+import { Router } from "../deps.ts";
+import { z } from "../deps.ts";
+import { oakify } from "../utils/oakify.ts";
+import { getByUserId } from "../controllers/absences/absences.ts";
 
 export const absenceRouter = new Router({
   prefix: "/api",
 });
 
-absenceRouter.get("/absences/:userId", async (ctx) => {
-  const { userId } = ctx.params;
-
-  if (!isValidUUID(userId)) {
-    ctx.response.status = 400;
-    ctx.response.body = { id: "not-valid" };
-    return;
-  }
-
-  console.log(userId);
-
-  const absences = await db
-    .selectFrom("Absence")
-    .innerJoin("User", "User.id", "Absence.userId")
-    .select(["User.name", "date", "userId", "Absence.id", "lesson"])
-    .where("Absence.userId", "=", userId)
-    .execute();
-
-  console.log(absences);
-
-  if (absences.length === 0) {
-    ctx.response.status = 404;
-    ctx.response.body = { absences: "no-absences" };
-    return;
-  }
-
-  ctx.response.body = absences;
-});
+absenceRouter.get("/absences/:userId", oakify(getByUserId));
 
 absenceRouter.post("/absences/scan", async (ctx) => {
   const formDataReader = ctx.request.body({ type: "form-data" }).value;

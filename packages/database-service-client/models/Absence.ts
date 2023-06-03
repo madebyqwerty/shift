@@ -20,13 +20,13 @@ import { exists, mapValues } from '../runtime';
  */
 export interface Absence {
     /**
-     * The user's name.
+     * The user's name
      * @type {string}
      * @memberof Absence
      */
     name: string;
     /**
-     * The user's id.
+     * The user's id
      * @type {string}
      * @memberof Absence
      */

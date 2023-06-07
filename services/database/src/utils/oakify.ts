@@ -5,12 +5,12 @@ export type Body =
       data: Record<string, unknown>;
     }
   | {
-      error: string;
+      errors: Record<string, unknown>;
     };
 
 export type Response = {
   status: number;
-  body: Record<string, unknown>;
+  body: Body;
 };
 
 export type Controller<T extends string> = (
@@ -26,12 +26,17 @@ export const oakify =
     });
   };
 
-export const success = <T>(data: T): Response => ({
+export const success = <T extends Record<string, unknown>>(
+  data: T
+): Response => ({
   status: 200,
   body: { data },
 });
 
-export const error = (error: string, status: 400 | 404 | 500): Response => ({
+export const error = (
+  errors: Record<string, unknown>,
+  status: 400 | 404 | 500 = 400
+): Response => ({
   status,
-  body: { error },
+  body: { errors },
 });

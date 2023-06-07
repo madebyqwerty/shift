@@ -3,13 +3,13 @@ import { isValidUUID } from "../utils/isValidUUID.ts";
 import { Router } from "../deps.ts";
 import { z } from "../deps.ts";
 import { oakify } from "../utils/oakify.ts";
-import { getByUserId } from "../controllers/absences/absences.ts";
+import { getByUserId } from "../controllers/absences.ts";
 
 export const absenceRouter = new Router({
-  prefix: "/api",
+  prefix: "/api/absences",
 });
 
-absenceRouter.get("/absences/:userId", oakify(getByUserId));
+absenceRouter.get("/:userId", oakify(getByUserId));
 
 absenceRouter.post("/absences/scan", async (ctx) => {
   const formDataReader = ctx.request.body({ type: "form-data" }).value;

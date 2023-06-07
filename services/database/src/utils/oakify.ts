@@ -13,7 +13,7 @@ export type Response = {
   body: Body;
 };
 
-export type Controller<T extends string> = (
+export type Controller<T extends string = "/"> = (
   ctx: RouterContext<T>
 ) => Promise<Response>;
 

@@ -11,27 +11,6 @@ export const absenceRouter = new Router({
 
 absenceRouter.get("/:userId", oakify(getByUserId));
 
-absenceRouter.post("/absences/scan", async (ctx) => {
-  const formDataReader = ctx.request.body({ type: "form-data" }).value;
-  const formDataBody = await formDataReader.read();
-
-  const files = formDataBody.files;
-
-  if (files) {
-    const [file] = files;
-    if (file.filename) {
-      const fileBytes = await Deno.readFile(file.filename);
-      ctx.response.status = 200;
-      ctx.response.headers.set("Content-Type", file.contentType);
-      ctx.response.body = fileBytes;
-      return;
-    }
-  }
-
-  ctx.response.status = 400;
-  ctx.response.body = { error: "no-image" };
-});
-
 const absenceBody = z.object({
   lesson: z.number({ required_error: "required" }),
   date: z.string({ required_error: "required" }),

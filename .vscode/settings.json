@@ -1,4 +1,13 @@
 {
-  "deno.enablePaths": ["./database-service"],
-  "deno.unstable": true
+  "deno.enablePaths": ["./services/database"],
+  "deno.unstable": true,
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true
+  }
 }

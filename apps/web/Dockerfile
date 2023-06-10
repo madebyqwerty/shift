@@ -7,7 +7,6 @@ COPY ./.moon/docker/workspace .
 
 RUN moon docker setup
 
-RUN rm -rf apps/web/node_modules/
 COPY ./.moon/docker/sources .
 
 EXPOSE 3000

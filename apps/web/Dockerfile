@@ -1,15 +1,22 @@
-FROM node:18-alpine as base
+FROM node:18 as base
 
-WORKDIR /frontend
-COPY package*.json ./
-RUN npm ci
-COPY . .
-RUN npm run build
+RUN npm install -g @moonrepo/cli
+
+WORKDIR /web
+COPY ./.moon/docker/workspace .
+
+RUN moon docker setup
+
+COPY ./.moon/docker/sources .
 
 EXPOSE 3000
-
 ENV PORT 3000
 ENV PROTOCOL_HEADER x-forwarded-proto
 ENV HOST_HEADER x-forwarded-host
 
-CMD ["node","build"]
+RUN moon run web:build
+RUN ls
+
+RUN moon docker prune
+
+CMD ["node", "apps/web/build/."]

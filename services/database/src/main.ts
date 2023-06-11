@@ -1,9 +1,8 @@
 import { port } from "./constants.ts";
-import { docsRouter } from "./routes/docs/docs.ts";
 import { userRouter } from "./routes/users/users.ts";
-import { absenceRouter } from "./routes/absences/absences.ts";
+import { absenceRouter } from "./routes/absences.ts";
 import { Application, oakCors } from "./deps.ts";
-import { seed } from "./utils/seed.ts";
+import { queueRouter } from "./routes/queue.ts";
 
 export const app = new Application();
 
@@ -28,16 +27,12 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 });
 
-app.use(docsRouter.routes());
-app.use(docsRouter.allowedMethods());
 app.use(userRouter.routes());
 app.use(userRouter.allowedMethods());
 app.use(absenceRouter.routes());
 app.use(absenceRouter.allowedMethods());
-
-app.addEventListener("error", (e) => {
-  console.log(e);
-});
+app.use(queueRouter.routes());
+app.use(queueRouter.allowedMethods());
 
 app.addEventListener("listen", () => {
   console.log("═════════════════════════════════");

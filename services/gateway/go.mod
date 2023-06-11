@@ -1,4 +1,4 @@
-module boilerplate
+module github.com/madebyqwerty/shift
 
 go 1.19
 

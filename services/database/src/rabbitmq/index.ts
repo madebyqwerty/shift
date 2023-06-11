@@ -1,32 +1,38 @@
 import { amqp } from "../deps.ts";
 
-export class RabbitMQ {
+class RabbitMQ {
   #connection: amqp.AmqpConnection;
 
-  private constructor(connection: amqp.AmqpConnection) {
+  constructor(connection: amqp.AmqpConnection) {
     this.#connection = connection;
-  }
-
-  static async init() {
-    const connection = await amqp.connect();
-
-    return new RabbitMQ(connection);
   }
 
   async createChannel() {
     return await this.#connection.openChannel();
   }
+}
 
-  async createWelcomeChannel() {
-    const channel = await this.createChannel();
+export class WelcomeQueue extends RabbitMQ {
+  channel: amqp.AmqpChannel;
+
+  private constructor(
+    connection: amqp.AmqpConnection,
+    channel: amqp.AmqpChannel
+  ) {
+    super(connection);
+    this.channel = channel;
+  }
+
+  static async init() {
+    const connection = await amqp.connect();
+    const channel = await connection.openChannel();
     await channel.declareQueue({ queue: "welcome" });
 
-    return channel;
+    return new WelcomeQueue(connection, channel);
   }
 
   async sendHelloWorldToWelcomeQueue() {
-    const channel = await this.createWelcomeChannel();
-    await channel.publish(
+    await this.channel.publish(
       { routingKey: "welcome" },
       { contentType: "application/json" },
       new TextEncoder().encode(JSON.stringify({ message: "Hello World" }))
@@ -34,15 +40,16 @@ export class RabbitMQ {
   }
 
   async consumeHelloWorldFromWelcomeQueue() {
-    const channel = await this.createChannel();
-
-    await channel.declareQueue({ queue: "welcome" });
-    await channel.consume({ queue: "welcome" }, async (args, props, data) => {
-      console.log("Received:", new TextDecoder().decode(data));
-      await channel.ack({ deliveryTag: args.deliveryTag });
-    });
+    await this.channel.declareQueue({ queue: "welcome" });
+    await this.channel.consume(
+      { queue: "welcome" },
+      async (args, props, data) => {
+        console.log("Received:", new TextDecoder().decode(data));
+        await this.channel.ack({ deliveryTag: args.deliveryTag });
+      }
+    );
   }
 }
 
-const rabbitmq = await RabbitMQ.init();
+const rabbitmq = await WelcomeQueue.init();
 await rabbitmq.consumeHelloWorldFromWelcomeQueue();

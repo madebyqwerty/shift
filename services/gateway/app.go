@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	port = flag.String("port", ":5001", "Port to listen on")
+	port = flag.String("port", ":5002", "Port to listen on")
 	prod = flag.Bool("prod", false, "Enable prefork in Production")
 )
 
@@ -29,6 +29,10 @@ func main() {
 	// Middleware
 	app.Use(recover.New())
 	app.Use(logger.New())
+
+	// Routes
+	v1 := app.Group("/api/v1")
+	v1.Get("/hello", handlers.Hello)
 
 	// Handle not founds
 	app.Use(handlers.NotFound)

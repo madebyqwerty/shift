@@ -20,7 +20,6 @@ func main() {
 	// Parse command-line flags
 	flag.Parse()
 
-
 	// Create fiber app
 	app := fiber.New(fiber.Config{
 		Prefork: *prod, // go run app.go -prod
@@ -31,8 +30,8 @@ func main() {
 	app.Use(logger.New())
 
 	// Routes
-	v1 := app.Group("/api/v1")
-	v1.Get("/hello", handlers.Hello)
+	api := app.Group("/api")
+	api.Get("/hello", handlers.Hello)
 
 	// Handle not founds
 	app.Use(handlers.NotFound)

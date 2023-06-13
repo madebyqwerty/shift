@@ -16,6 +16,7 @@ files[] = {"id":"27173972-1252942f-4f3b-4346-bbdf-ea199c5285b3","path":"Database
 [config.relations.apiDefinition]
 rootDirectory = services/database/docs
 files[] = {"path":"openapi.yml","metaData":{}}
+files[] = {"path":"openapitools.json","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
 type = openapi:3

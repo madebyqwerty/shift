@@ -27,3 +27,4 @@ export { Router } from "https://deno.land/x/oak@v12.4.0/mod.ts";
 export { z } from "https://deno.land/x/zod@v3.21.4/index.ts";
 export { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 export * as faker from "https://cdn.skypack.dev/@faker-js/faker@v5.5.3?dts";
+export * as amqp from "https://deno.land/x/amqp@v0.23.1/mod.ts";

@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "1252942f-4f3b-4346-bbdf-ea199c5285b3",
-		"name": "Database service collection",
-		"description": "This is a REST API for the database service.\n\nContact Support:\n Name: Tomáš Kebrle",
+		"name": "Shift API Collection",
+		"description": "This is a REST API for the database service.\n\nContact Support:  \nName: Tomáš Kebrle",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "27173972-1252942f-4f3b-4346-bbdf-ea199c5285b3"
 	},

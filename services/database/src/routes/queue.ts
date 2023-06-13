@@ -1,5 +1,5 @@
 import { Router } from "../deps.ts";
-import { RabbitMQ } from "../rabbitmq/index.ts";
+import { RabbitMQ } from "../rabbitmq.ts";
 
 export const queueRouter = new Router({
   prefix: "/api/queue",
@@ -7,6 +7,6 @@ export const queueRouter = new Router({
 
 queueRouter.get("/send", async (ctx) => {
   const rabbitmq = await RabbitMQ.init();
-  await rabbitmq.sendHelloWorldToWelcomeQueue();
+  await rabbitmq.welcome.sendHelloWorldToWelcomeQueue();
   ctx.response.body = "Hello World sent to welcome queue";
 });

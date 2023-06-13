@@ -6,22 +6,16 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/madebyqwerty/shift/rabbitmq"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-func failOnError(err error, msg string) {
-	if err != nil {
-		log.Panicf("%s: %s", msg, err)
-	}
-}
-
 func Hello(c *fiber.Ctx) error {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
-	failOnError(err, "Failed to connect to RabbitMQ")
-	defer conn.Close()
 
-	ch, err := conn.Channel()
-	failOnError(err, "Failed to open a channel")
+	ch, err := rabbitmq.Conn.Channel()
+	if err != nil {
+		log.Fatalf("Error opening channel: %s", err)
+	}
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
@@ -32,7 +26,6 @@ func Hello(c *fiber.Ctx) error {
 		false,
 		nil,
 	)
-	failOnError(err, "Failed to declare a queue")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -46,7 +39,7 @@ func Hello(c *fiber.Ctx) error {
 			ContentType: "text/plain",
 			Body:        []byte(body),
 		})
-	failOnError(err, "Failed to publish a message")
+
 	log.Printf(" [x] Sent %s\n", body)
 	return c.JSON(fiber.Map{
 		"status": "message sent",

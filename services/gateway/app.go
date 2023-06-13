@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/madebyqwerty/shift/handlers"
+	"github.com/madebyqwerty/shift/rabbitmq"
 
 	"flag"
 	"log"
@@ -28,6 +29,10 @@ func main() {
 	// Middleware
 	app.Use(recover.New())
 	app.Use(logger.New())
+
+	// RabbitMQ
+	rabbitmq.Init()
+	defer rabbitmq.Conn.Close()
 
 	// Routes
 	api := app.Group("/api")

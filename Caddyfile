@@ -1,0 +1,17 @@
+https://database-service.madebyqwerty.online {
+reverse_proxy localhost:5000
+
+bind 0.0.0.0
+}
+
+https://ocr-service.madebyqwerty.online {
+reverse_proxy localhost:5001
+
+bind 0.0.0.0
+}
+
+https://shift.madebyqwerty.online {
+reverse_proxy localhost:3000
+
+bind 0.0.0.0
+}

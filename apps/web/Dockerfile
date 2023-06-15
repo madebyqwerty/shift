@@ -1,22 +1,31 @@
 FROM node:18 as base
 
+# Install Moonrepo CLI globally
 RUN npm install -g @moonrepo/cli
 
+# Set the working directory
 WORKDIR /web
-COPY ./.moon/docker/workspace .
 
+# Copy the Moonrepo workspace configuration
+COPY ./.moon/docker/workspace ./.moon/docker/workspace
+
+# Set up Moonrepo
 RUN moon docker setup
 
-COPY ./.moon/docker/sources .
+# Copy the project sources
+COPY ./.moon/docker/sources ./.moon/docker/sources
 
+# Expose port and set environment variables
 EXPOSE 3000
-ENV PORT 3000
-ENV PROTOCOL_HEADER x-forwarded-proto
-ENV HOST_HEADER x-forwarded-host
+ENV PORT=3000
+ENV PROTOCOL_HEADER=x-forwarded-proto
+ENV HOST_HEADER=x-forwarded-host
 
+# Build the web application
 RUN moon run web:build
-RUN ls
 
+# Remove unnecessary Docker artifacts
 RUN moon docker prune
 
-CMD ["node", "apps/web/build/."]
+# Specify the command to run the application
+CMD ["node", "apps/web/build/index.js"]

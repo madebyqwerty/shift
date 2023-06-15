@@ -1,0 +1,10 @@
+type: "tool"
+language: "go"
+
+tasks:
+  start:
+    command: "go run app.go"
+    local: true
+  dev:
+    command: "air ."
+    local: true

@@ -5,7 +5,7 @@ export type Body =
       data: Record<string, unknown>;
     }
   | {
-      errors: Record<string, unknown>;
+      errors: Record<string, string[]>;
     };
 
 export type Response = {
@@ -33,7 +33,7 @@ export const success = <T extends Record<string, unknown>>(
 });
 
 export const error = (
-  errors: Record<string, unknown>,
+  errors: Record<string, string[]>,
   status: 400 | 404 | 500 = 400
 ): Response => ({
   status,

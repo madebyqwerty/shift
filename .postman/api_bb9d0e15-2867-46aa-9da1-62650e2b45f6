@@ -9,13 +9,15 @@ id = bb9d0e15-2867-46aa-9da1-62650e2b45f6
 
 [config.relations.collections]
 rootDirectory = services/database/collections
-files[] = {"id":"27173972-1252942f-4f3b-4346-bbdf-ea199c5285b3","path":"Database service collection.json","metaData":{"generateCollectionPreferences":"{\"updateCollectionSync\":true}"}}
+files[] = {"id":"27173972-1252942f-4f3b-4346-bbdf-ea199c5285b3","path":"Shift API Collection.json","metaData":{"generateCollectionPreferences":"{\"updateCollectionSync\":true}"}}
 
 [config.relations.collections.metaData]
 
 [config.relations.apiDefinition]
 rootDirectory = services/database/docs
 files[] = {"path":"openapi.yml","metaData":{}}
+files[] = {"path":"openapitools.json","metaData":{}}
+files[] = {"path":"responses/error.yml","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
 type = openapi:3

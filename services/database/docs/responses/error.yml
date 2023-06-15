@@ -1,0 +1,15 @@
+description: Error
+content:
+    application/json:
+        schema:
+            type: object
+            properties:
+                errors:
+                    type: object
+                    properties:
+                        example:
+                            type: array
+                            items:
+                                type: string
+
+    

@@ -6,6 +6,12 @@ settings:
 
 importers:
 
+  .:
+    dependencies:
+      lucide-svelte:
+        specifier: ^0.233.0
+        version: 0.233.0(svelte@3.59.1)
+
   apps/web:
     dependencies:
       '@shift/database-service-client':

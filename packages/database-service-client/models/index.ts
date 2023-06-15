@@ -2,6 +2,7 @@
 /* eslint-disable */
 export * from './Absence';
 export * from './AbsencesUserIdGet400Response';
+export * from './AbsencesUserIdGet400ResponseErrors';
 export * from './AbsencesUserIdPost200Response';
 export * from './AbsencesUserIdPostRequest';
 export * from './ErrorCodes';

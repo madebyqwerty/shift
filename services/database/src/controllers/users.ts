@@ -43,9 +43,9 @@ const userPostReqBodySchema = z.object({
 });
 
 export const createUser: Controller<"/"> = async ({ request }) => {
-  const body = await request.body({ type: "json" });
+  const body = request.body({ type: "json" });
 
-  const result = userPostReqBodySchema.safeParse(body.value);
+  const result = userPostReqBodySchema.safeParse(await body.value);
 
   if (!result.success) {
     return error(result.error.flatten(), 400);

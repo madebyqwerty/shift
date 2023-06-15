@@ -33,7 +33,7 @@ export const success = <T extends Record<string, unknown>>(
 });
 
 export const error = (
-  errors: Record<string, string[]>,
+  errors: Record<string, any[]>,
   status: 400 | 404 | 500 = 400
 ): Response => ({
   status,

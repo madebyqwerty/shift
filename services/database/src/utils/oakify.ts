@@ -19,11 +19,10 @@ export type Controller<T extends string = "/"> = (
 
 export const oakify =
   <T extends string>(controller: Controller<T>) =>
-  (ctx: RouterContext<T>) => {
-    controller(ctx).then(({ status, body }) => {
-      ctx.response.status = status;
-      ctx.response.body = body;
-    });
+  async (ctx: RouterContext<T>) => {
+    const { status, body } = await controller(ctx);
+    ctx.response.status = status;
+    ctx.response.body = body;
   };
 
 export const success = <T extends Record<string, unknown>>(

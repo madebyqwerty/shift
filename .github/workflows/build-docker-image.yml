@@ -1,0 +1,48 @@
+name: Build and Publish Docker Images
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  DOCKER_IMAGES: |
+    ocr-service:
+      dockerfile: ./services/ocr/Dockerfile
+      build_args: ""
+    database-service:
+      dockerfile: ./services/database/Dockerfile
+      build_args: ""
+    web:
+      dockerfile: ./apps/web/Dockerfile
+      build_args: ""
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish Docker images
+        run: |
+          for image in $DOCKER_IMAGES; do
+            name=$(echo $image | cut -d: -f1)
+            dockerfile=$(echo $image | cut -d: -f2 | awk '{print $1}')
+            build_args=$(echo $image | cut -d: -f2 | awk '{print $2}')
+            docker build -t ghcr.io/${{ github.repository_owner }}/$name:${{ github.sha }} -f $dockerfile $build_args .
+            docker push ghcr.io/${{ github.repository_owner }}/$name:${{ github.sha }}
+          done
+        env:
+          DOCKER_IMAGES: ${{ env.DOCKER_IMAGES }}

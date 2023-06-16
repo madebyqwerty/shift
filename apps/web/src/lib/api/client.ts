@@ -1,3 +1,4 @@
-import { BaseAPI } from "@shift/database-service-client";
+import { AbsencesApi, UsersApi } from "@shift/database-service-client";
 
-export const client = new BaseAPI();
+export const absencesClient = new AbsencesApi();
+export const usersClient = new UsersApi();

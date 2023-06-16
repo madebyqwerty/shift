@@ -14,7 +14,7 @@ export const getUser: Controller<"/:id"> = async (ctx) => {
   if (!isValidUUID(id)) {
     return error(
       {
-        id: "not-valid",
+        id: ["not-valid"],
       },
       400
     );
@@ -29,7 +29,7 @@ export const getUser: Controller<"/:id"> = async (ctx) => {
   if (!user) {
     return error(
       {
-        user: "not-found",
+        user: ["not-found"],
       },
       404
     );
@@ -43,12 +43,12 @@ const userPostReqBodySchema = z.object({
 });
 
 export const createUser: Controller<"/"> = async ({ request }) => {
-  const body = await request.body({ type: "json" });
+  const body = request.body({ type: "json" });
 
-  const result = userPostReqBodySchema.safeParse(body.value);
+  const result = userPostReqBodySchema.safeParse(await body.value);
 
   if (!result.success) {
-    return error(result.error.flatten(), 400);
+    return error({ form: result.error.issues }, 400);
   }
 
   const [user] = await db

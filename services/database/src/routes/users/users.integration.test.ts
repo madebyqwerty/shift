@@ -25,6 +25,8 @@ Deno.test("Should create an user", async () => {
     }),
   });
 
+  console.log(await res.json());
+
   assertEquals(res.status, 200);
   const user = await res.json();
   assertEquals(user.name, "Tomáš Kebrle");

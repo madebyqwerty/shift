@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { AbsencesUserIdGet400ResponseErrors } from './AbsencesUserIdGet400ResponseErrors';
+import {
+    AbsencesUserIdGet400ResponseErrorsFromJSON,
+    AbsencesUserIdGet400ResponseErrorsFromJSONTyped,
+    AbsencesUserIdGet400ResponseErrorsToJSON,
+} from './AbsencesUserIdGet400ResponseErrors';
+
 /**
  * 
  * @export
@@ -21,22 +28,11 @@ import { exists, mapValues } from '../runtime';
 export interface AbsencesUserIdGet400Response {
     /**
      * 
-     * @type {string}
+     * @type {AbsencesUserIdGet400ResponseErrors}
      * @memberof AbsencesUserIdGet400Response
      */
-    id?: AbsencesUserIdGet400ResponseIdEnum;
+    errors?: AbsencesUserIdGet400ResponseErrors;
 }
-
-
-/**
- * @export
- */
-export const AbsencesUserIdGet400ResponseIdEnum = {
-    Required: 'required',
-    NotValid: 'not-valid'
-} as const;
-export type AbsencesUserIdGet400ResponseIdEnum = typeof AbsencesUserIdGet400ResponseIdEnum[keyof typeof AbsencesUserIdGet400ResponseIdEnum];
-
 
 /**
  * Check if a given object implements the AbsencesUserIdGet400Response interface.
@@ -57,7 +53,7 @@ export function AbsencesUserIdGet400ResponseFromJSONTyped(json: any, ignoreDiscr
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
+        'errors': !exists(json, 'errors') ? undefined : AbsencesUserIdGet400ResponseErrorsFromJSON(json['errors']),
     };
 }
 
@@ -70,7 +66,7 @@ export function AbsencesUserIdGet400ResponseToJSON(value?: AbsencesUserIdGet400R
     }
     return {
         
-        'id': value.id,
+        'errors': AbsencesUserIdGet400ResponseErrorsToJSON(value.errors),
     };
 }
 

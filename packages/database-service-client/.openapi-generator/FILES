@@ -4,6 +4,7 @@ apis/index.ts
 index.ts
 models/Absence.ts
 models/AbsencesUserIdGet400Response.ts
+models/AbsencesUserIdGet400ResponseErrors.ts
 models/AbsencesUserIdPost200Response.ts
 models/AbsencesUserIdPostRequest.ts
 models/ErrorCodes.ts

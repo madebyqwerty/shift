@@ -1,15 +1,15 @@
 version: "3"
 services:
-  web:
-    container_name: web
-    image: node:18-alpine
-    restart: always
-    build:
-      context: ./
-      dockerfile: ./apps/web/Dockerfile
-      target: base
-    ports:
-      - "3000:3000"
+  # web:
+  #   container_name: web
+  #   image: node:18-alpine
+  #   restart: always
+  #   build:
+  #     context: ./
+  #     dockerfile: ./apps/web/Dockerfile
+  #     target: base
+  #   ports:
+  #     - "3000:3000"
 
   database-service:
     container_name: database-service

@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "1252942f-4f3b-4346-bbdf-ea199c5285b3",
-		"name": "Database service collection",
-		"description": "This is a REST API for the database service.\n\nContact Support:\n Name: Tomáš Kebrle",
+		"name": "Shift API Collection",
+		"description": "This is a REST API for the database service.\n\nContact Support:  \nName: Tomáš Kebrle",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_uid": "27173972-1252942f-4f3b-4346-bbdf-ea199c5285b3"
 	},
@@ -14,7 +14,7 @@
 					"name": "{id}",
 					"item": [
 						{
-							"name": "Returns a user by ID.",
+							"name": "A user by id",
 							"id": "6dc76219-e48d-40b4-b9f8-2c734ccbae00",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -414,7 +414,7 @@
 					"name": "{userId}",
 					"item": [
 						{
-							"name": "Returns a list of absences for a given user.",
+							"name": "List of all absences for a user",
 							"id": "6733b824-602a-4c2a-913e-a220b3f1bda9",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
@@ -499,11 +499,14 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/absences/:userId",
+											"raw": "http://localhost:5000/api/absences/:userId",
+											"protocol": "http",
 											"host": [
-												"{{baseUrl}}"
+												"localhost"
 											],
+											"port": "5000",
 											"path": [
+												"api",
 												"absences",
 												":userId"
 											],
@@ -665,7 +668,8 @@
 		{
 			"id": "19fe15e0-c0ee-454f-a26d-6ee729b7beab",
 			"key": "baseUrl",
-			"value": "http://localhost:5000/api"
+			"value": "http://localhost:5000/api",
+			"type": "any"
 		}
 	]
 }

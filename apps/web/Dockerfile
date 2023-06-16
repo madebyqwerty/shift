@@ -9,6 +9,10 @@ WORKDIR /web
 # Copy the Moonrepo workspace configuration
 COPY ./.moon/docker/workspace ./.moon/docker/workspace
 
+# Copy the Moonrepo project configuration
+COPY ./.moon/workspace.yml ./.moon/workspace.yml
+COPY ./.moon/toolchain.yml ./.moon/toolchain.yml
+
 # Set up Moonrepo
 RUN moon docker setup
 

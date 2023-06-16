@@ -39,8 +39,8 @@ jobs:
         run: |
           for image in $DOCKER_IMAGES; do
             name=$(echo $image | cut -d: -f1)
-            dockerfile=$(echo $image | cut -d: -f2 | awk '{print $1}')
-            build_args=$(echo $image | cut -d: -f2 | awk '{print $2}')
+            dockerfile=$(echo $DOCKER_IMAGES | yq -r ".[$name].dockerfile")
+            build_args=$(echo $DOCKER_IMAGES | yq -r ".[$name].build_args")
             docker build -t ghcr.io/${{ github.repository_owner }}/$name:${{ github.sha }} -f $dockerfile $build_args .
             docker push ghcr.io/${{ github.repository_owner }}/$name:${{ github.sha }}
           done

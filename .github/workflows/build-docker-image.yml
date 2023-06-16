@@ -23,10 +23,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install moon
+        run: curl -fsSL https://moonrepo.dev/install/moon.sh | bash
+
+      - name: Scaffold docker image for web
+        run: moon scaffold docker web
+
       - name: Build Database service Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: .services/database
           file: ./services/database/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/database-service:${{ github.sha }}
@@ -34,7 +40,7 @@ jobs:
       - name: Build OCR service Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: .services/ocr
           file: ./services/ocr/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/database-service:${{ github.sha }}

@@ -27,7 +27,7 @@ jobs:
         run: curl -fsSL https://moonrepo.dev/install/moon.sh | bash
 
       - name: Scaffold docker image for web
-        run: moon scaffold docker web
+        run: moon docker scaffold web
 
       - name: Build Database service Docker image
         uses: docker/build-push-action@v2

@@ -43,7 +43,7 @@ jobs:
           context: ./services/ocr
           file: ./services/ocr/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/database-service:${{ github.sha }}
+          tags: ghcr.io/${{ github.repository_owner }}/ocr-service:${{ github.sha }}
 
       - name: Build web Docker image
         uses: docker/build-push-action@v2
@@ -51,4 +51,4 @@ jobs:
           context: .
           file: ./apps/web/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/database-service:${{ github.sha }}
+          tags: ghcr.io/${{ github.repository_owner }}/web:${{ github.sha }}

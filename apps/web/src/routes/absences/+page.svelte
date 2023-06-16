@@ -6,6 +6,7 @@
 	import ActionButtons from './ActionButtons.svelte';
 
 	export let data: PageData;
+	console.log(data);
 </script>
 
 <section class="flex flex-col gap-2">
@@ -15,10 +16,10 @@
 		<Tab active>Přehled žáků</Tab>
 		<Tab>Absence</Tab>
 	</Tabs>
-	{#each data.students as student}
+	<!-- {#each data.students as student}
 		<Student {student} />
-	{/each}
-	<!-- 	<div class="relative">
-		<ActionButtons />
-	</div> -->
+	{/each} -->
+	
+	
 </section>
+<ActionButtons />

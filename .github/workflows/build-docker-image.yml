@@ -32,7 +32,7 @@ jobs:
       - name: Build Database service Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .services/database
+          context: ./services/database
           file: ./services/database/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/database-service:${{ github.sha }}
@@ -40,7 +40,7 @@ jobs:
       - name: Build OCR service Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .services/ocr
+          context: ./services/ocr
           file: ./services/ocr/Dockerfile
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/database-service:${{ github.sha }}

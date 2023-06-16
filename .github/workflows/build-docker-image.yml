@@ -9,18 +9,6 @@ permissions:
   contents: write
   packages: write
 
-env:
-  DOCKER_IMAGES: |
-    ocr-service:
-      dockerfile: ./services/ocr/Dockerfile
-      build_args: ""
-    database-service:
-      dockerfile: ./services/database/Dockerfile
-      build_args: ""
-    web:
-      dockerfile: ./apps/web/Dockerfile
-      build_args: ""
-
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
@@ -35,14 +23,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and publish Docker images
-        run: |
-          for image in $DOCKER_IMAGES; do
-            name=$(echo $image | cut -d: -f1)
-            dockerfile=$(echo $DOCKER_IMAGES | yq -r ".[$name].dockerfile")
-            build_args=$(echo $DOCKER_IMAGES | yq -r ".[$name].build_args")
-            docker build -t ghcr.io/${{ github.repository_owner }}/$name:${{ github.sha }} -f $dockerfile $build_args .
-            docker push ghcr.io/${{ github.repository_owner }}/$name:${{ github.sha }}
-          done
-        env:
-          DOCKER_IMAGES: ${{ env.DOCKER_IMAGES }}
+      - name: Build Database service Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./services/database/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/database-service:${{ github.sha }}
+
+      - name: Build OCR service Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./services/ocr/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/database-service:${{ github.sha }}
+
+      - name: Build web Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./apps/web/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/database-service:${{ github.sha }}

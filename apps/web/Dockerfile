@@ -7,17 +7,17 @@ RUN npm install -g @moonrepo/cli
 WORKDIR /web
 
 # Copy the Moonrepo workspace configuration
-COPY ./.moon/docker/workspace ./.moon/docker/workspace
+COPY ./.moon/docker/workspace .
 
 # Set up Moonrepo
 RUN moon docker setup
 
 # Copy the project sources
-COPY ./.moon/docker/sources ./.moon/docker/sources
+COPY ./.moon/docker/sources .
 
 # Expose port and set environment variables
-EXPOSE 3000
-ENV PORT=3000
+EXPOSE 5002
+ENV PORT=5002
 ENV PROTOCOL_HEADER=x-forwarded-proto
 ENV HOST_HEADER=x-forwarded-host
 

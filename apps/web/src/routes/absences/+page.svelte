@@ -7,6 +7,31 @@
 
 	export let data: PageData;
 	console.log(data);
+
+	let takenImage: string;
+
+	const handleCapture = async (e) => {
+		takenImage = e.detail;
+		console.log(takenImage);
+
+		const formData = new FormData();
+		formData.append('file', takenImage);
+        formData.append('week_number', '51');
+
+		await fetch('http://localhost:5001/api/scan', {
+			method: 'POST',
+			body: formData
+		})
+			.then((response) => console.log(response))
+			.then((data) => {
+				// Process the response data
+				console.log(data);
+			})
+			.catch((error) => {
+				// Handle any errors
+				console.error(error);
+			});
+	};
 </script>
 
 <section class="flex flex-col gap-2">
@@ -19,7 +44,5 @@
 	<!-- {#each data.students as student}
 		<Student {student} />
 	{/each} -->
-	
-	
 </section>
-<ActionButtons />
+<ActionButtons on:capture={handleCapture} />

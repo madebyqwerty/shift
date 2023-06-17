@@ -1,16 +1,20 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import CameraInput from './CameraInput.svelte';
 	import LoadingOverlay from './LoadingOverlay.svelte';
 
 	let takenImage: string;
 	let cameraInputRef;
 
+    const dispatch = createEventDispatcher()
+
 	export const openCameraInput = () => {
 		cameraInputRef.openCamera();
 	};
 
-	const handleCapture = (imgURL) => {
-		takenImage = imgURL;
+	const handleCapture = (event) => {
+		takenImage = event.detail;
+        dispatch("capture", takenImage)
 	};
 
     let loadingText = "";
@@ -22,5 +26,5 @@
 	{:else}
 		<CameraInput on:capture={handleCapture} bind:this={cameraInputRef} />
 	{/if}
-	<LoadingOverlay bind:message={loadingText}/>
+	<!-- <LoadingOverlay bind:message={loadingText}/> -->
 </main>

@@ -13,4 +13,4 @@
 	<ActionButton on:click={scan} icon="scan">Skenovat</ActionButton>
 </div>
 
-<Scan bind:this={scanRef} />
+<Scan bind:this={scanRef} on:capture />

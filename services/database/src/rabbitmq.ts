@@ -57,6 +57,3 @@ class WelcomeQueue {
     );
   }
 }
-
-const rabbitmq = await RabbitMQ.init();
-await rabbitmq.welcome.consumeHelloWorldFromWelcomeQueue();

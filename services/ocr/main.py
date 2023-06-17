@@ -2,11 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flasgger import Swagger
 import numpy as np
-import dotenv, ocr, cv2
+import os, ocr, cv2
 
-config = dotenv.dotenv_values(".env")
 app = Flask(__name__)
-app.secret_key = config["SECRET_KEY"]
+app.secret_key = os.environ["SECRET_KEY"]
 CORS(app)
 
 swagger_config = {

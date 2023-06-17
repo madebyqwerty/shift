@@ -6,6 +6,8 @@ services:
     restart: always
     ports:
       - "5002:5002"
+    networks:
+      - shift-infra
 
   database-service:
     container_name: database-service
@@ -16,6 +18,8 @@ services:
     depends_on:
       - postgres
       - rabbitmq
+    networks:
+      - shift-infra
 
   ocr-service:
     container_name: ocr-service
@@ -23,6 +27,8 @@ services:
     restart: always
     ports:
       - 5001:5001
+    networks:
+      - shift-infra
 
   postgres:
     image: postgres:latest
@@ -36,12 +42,22 @@ services:
       - 5432:5432
     volumes:
       - database_postgres:/var/lib/postgresql/data
+    networks:
+      - shift-infra
+
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
     ports:
       - 5672:5672
       - 15672:15672
+    networks:
+      - shift-infra
+
+networks:
+  shift-infra:
+    attachable: true
+    name: shift-infra
 
 volumes:
   database_postgres:

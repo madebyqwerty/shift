@@ -10,7 +10,7 @@
 
 	let takenImage: string;
 
-	const handleCapture = async (e) => {
+	const handleCapture = async (e:Object) => {
 		takenImage = e.detail;
 		console.log(takenImage);
 
@@ -22,7 +22,7 @@
 			method: 'POST',
 			body: formData
 		})
-			.then((response) => console.log(response))
+			.then((response) => response.json())
 			.then((data) => {
 				// Process the response data
 				console.log(data);

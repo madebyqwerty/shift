@@ -2,15 +2,23 @@ version: "3"
 services:
   web:
     container_name: web
-    image: ghcr.io/madebyqwerty/web:latest
+    image: node:18-alpine
     restart: always
+    build:
+      context: ./
+      dockerfile: ./apps/web/Dockerfile
+      target: base
     ports:
-      - "5002:5002"
+      - "3000:3000"
 
   database-service:
     container_name: database-service
-    image: ghcr.io/madebyqwerty/database-service:latest
+    image: deno
     restart: always
+    build:
+      context: ./services/database
+      dockerfile: Dockerfile
+      target: base
     ports:
       - "5000:5000"
     depends_on:
@@ -19,8 +27,11 @@ services:
 
   ocr-service:
     container_name: ocr-service
-    image: ghcr.io/madebyqwerty/ocr-service:latest
     restart: always
+    build:
+      context: ./services/ocr
+      dockerfile: Dockerfile
+      target: base
     ports:
       - 5001:5001
 

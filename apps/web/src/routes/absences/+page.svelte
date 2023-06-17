@@ -4,19 +4,20 @@
 	import Tab from './Tab.svelte';
 	import Student from './Student.svelte';
 	import ActionButtons from './ActionButtons.svelte';
+	import { enhance } from '$app/forms';
 
 	export let data: PageData;
 	console.log(data);
 
 	let takenImage: string;
 
-	const handleCapture = async (e:Object) => {
+	const handleCapture = async (e: Object) => {
 		takenImage = e.detail;
 		console.log(takenImage);
 
 		const formData = new FormData();
 		formData.append('file', takenImage);
-        formData.append('week_number', '51');
+		formData.append('week_number', '51');
 
 		await fetch('http://localhost:5001/api/scan', {
 			method: 'POST',
@@ -41,8 +42,8 @@
 		<Tab active>Přehled žáků</Tab>
 		<Tab>Absence</Tab>
 	</Tabs>
-	<!-- {#each data.students as student}
+	{#each data.students.data.users as student}
 		<Student {student} />
-	{/each} -->
+	{/each}
 </section>
 <ActionButtons on:capture={handleCapture} />

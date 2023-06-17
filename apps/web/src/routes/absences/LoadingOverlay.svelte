@@ -1,7 +1,7 @@
 <script>
 	import Stretch from '$lib/components/loading/Stretch.svelte';
 
-    export let message="Načítání ...";
+	export let message = 'Načítání ...';
 </script>
 
 <section
@@ -9,8 +9,8 @@
 >
 	<div class="overlay-content flex flex-col justify-center items-center">
 		<Stretch size="50px" />
-        <span>
-            {message}
-        </span>
+		<span>
+			{message}
+		</span>
 	</div>
 </section>

@@ -12,7 +12,7 @@ fileGroups:
 
 tasks:
   dev:
-    command: 'vite dev'
+    command: 'vite dev --host'
     local: true
 
   build:

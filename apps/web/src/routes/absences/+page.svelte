@@ -4,6 +4,7 @@
 	import Tab from './Tab.svelte';
 	import Student from './Student.svelte';
 	import ActionButtons from './ActionButtons.svelte';
+	import { enhance } from '$app/forms';
 
 	export let data: PageData;
 	console.log(data);
@@ -41,8 +42,8 @@
 		<Tab active>Přehled žáků</Tab>
 		<Tab>Absence</Tab>
 	</Tabs>
-	<!-- {#each data.students as student}
-                <Student {student} />
-            {/each} -->
+	{#each data.students.data.users as student}
+		<Student {student} />
+	{/each}
 </section>
 <ActionButtons on:capture={handleCapture} />

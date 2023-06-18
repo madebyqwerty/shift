@@ -1,16 +1,36 @@
-<script>
+<script lang="ts">
+	import { enhance } from '$app/forms';
 	import ActionButton from './ActionButton.svelte';
-	import Scan from './Scan.svelte';
 
-	let scanRef;
-	const scan = () => {
-        scanRef.openCameraInput()
-    };
+	let formElement: HTMLFormElement;
+	let cameraInputRef: HTMLInputElement;
+	let submitButton: HTMLButtonElement;
+
+	function handleCapture() {
+		console.log(new FormData(formElement));
+		submitButton.click();
+	}
+
+	function openCamera() {
+		cameraInputRef.click();
+	}
 </script>
 
 <div class="sticky top-full w-full py-2 flex flex-row gap-2">
 	<ActionButton on:click={() => {}} icon="plus">Přidat absenci</ActionButton>
-	<ActionButton on:click={scan} icon="scan">Skenovat</ActionButton>
+	<ActionButton on:click={openCamera} icon="scan">Skenovat</ActionButton>
 </div>
 
-<Scan bind:this={scanRef} on:capture />
+<form use:enhance bind:this={formElement} method="post" enctype="multipart/form-data">
+	<div class="flex flex-col items-center space-y-4">
+		<input
+			type="file"
+			class="hidden"
+			accept=".jpg, .jpeg, .png"
+			name="img"
+			bind:this={cameraInputRef}
+			on:change={handleCapture}
+		/>
+	</div>
+	<button bind:this={submitButton} />
+</form>

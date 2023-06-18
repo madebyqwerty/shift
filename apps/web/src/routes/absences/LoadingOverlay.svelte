@@ -9,7 +9,7 @@
 >
 	<div class="overlay-content flex flex-col justify-center items-center">
 		<Stretch size="50px" />
-		<span>
+		<span >
 			{message}
 		</span>
 	</div>

@@ -16,33 +16,35 @@
 	$: durationNum = duration.replace(durationUnitRegex, '');
 </script>
 
-
-	<div class="inline-block text-center " style="height:{size};width:{size}" >
-		{#each range(1, 5) as version}
-			<div
-				class=" h-full w-[10%] inline-block mr-1 scale-y-[0.4] bg-accent-200"
-				class:pause-animation={pause}
-				style="animation: stretch {duration} ease-in-out infinite;animation-delay: {(version - 1) *
-					(durationNum / 12)}{durationUnit}"
-			/>
-		{/each}
-	</div>
-
-	<style>
-
-
-		.pause-animation {
-			animation-play-state: paused;
-		}
-		@keyframes stretch {
-			0%,
-			40%,
-			100% {
-				transform: scaleY(0.4);
-			}
-			20% {
-				transform: scaleY(1);
-			}
-		}
-	</style>
-
+<main>
+    
+        <div class="inline-block text-center " style="height:{size};width:{size}" >
+            {#each range(1, 5) as version}
+                <div
+                    class=" h-full w-[10%] inline-block mr-1 scale-y-[0.4] bg-accent-200"
+                    class:pause-animation={pause}
+                    style="animation: stretch {duration} ease-in-out infinite !important;animation-delay: {(version - 1) *
+                        (durationNum / 12)}{durationUnit}"
+                />
+            {/each}
+        </div>
+    
+        <style>
+    
+    
+            .pause-animation {
+                animation-play-state: paused;
+            }
+            @keyframes stretch {
+                0%,
+                40%,
+                100% {
+                    transform: scaleY(0.4);
+                }
+                20% {
+                    transform: scaleY(1);
+                }
+            }
+        </style>
+    
+</main>

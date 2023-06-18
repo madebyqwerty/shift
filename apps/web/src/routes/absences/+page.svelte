@@ -10,13 +10,13 @@
 
 	let takenImage: string;
 
-	const handleCapture = async (e:Object) => {
+	const handleCapture = async (e: Object) => {
 		takenImage = e.detail;
 		console.log(takenImage);
 
 		const formData = new FormData();
 		formData.append('file', takenImage);
-        formData.append('week_number', '51');
+		formData.append('week_number', '51');
 
 		await fetch('http://localhost:5001/api/scan', {
 			method: 'POST',
@@ -42,7 +42,7 @@
 		<Tab>Absence</Tab>
 	</Tabs>
 	<!-- {#each data.students as student}
-		<Student {student} />
-	{/each} -->
+                <Student {student} />
+            {/each} -->
 </section>
 <ActionButtons on:capture={handleCapture} />

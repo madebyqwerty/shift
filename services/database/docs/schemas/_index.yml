@@ -1,0 +1,4 @@
+Absence:
+  $ref: "./Absence.yml"
+User:
+  $ref: "./User.yml"

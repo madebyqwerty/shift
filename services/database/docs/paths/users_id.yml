@@ -1,0 +1,35 @@
+get:
+  summary: A user with the given ID
+  tags:
+    - Users
+  parameters:
+    $ref: "../parameters/userId.yml"
+  responses:
+    200:
+      description: The user.
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/User.yml"
+    400:
+      description: Id is not valid.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                enum:
+                  - not-valid
+    404:
+      description: User not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user:
+                type: string
+                enum:
+                  - not-found

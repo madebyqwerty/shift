@@ -79,18 +79,18 @@ def scan():
                         date:
                             type: date
                             description: Date od absence
-        400:
-            description: Process error
-        403:
-            description: Missing image
         404:
+            description: Process error
+        400:
+            description: Missing image
+        400:
             description: No week number
 
     """
     week_number = request.form.get('week_number')
 
     if week_number == None:
-        return jsonify({"error": "No week number"}), 404
+        return jsonify({"error": "No week number"}), 400
     
     file = request.files.get("img")
 
@@ -101,9 +101,9 @@ def scan():
         data = ocr.Engine.process(image, week_number)
         return jsonify(data), 200
     except: 
-        return jsonify({"error": "Process error"}), 400
+        return jsonify({"error": "Process error"}), 404
     
-    return jsonify({"error": "Missing image"}), 403
+    return jsonify({"error": "Missing image"}), 400
     
 if __name__ == '__main__':
     # app.run("0.0.0.0", 5001, debug=True)

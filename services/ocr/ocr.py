@@ -1,5 +1,5 @@
 
-import cv2, qrcode, pytesseract, time, ast, requests, json, datetime
+import cv2, qrcode, pytesseract, time, ast, requests, datetime
 import numpy as np
 
 debug_mode = False
@@ -292,12 +292,7 @@ class OCR():
         binary_img = Image.convert_to_binary(gray_thresh_img, 130, 255)
         edges_img = cv2.Canny(binary_img, 100, 200) #Edge detection
 
-        print("Je tu chubaaaaaaaaaaaa?")
-
         data = pytesseract.image_to_data(edges_img, lang="ces", output_type=pytesseract.Output.DICT)
-
-        print("halo jsou tu data?????????,,")
-        print(data)
 
         cords, text = [], []
         for i in range(len(data["text"])):
@@ -411,13 +406,9 @@ class Engine():
             if max > len(students): max = len(students)
             students = students[num:max]
 
-        print("VA3KU nefunguje toooooooo")
-
         names_cut_img = img[0:img.shape[0], 0:int(img.shape[1]/5.5)]
         data, cords = OCR.img_processing(names_cut_img)
         if len(data) < 5: return None, None, cords
-
-        print("TADY TO TAKY NEFUNGUJEEEEEEEEEEEEEEEee")
 
         name = Engine.is_name_here(students, data)
         if name == None: return None, None, cords

@@ -2,7 +2,7 @@
 import cv2, qrcode, pytesseract, time, ast, requests, json, datetime
 import numpy as np
 
-debug_mode = True
+debug_mode = False
 DEBUG_IMG_SCALE = 0.15
 
 class QRCodeError(Exception):

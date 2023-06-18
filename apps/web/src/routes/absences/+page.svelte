@@ -1,11 +1,14 @@
 <script lang="ts">
 	import LoadingOverlay from './LoadingOverlay.svelte';
+	import { ChevronLeft } from 'lucide-svelte';
+
 	import type { ActionData, PageData } from './$types';
 	import Tabs from './Tabs.svelte';
 	import Tab from './Tab.svelte';
 	import Student from './Student.svelte';
 	import ActionButtons from './ActionButtons.svelte';
 	import { enhance } from '$app/forms';
+	import { fly } from 'svelte/transition';
 
 	export let data: PageData;
 	console.log(data);
@@ -24,7 +27,12 @@
 	}
 </script>
 
-<div class="flex flex-col gap-2 flex-grow overflow-hidden">
+<div
+	class="flex flex-col gap-2 flex-grow overflow-hidden"
+	in:fly={{ x: 200, duration: 300, delay: 300 }}
+	out:fly={{ x: 200, duration: 300 }}
+>
+    <a href="/"><ChevronLeft size="28"/></a>
 	<h1 class="text-2xl font-extrabold font-nunito">Absence</h1>
 	<div class="w-16 h-1 bg-primary-500 rounded mb-2" />
 	<Tabs>

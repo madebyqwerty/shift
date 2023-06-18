@@ -29,6 +29,7 @@ services:
       - 5001:5001
     networks:
       - shift-infra
+    env_file: .env
 
   postgres:
     image: postgres:latest

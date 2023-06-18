@@ -1,5 +1,5 @@
 
-import cv2, qrcode, pytesseract, time, ast, requests, json, datetime
+import cv2, qrcode, pytesseract, time, ast, requests, datetime
 import numpy as np
 
 debug_mode = False
@@ -17,7 +17,7 @@ class db():
         response = requests.get(url).json()
 
         users = {}
-        for user in response: users[user["name"]] = user["id"]
+        for user in response["data"]["users"]: users[user["name"]] = user["id"]
 
         return users
     

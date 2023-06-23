@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './Absence';
-export * from './AbsencesPost200Response';
-export * from './AbsencesPostRequest';
+export * from './AbsencesUserIdPost200Response';
+export * from './AbsencesUserIdPostRequest';
 export * from './ModelError';
 export * from './User';
 export * from './UsersPostRequest';

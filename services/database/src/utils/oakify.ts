@@ -1,9 +1,7 @@
 import { RouterContext } from "../deps.ts";
 
 export type Body =
-  | {
-      data: Record<string, unknown>;
-    }
+  | Record<string, unknown>
   | {
       errors: Record<string, string[]>;
     };
@@ -29,7 +27,7 @@ export const success = <T extends Record<string, unknown>>(
   data: T
 ): Response => ({
   status: 200,
-  body: { data },
+  body: data,
 });
 
 export const error = (

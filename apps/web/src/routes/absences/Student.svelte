@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Student, Absence } from '$lib/types';
-	import { ChevronRight } from 'lucide-svelte';
+	import { slide } from 'svelte/transition';
+	import { ChevronRight, Check, X } from 'lucide-svelte';
 
 	export let student: Student;
 	let open = false;
@@ -21,25 +22,57 @@
 	}
 </script>
 
-<div class="bg-white p-2 flex flex-col h-max duration-300 transition-all">
-	<button class="flex text-base-800 items-center gap-1" on:click={switchState}>
-		<ChevronRight size={18} />
-		<p class="font-semibold text-base-950">{student.name}</p>
+<div class="bg-white p-1 flex flex-col h-max duration-300 transition-all rounded-lg">
+	<button
+		class="flex text-base-800 items-center justify-between gap-1 {open ? 'border-base-50 border-b-[2px]' : ''}"
+		on:click={switchState}
+	>
+		<span class="flex flex-row justify-center items-center">
+            <span class="duration-100 {open ? 'rotate-90' : ''}">
+                <ChevronRight size={18} />
+            </span>
+            <p class="font-semibold text-base-950">{student.name}</p>
+        </span>
+        <p class="text-xs text-base-950 bg-base-200 rounded-lg px-1">36</p>
+
 	</button>
 	{#if open}
-		{#await getAbsences()}
-			<p>Loading...</p>
-		{:then absences}
-			<div class="pl-6">
-				{#each absences as absence}
+		<div
+			class="accordion-content flex flex-col gap-1 pl-6 py-2"
+			transition:slide={{ duration: 150 }}
+		>
+			<!-- {#await getAbsences()}
+			<p >Loading...</p>
+		{:then absences} -->
+
+			<!-- {#each absences as absence}
 					<div class="flex justify-between">
 						<p class="text-base-950 text-sm">{absence.lesson}. Hodina</p>
 						<p class="text-base-700">{new Date(absence.date).toLocaleDateString()}</p>
 					</div>
-				{/each}
+				{/each} -->
+			<div class="flex justify-between">
+				<span class="flex flex-row justify-center items-center gap-1">
+					<span class="icon p-0.5 bg-green-300 text-green-900 rounded-full">
+						<Check size="12" strokeWidth="3" />
+					</span>
+					<p class="text-base-930 text-sm font-nunito-sans font-semibold text-sm">2. Hodina</p>
+				</span>
+				<p class="text-base-700 text-sm">17. 6. 2023</p>
 			</div>
-		{:catch error}
+			<div class="flex justify-between">
+				<span class="flex flex-row justify-center items-center gap-1">
+					<span class="icon p-0.5 bg-red-300 text-red-900 rounded-full">
+						<X size="12" strokeWidth="3" />
+					</span>
+					<p class="text-base-950 text-sm font-nunito-sans font-semibold text-sm">5. Hodina</p>
+				</span>
+				<p class="text-base-700 text-sm">18. 6. 2023</p>
+			</div>
+
+			<!-- {:catch error}
 			<p class="text-base-800">{JSON.stringify(error.message)}</p>
-		{/await}
+		{/await} -->
+		</div>
 	{/if}
 </div>

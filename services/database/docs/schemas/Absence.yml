@@ -1,30 +1,29 @@
-Absence:
-  type: object
-  required:
-    - name
-    - userId
-    - id
-    - lesson
-    - date
-  properties:
-    name:
-      type: string
-      description: The user's name
-    userId:
-      type: string
-      description: The user's id
-    id:
-      type: string
-      description: The absence's id.
-    lesson:
-      type: number
-      description: The lesson number
-    date:
-      type: string
-      description: Date of the absence
-  example:
-    name: John Doe
-    userId: 7d6fd0c4-6b3d-46d9-9840-5e8874c9c646
-    id: f7cabd53-49e1-4c93-b59e-6035811b134d
-    lesson: 2
-    date: 2023-05-14
+type: object
+required:
+  - name
+  - userId
+  - id
+  - lesson
+  - date
+properties:
+  name:
+    type: string
+    description: The user's name
+  userId:
+    type: string
+    description: The user's id
+  id:
+    type: string
+    description: The absence's id.
+  lesson:
+    type: number
+    description: The lesson number
+  date:
+    type: string
+    description: Date of the absence
+example:
+  name: John Doe
+  userId: 7d6fd0c4-6b3d-46d9-9840-5e8874c9c646
+  id: f7cabd53-49e1-4c93-b59e-6035811b134d
+  lesson: 2
+  date: 2023-05-14

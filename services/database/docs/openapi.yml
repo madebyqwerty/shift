@@ -26,8 +26,16 @@ paths:
 
   /users/{userId}:
     $ref: "./paths/users_id.yml"
+
 components:
   schemas:
-    $ref: "./schemas/_index.yml"
+    Absence:
+      $ref: "./schemas/Absence.yml"
+    User:
+      $ref: "./schemas/User.yml"
+    Error:
+      $ref: "./schemas/Error.yml"
+
   parameters:
-    $ref: "./parameters/_index.yml"
+    userId:
+      $ref: "./parameters/userId.yml"

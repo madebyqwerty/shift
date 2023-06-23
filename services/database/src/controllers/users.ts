@@ -5,7 +5,7 @@ import { Controller, error, success } from "../utils/oakify.ts";
 
 export const getAllUsers: Controller<"/"> = async () => {
   const users = await db.selectFrom("User").selectAll().execute();
-  return success({ users });
+  return success(users);
 };
 
 export const getUser: Controller<"/:id"> = async (ctx) => {
@@ -35,7 +35,7 @@ export const getUser: Controller<"/:id"> = async (ctx) => {
     );
   }
 
-  return success({ user });
+  return success(user);
 };
 
 const userPostReqBodySchema = z.object({
@@ -48,7 +48,8 @@ export const createUser: Controller<"/"> = async ({ request }) => {
   const result = userPostReqBodySchema.safeParse(await body.value);
 
   if (!result.success) {
-    return error({ form: result.error.issues }, 400);
+    console.log(result);
+    return error({ ...result.error.formErrors.fieldErrors }, 400);
   }
 
   const [user] = await db
@@ -59,5 +60,5 @@ export const createUser: Controller<"/"> = async ({ request }) => {
     .returning(["id", "name"])
     .execute();
 
-  return success({ user });
+  return success(user);
 };

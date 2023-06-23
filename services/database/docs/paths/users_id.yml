@@ -12,24 +12,7 @@ get:
           schema:
             $ref: "../schemas/User.yml"
     400:
-      description: Id is not valid.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              id:
-                type: string
-                enum:
-                  - not-valid
+      $ref: "../responses/error.yml"
+
     404:
-      description: User not found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              user:
-                type: string
-                enum:
-                  - not-found
+      $ref: "../responses/error.yml"

@@ -1,18 +1,14 @@
 import { error } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import type { Student } from '$lib/types';
-import { AbsencesApi } from '@shift/database-service-client/';
+import { usersClient } from '$lib/api/client';
 
-export const load = (async ({ fetch, url }) => {
-	const res = await fetch('http://127.0.0.1:5000/api/users');
-	const data = await res.json();
-
-	if (!res.ok) {
-		throw error(res.status, data);
-	}
+export const load = (async ({ url }) => {
+	const data = await usersClient.usersGet().catch((err) => {
+		throw error(err.status, err.message);
+	});
 
 	return {
-		students: data as Student[],
+		students: data,
 		url: url.pathname
 	};
 }) satisfies PageServerLoad;

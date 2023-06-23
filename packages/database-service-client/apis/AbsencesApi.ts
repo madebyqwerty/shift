@@ -16,28 +16,25 @@
 import * as runtime from '../runtime';
 import type {
   Absence,
-  AbsencesUserIdGet400Response,
-  AbsencesUserIdPost200Response,
-  AbsencesUserIdPostRequest,
+  AbsencesPost200Response,
+  AbsencesPostRequest,
 } from '../models';
 import {
     AbsenceFromJSON,
     AbsenceToJSON,
-    AbsencesUserIdGet400ResponseFromJSON,
-    AbsencesUserIdGet400ResponseToJSON,
-    AbsencesUserIdPost200ResponseFromJSON,
-    AbsencesUserIdPost200ResponseToJSON,
-    AbsencesUserIdPostRequestFromJSON,
-    AbsencesUserIdPostRequestToJSON,
+    AbsencesPost200ResponseFromJSON,
+    AbsencesPost200ResponseToJSON,
+    AbsencesPostRequestFromJSON,
+    AbsencesPostRequestToJSON,
 } from '../models';
 
-export interface AbsencesUserIdGetRequest {
+export interface AbsencesGetRequest {
     userId: string;
 }
 
-export interface AbsencesUserIdPostOperationRequest {
+export interface AbsencesPostOperationRequest {
     userId: string;
-    absencesUserIdPostRequest: AbsencesUserIdPostRequest;
+    absencesPostRequest: AbsencesPostRequest;
 }
 
 /**
@@ -48,9 +45,9 @@ export class AbsencesApi extends runtime.BaseAPI {
     /**
      * List of all absences for a user
      */
-    async absencesUserIdGetRaw(requestParameters: AbsencesUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Absence>>> {
+    async absencesGetRaw(requestParameters: AbsencesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Absence>>> {
         if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling absencesUserIdGet.');
+            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling absencesGet.');
         }
 
         const queryParameters: any = {};
@@ -58,7 +55,7 @@ export class AbsencesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/absences/{userId}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
+            path: `/absences`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -70,21 +67,21 @@ export class AbsencesApi extends runtime.BaseAPI {
     /**
      * List of all absences for a user
      */
-    async absencesUserIdGet(requestParameters: AbsencesUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Absence>> {
-        const response = await this.absencesUserIdGetRaw(requestParameters, initOverrides);
+    async absencesGet(requestParameters: AbsencesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Absence>> {
+        const response = await this.absencesGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Creates a new absence.
      */
-    async absencesUserIdPostRaw(requestParameters: AbsencesUserIdPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AbsencesUserIdPost200Response>> {
+    async absencesPostRaw(requestParameters: AbsencesPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<AbsencesPost200Response>> {
         if (requestParameters.userId === null || requestParameters.userId === undefined) {
-            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling absencesUserIdPost.');
+            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling absencesPost.');
         }
 
-        if (requestParameters.absencesUserIdPostRequest === null || requestParameters.absencesUserIdPostRequest === undefined) {
-            throw new runtime.RequiredError('absencesUserIdPostRequest','Required parameter requestParameters.absencesUserIdPostRequest was null or undefined when calling absencesUserIdPost.');
+        if (requestParameters.absencesPostRequest === null || requestParameters.absencesPostRequest === undefined) {
+            throw new runtime.RequiredError('absencesPostRequest','Required parameter requestParameters.absencesPostRequest was null or undefined when calling absencesPost.');
         }
 
         const queryParameters: any = {};
@@ -94,21 +91,21 @@ export class AbsencesApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/absences/{userId}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
+            path: `/absences`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: AbsencesUserIdPostRequestToJSON(requestParameters.absencesUserIdPostRequest),
+            body: AbsencesPostRequestToJSON(requestParameters.absencesPostRequest),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => AbsencesUserIdPost200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => AbsencesPost200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Creates a new absence.
      */
-    async absencesUserIdPost(requestParameters: AbsencesUserIdPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AbsencesUserIdPost200Response> {
-        const response = await this.absencesUserIdPostRaw(requestParameters, initOverrides);
+    async absencesPost(requestParameters: AbsencesPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<AbsencesPost200Response> {
+        const response = await this.absencesPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

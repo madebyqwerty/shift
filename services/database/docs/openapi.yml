@@ -17,6 +17,9 @@ paths:
   /users/{userId}:
     $ref: "./paths/users_id.yml"
 
+  /absences:
+    $ref: "./paths/absences.yml"
+
 components:
   schemas:
     Absence:

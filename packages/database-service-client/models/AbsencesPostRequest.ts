@@ -16,55 +16,48 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface AbsencesUserIdPost200Response
+ * @interface AbsencesPostRequest
  */
-export interface AbsencesUserIdPost200Response {
+export interface AbsencesPostRequest {
     /**
-     * The absence id.
-     * @type {string}
-     * @memberof AbsencesUserIdPost200Response
-     */
-    id?: string;
-    /**
-     * The lesson number
+     * 
      * @type {number}
-     * @memberof AbsencesUserIdPost200Response
+     * @memberof AbsencesPostRequest
      */
     lesson?: number;
     /**
-     * Date of the absence
+     * 
      * @type {string}
-     * @memberof AbsencesUserIdPost200Response
+     * @memberof AbsencesPostRequest
      */
     date?: string;
 }
 
 /**
- * Check if a given object implements the AbsencesUserIdPost200Response interface.
+ * Check if a given object implements the AbsencesPostRequest interface.
  */
-export function instanceOfAbsencesUserIdPost200Response(value: object): boolean {
+export function instanceOfAbsencesPostRequest(value: object): boolean {
     let isInstance = true;
 
     return isInstance;
 }
 
-export function AbsencesUserIdPost200ResponseFromJSON(json: any): AbsencesUserIdPost200Response {
-    return AbsencesUserIdPost200ResponseFromJSONTyped(json, false);
+export function AbsencesPostRequestFromJSON(json: any): AbsencesPostRequest {
+    return AbsencesPostRequestFromJSONTyped(json, false);
 }
 
-export function AbsencesUserIdPost200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): AbsencesUserIdPost200Response {
+export function AbsencesPostRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): AbsencesPostRequest {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'lesson': !exists(json, 'lesson') ? undefined : json['lesson'],
         'date': !exists(json, 'date') ? undefined : json['date'],
     };
 }
 
-export function AbsencesUserIdPost200ResponseToJSON(value?: AbsencesUserIdPost200Response | null): any {
+export function AbsencesPostRequestToJSON(value?: AbsencesPostRequest | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -73,7 +66,6 @@ export function AbsencesUserIdPost200ResponseToJSON(value?: AbsencesUserIdPost20
     }
     return {
         
-        'id': value.id,
         'lesson': value.lesson,
         'date': value.date,
     };

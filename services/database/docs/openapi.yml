@@ -1,25 +1,26 @@
 openapi: 3.0.0
 info:
-  title: Shift API
-  version: 0.0.2
-  description: REST API for interfacing with the Shift backend
-  license:
-    name: Proprietary
-  contact:
-    name: Tomáš Kebrle
+    title: Database service API
+    version: 0.0.1
+    description: REST API for interacting with the database service.
+    license:
+        name: Proprietary
+    contact:
+        name: Tomáš Kebrle
 servers:
-  - url: http://localhost:5000/api
-  - url: https://api.qwerty.mesh.sk/api
-
-tags:
-  - name: Absences
-    description: Endpoints for managing absences of users.
-  - name: Users
-    description: Endpoints for managing users.
+    - url: http://localhost:5000/api
 
 paths:
-  /absences/{userId}:
-    $ref: "./paths/absences.yml"
+    "/absences/{userId}":
+        get:
+            summary: List of all absences for a user
+            parameters:
+                - name: userId
+                  in: path
+                  description: ID of the user to get
+                  required: true
+                  schema:
+                      type: string
 
   /users:
     $ref: "./paths/users.yml"

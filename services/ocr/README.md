@@ -2,10 +2,10 @@
 
 ## How to run:
 
-- `pip install -r requirements.txt`
-- copy `.env.example` file and rename it to `.env`
-- enter own secret string
-- `python main.py`
+- pip install -r requirements.txt
+- sudo dnf install tesseract
+- sudo dnf install tesseract-langpack-ces
+- python main.py
 
 ## How to use:
 

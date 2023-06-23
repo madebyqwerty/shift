@@ -1,8 +1,17 @@
 import { writable } from 'svelte/store';
 
+type ScanItem =
+	| {
+			status: 'success' | 'loading';
+			data?: Record<string, unknown>;
+	  }
+	| {
+			status: 'error';
+			error: string;
+	  };
+
 interface ScanStore {
-	status: 'succes' | 'error' | 'loading';
-	data: Record<string, unknown>[];
+	[key: string]: ScanItem;
 }
 
-export const scanStore = writable<ScanStore[]>();
+export const scanStore = writable<ScanStore>({});

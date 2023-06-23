@@ -2,8 +2,9 @@
 	import type { Student, Absence } from '$lib/types';
 	import { slide } from 'svelte/transition';
 	import { ChevronRight, Check, X } from 'lucide-svelte';
+	import type { User } from '@shift/database-service-client';
 
-	export let student: Student;
+	export let student: User;
 	let open = false;
 
 	function switchState() {
@@ -24,17 +25,18 @@
 
 <div class="bg-white p-1 flex flex-col h-max duration-300 transition-all rounded-lg">
 	<button
-		class="flex text-base-800 items-center justify-between gap-1 {open ? 'border-base-50 border-b-[2px]' : ''}"
+		class="flex text-base-800 items-center justify-between gap-1 {open
+			? 'border-base-50 border-b-[2px]'
+			: ''}"
 		on:click={switchState}
 	>
 		<span class="flex flex-row justify-center items-center">
-            <span class="duration-100 {open ? 'rotate-90' : ''}">
-                <ChevronRight size={18} />
-            </span>
-            <p class="font-semibold text-base-950">{student.name}</p>
-        </span>
-        <p class="text-xs text-base-950 bg-base-200 rounded-lg px-1">36</p>
-
+			<span class="duration-100 {open ? 'rotate-90' : ''}">
+				<ChevronRight size={18} />
+			</span>
+			<p class="font-semibold text-base-950">{student.name}</p>
+		</span>
+		<p class="text-xs text-base-950 bg-base-200 rounded-lg px-1">36</p>
 	</button>
 	{#if open}
 		<div
@@ -56,7 +58,7 @@
 					<span class="icon p-0.5 bg-green-300 text-green-900 rounded-full">
 						<Check size="12" strokeWidth="3" />
 					</span>
-					<p class="text-base-930 text-sm font-nunito-sans font-semibold text-sm">2. Hodina</p>
+					<p class="text-base-930 text-sm font-nunito-sans font-semibold">2. Hodina</p>
 				</span>
 				<p class="text-base-700 text-sm">17. 6. 2023</p>
 			</div>
@@ -65,7 +67,7 @@
 					<span class="icon p-0.5 bg-red-300 text-red-900 rounded-full">
 						<X size="12" strokeWidth="3" />
 					</span>
-					<p class="text-base-950 text-sm font-nunito-sans font-semibold text-sm">5. Hodina</p>
+					<p class="text-base-950 font-nunito-sans font-semibold text-sm">5. Hodina</p>
 				</span>
 				<p class="text-base-700 text-sm">18. 6. 2023</p>
 			</div>

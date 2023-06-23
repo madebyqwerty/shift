@@ -1,4 +1,8 @@
-import { UsersApi, AbsencesApi } from '@shift/database-service-client';
+import { UsersApi, AbsencesApi, Configuration } from '@shift/database-service-client';
 
-export const absencesClient = new AbsencesApi();
-export const usersClient = new UsersApi();
+const config = new Configuration({
+	basePath: 'http://127.0.0.1:5000/api'
+});
+
+export const absencesClient = new AbsencesApi(config);
+export const usersClient = new UsersApi(config);

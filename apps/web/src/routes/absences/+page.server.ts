@@ -4,6 +4,7 @@ import { usersClient } from '$lib/api/client';
 
 export const load = (async ({ url }) => {
 	const data = await usersClient.usersGet().catch((err) => {
+		console.log(err);
 		throw error(err.status, err.message);
 	});
 
@@ -18,7 +19,15 @@ export const actions: Actions = {
 		const body = await request.formData();
 		body.append('week_number', '4');
 
-		const res = await new Promise((resolve) => setTimeout(resolve, 2000));
-		return { success: true };
+		const res = await fetch('http://localhost:5001/api/absences');
+		if (!res.ok) {
+			return {
+				res
+			};
+		}
+
+		const data = await res.json();
+
+		return data;
 	}
 };

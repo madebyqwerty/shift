@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { createEventDispatcher } from 'svelte';
 	import ActionButton from './ActionButton.svelte';
+	import { ScanLine, PlusSquare } from 'lucide-svelte';
 
 	let formElement: HTMLFormElement;
 	let cameraInputRef: HTMLInputElement;
@@ -10,7 +11,7 @@
 	const dispatch = createEventDispatcher();
 
 	function handleCapture() {
-		console.log(new FormData(formElement));
+		const data = new FormData(formElement);
 		submitButton.click();
 		dispatch('submit');
 	}
@@ -20,11 +21,9 @@
 	}
 </script>
 
-<div
-	class="absolute top-full left-0 -translate-y-full w-full px-5 py-8 rounded-b-3xl pt-10 flex flex-row gap-2 bg-gradient-to-t from-[rgba(85,85,85,0.7)] from-60% to-[rgba(231,231,231,0]"
->
-	<ActionButton on:click={() => {}} icon="plus">Přidat absenci</ActionButton>
-	<ActionButton on:click={openCamera} icon="scan">Skenovat</ActionButton>
+<div class="flex flex-row gap-2">
+	<ActionButton on:click={() => {}} icon={ScanLine}>Přidat absenci</ActionButton>
+	<ActionButton on:click={openCamera} icon={PlusSquare}>Skenovat</ActionButton>
 
 	<form use:enhance bind:this={formElement} method="post" class="hidden">
 		<div class="flex flex-col items-center space-y-4">

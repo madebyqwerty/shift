@@ -3,7 +3,12 @@ get:
   tags:
     - Users
   parameters:
-    $ref: "../parameters/userId.yml"
+    - name: userId
+      in: path
+      description: ID of the user to get
+      required: true
+      schema:
+        type: string
   responses:
     200:
       description: The user.
@@ -12,7 +17,21 @@ get:
           schema:
             $ref: "../schemas/User.yml"
     400:
-      $ref: "../responses/error.yml"
+      description: The user ID is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yml"
+          example:
+            id:
+              - invalid
 
     404:
-      $ref: "../responses/error.yml"
+      description: The user was not found.
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yml"
+          example:
+            user:
+              - not-found

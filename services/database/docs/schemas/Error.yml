@@ -2,8 +2,7 @@ type: object
 properties:
   errors:
     type: object
-    properties:
-      [key]:
-        type: array
-        items:
-          type: string
+    additionalProperties:
+      type: array
+      items:
+        type: string

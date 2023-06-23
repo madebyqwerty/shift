@@ -1,27 +1,16 @@
 openapi: 3.0.0
 info:
-    title: Database service API
-    version: 0.0.1
-    description: REST API for interacting with the database service.
-    license:
-        name: Proprietary
-    contact:
-        name: Tomáš Kebrle
+  title: Database service API
+  version: 0.0.1
+  description: REST API for interacting with the database service.
+  license:
+    name: Proprietary
+  contact:
+    name: Tomáš Kebrle
 servers:
-    - url: http://localhost:5000/api
+  - url: http://localhost:5000/api
 
 paths:
-    "/absences/{userId}":
-        get:
-            summary: List of all absences for a user
-            parameters:
-                - name: userId
-                  in: path
-                  description: ID of the user to get
-                  required: true
-                  schema:
-                      type: string
-
   /users:
     $ref: "./paths/users.yml"
 
@@ -36,7 +25,3 @@ components:
       $ref: "./schemas/User.yml"
     Error:
       $ref: "./schemas/Error.yml"
-
-  parameters:
-    userId:
-      $ref: "./parameters/userId.yml"

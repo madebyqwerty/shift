@@ -16,33 +16,21 @@
 import * as runtime from '../runtime';
 import type {
   User,
-  UsersGet400Response,
-  UsersIdGet400Response,
-  UsersIdGet404Response,
-  UsersPost400Response,
   UsersPostRequest,
 } from '../models';
 import {
     UserFromJSON,
     UserToJSON,
-    UsersGet400ResponseFromJSON,
-    UsersGet400ResponseToJSON,
-    UsersIdGet400ResponseFromJSON,
-    UsersIdGet400ResponseToJSON,
-    UsersIdGet404ResponseFromJSON,
-    UsersIdGet404ResponseToJSON,
-    UsersPost400ResponseFromJSON,
-    UsersPost400ResponseToJSON,
     UsersPostRequestFromJSON,
     UsersPostRequestToJSON,
 } from '../models';
 
-export interface UsersIdGetRequest {
-    id: string;
-}
-
 export interface UsersPostOperationRequest {
     usersPostRequest: UsersPostRequest;
+}
+
+export interface UsersUserIdGetRequest {
+    userId: string;
 }
 
 /**
@@ -77,36 +65,6 @@ export class UsersApi extends runtime.BaseAPI {
     }
 
     /**
-     * A user by id
-     */
-    async usersIdGetRaw(requestParameters: UsersIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling usersIdGet.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/users/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => UserFromJSON(jsonValue));
-    }
-
-    /**
-     * A user by id
-     */
-    async usersIdGet(requestParameters: UsersIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
-        const response = await this.usersIdGetRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * Creates a new user.
      */
     async usersPostRaw(requestParameters: UsersPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
@@ -136,6 +94,36 @@ export class UsersApi extends runtime.BaseAPI {
      */
     async usersPost(requestParameters: UsersPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
         const response = await this.usersPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * A user with the given ID
+     */
+    async usersUserIdGetRaw(requestParameters: UsersUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<User>> {
+        if (requestParameters.userId === null || requestParameters.userId === undefined) {
+            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling usersUserIdGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/users/{userId}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => UserFromJSON(jsonValue));
+    }
+
+    /**
+     * A user with the given ID
+     */
+    async usersUserIdGet(requestParameters: UsersUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
+        const response = await this.usersUserIdGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

@@ -1,0 +1,13 @@
+type: object
+required:
+  - name
+properties:
+  name:
+    type: string
+    description: The user's name.
+  id:
+    type: string
+    description: The user's id.
+example:
+  name: John Doe
+  id: f7cabd53-49e1-4c93-b59e-6035811b134d

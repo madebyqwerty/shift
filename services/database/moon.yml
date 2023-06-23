@@ -21,3 +21,6 @@ tasks:
       - "docs/openapi.yml"
     outputs:
       - "/packages/database-service-client"
+  serve-api:
+    command: "npx serve docs/"
+    local: true

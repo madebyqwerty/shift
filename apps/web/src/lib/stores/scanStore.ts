@@ -1,13 +1,21 @@
 import { writable } from 'svelte/store';
 
-type ScanItem =
+export enum ScanStates {
+	Success = 'success',
+	Loading = 'loading',
+	Error = 'error'
+}
+
+export type ScanItem =
 	| {
-			status: 'success' | 'loading';
+			status: ScanStates.Success | ScanStates.Loading;
 			data?: Record<string, unknown>;
+			name: string;
 	  }
 	| {
-			status: 'error';
+			status: ScanStates.Error;
 			error: string;
+			name: string;
 	  };
 
 interface ScanStore {

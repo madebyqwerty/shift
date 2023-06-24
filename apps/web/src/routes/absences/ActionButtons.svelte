@@ -1,25 +1,54 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { createEventDispatcher } from 'svelte';
 	import ActionButton from './ActionButton.svelte';
 	import { ScanLine, PlusSquare } from 'lucide-svelte';
-	import { scanStore } from '$lib/stores/scanStore';
+	import { scanStore, type ScanItem, ScanStates } from '$lib/stores/scanStore';
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { addToStore } from '$lib/stores/addToStore';
 
 	let formElement: HTMLFormElement;
 	let cameraInputRef: HTMLInputElement;
 	let submitButton: HTMLButtonElement;
 
-	const dispatch = createEventDispatcher();
-
 	function handleCapture() {
-		const data = new FormData(formElement);
 		submitButton.click();
-		dispatch('submit');
 	}
 
 	function openCamera() {
 		cameraInputRef.click();
 	}
+
+	const addToScanStore = addToStore(scanStore);
+
+	const enhanceForm: SubmitFunction = ({ formData }) => {
+		const id = Math.random().toString(36).substring(7);
+		const file = formData.get('img') as File;
+		const name = file.name;
+
+		const updateScanStore = addToScanStore<ScanItem>(id);
+
+		updateScanStore({
+			name,
+			status: ScanStates.Loading
+		});
+
+		return async ({ result }) => {
+			console.log(result);
+			if (result.type === 'error') {
+				updateScanStore({
+					name,
+					status: ScanStates.Error,
+					error: 'Nastala chyba při procesování obrázku'
+				});
+			} else {
+				updateScanStore({
+					status: ScanStates.Success,
+					name: name,
+					data: result
+				});
+			}
+		};
+	};
 </script>
 
 <div class="flex flex-row gap-2">
@@ -27,33 +56,7 @@
 	<ActionButton on:click={openCamera} icon={PlusSquare}>Skenovat</ActionButton>
 
 	<form
-		use:enhance={({ formElement, formData, action, cancel, submitter }) => {
-			console.log(formData);
-			const id = Math.random().toString(36).substring(7);
-			scanStore.update((store) => {
-				return {
-					...store,
-					[id]: {
-						status: 'loading'
-					}
-				};
-			});
-
-			return async ({ result }) => {
-				if (result.status === 400 || result.status === 500 || result.status === 404) {
-					scanStore.update((store) => ({
-						...store,
-						[id]: {
-							status: 'error',
-							error:
-								result.status === 404
-									? 'Nastala chyba při procesování obrázku'
-									: 'Nastala chyba při získání datumu'
-						}
-					}));
-				}
-			};
-		}}
+		use:enhance={enhanceForm}
 		bind:this={formElement}
 		enctype="multipart/form-data"
 		method="post"

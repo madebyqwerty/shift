@@ -34,7 +34,6 @@
 			</span>
 			<p class="font-semibold text-base-950">{student.name}</p>
 		</span>
-		<p class="text-xs text-base-950 bg-base-200 rounded-lg px-1">36</p>
 	</button>
 	{#if open}
 		<div
@@ -49,6 +48,8 @@
 						<p class="text-base-950 text-sm">{absence.lesson}. Hodina</p>
 						<p class="text-base-700">{new Date(absence.date).toLocaleDateString()}</p>
 					</div>
+				{:else}
+					Tento student nemá žádné absence
 				{/each}
 			{:catch error}
 				<p class="text-base-800">{JSON.stringify(error)}</p>

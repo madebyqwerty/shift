@@ -19,7 +19,7 @@ export const actions: Actions = {
 		const body = await request.formData();
 		body.append('week_number', '4');
 
-		const res = await fetch('http://127.0.0.1:5001/api/absences', {
+		const res = await fetch('http://127.0.0.1:5001/api/scan', {
 			method: 'POST',
 			body
 		});

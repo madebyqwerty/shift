@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import ActionButton from './ActionButton.svelte';
 	import { ScanLine, PlusSquare } from 'lucide-svelte';
-	import { scanStore, type ScanItem, ScanStates } from '$lib/stores/scanStore';
+	import { scanStore, type ScanItem, ScanStates, type ScanData } from '$lib/stores/scanStore';
 	import type { SubmitFunction } from '@sveltejs/kit';
 	import { addToStore } from '$lib/stores/addToStore';
 
@@ -44,7 +44,7 @@
 				updateScanStore({
 					status: ScanStates.Success,
 					name: name,
-					data: result
+					data: result.type === 'success' ? (result.data as ScanData[]) : []
 				});
 			}
 		};

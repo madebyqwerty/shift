@@ -11,7 +11,7 @@
 			{#if value.status === 'loading'}
 				<ScanLoader name={value.name} />
 			{:else}
-				<ScanFinished {...value} />
+				<ScanFinished {...value} id={key} />
 			{/if}
 		{/each}
 	</div>

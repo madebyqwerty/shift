@@ -1,22 +1,16 @@
 <script lang="ts">
-	import { ChevronLeft } from 'lucide-svelte';
 	import type { PageData } from './$types';
 	import Tabs from './Tabs.svelte';
 	import Tab from './Tab.svelte';
 	import Student from './Student.svelte';
 	import ActionButtons from './ActionButtons.svelte';
-	import { fly } from 'svelte/transition';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 
 	export let data: PageData;
 </script>
 
 <div>
-	<div class="flex gap-2 mb-4">
-		<a href="/"><ChevronLeft size="28" /></a>
-		<span>
-			<h1 class="text-lg font-bold font-nunito">Absence</h1>
-		</span>
-	</div>
+	<PageHeader>Absence</PageHeader>
 	<div class="flex justify-between">
 		<Tabs>
 			<Tab active>Přehled žáků</Tab>

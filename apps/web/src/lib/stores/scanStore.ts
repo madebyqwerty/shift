@@ -6,10 +6,16 @@ export enum ScanStates {
 	Error = 'error'
 }
 
+export type ScanData = {
+	date: string;
+	id: string;
+	lesson: string;
+};
+
 export type ScanItem =
 	| {
 			status: ScanStates.Success | ScanStates.Loading;
-			data?: Record<string, unknown>;
+			data?: ScanData[];
 			name: string;
 	  }
 	| {

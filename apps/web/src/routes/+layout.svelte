@@ -5,7 +5,7 @@
 </script>
 
 <div
-	class="w-full min-h-screen bg-base-100 text-base-950 grid grid-cols-[320px_1fr] grid-rows-1 font-nunito-sans"
+	class="w-full min-h-screen bg-base-100 text-base-950 grid grid-cols-[400px_1fr] grid-rows-1 font-nunito-sans"
 >
 	<div class="p-6">
 		<Sidebar />

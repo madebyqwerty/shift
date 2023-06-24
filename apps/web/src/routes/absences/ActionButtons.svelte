@@ -28,11 +28,12 @@
 
 	<form
 		use:enhance={({ formElement, formData, action, cancel, submitter }) => {
+			console.log(formData);
 			const id = Math.random().toString(36).substring(7);
 			scanStore.update((store) => {
 				return {
 					...store,
-					id: {
+					[id]: {
 						status: 'loading'
 					}
 				};

@@ -1,7 +1,12 @@
 get:
   summary: List of all absences for a user
   parameters:
-    $ref: "../parameters/userId.yml"
+    - name: userId
+      in: path
+      description: ID of the user to get
+      required: true
+      schema:
+        type: string
   tags:
     - Absences
   responses:
@@ -19,7 +24,13 @@ get:
 post:
   summary: Creates a new absence.
   parameters:
-    $ref: "../parameters/userId.yml"
+    - name: userId
+      in: path
+      description: ID of the user to get
+      required: true
+      schema:
+        type: string
+
   tags:
     - Absences
   requestBody:

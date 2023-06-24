@@ -1,18 +1,15 @@
 <script lang="ts">
-	import { ScanLine, PlusSquare } from 'lucide-svelte';
-	export let icon: string = 'plus';
+	import type { ComponentType } from 'svelte';
+
+	export let icon: ComponentType;
 </script>
 
 <button
-	class="h-full w-full rounded-2xl bg-base-50 text-base-950 flex flex-col justify-center items-center gap-1 py-3 shadow"
+	class="w-max rounded-xl bg-base-50 text-base-950 flex justify-center items-center gap-1 p-3 shadow"
 	on:click
 >
-	{#if icon === 'scan'}
-		<ScanLine class="w-8 h-8" />
-	{:else if icon === 'plus'}
-		<PlusSquare class="w-8 h-8" />
-	{/if}
-	<span class="text-sm leading-5">
+	<svelte:component this={icon} class="w-6 h-6" />
+	<span class=" leading-5">
 		<slot />
 	</span>
 </button>

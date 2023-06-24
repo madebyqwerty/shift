@@ -16,15 +16,12 @@
 import * as runtime from '../runtime';
 import type {
   Absence,
-  AbsencesUserIdGet400Response,
   AbsencesUserIdPost200Response,
   AbsencesUserIdPostRequest,
 } from '../models';
 import {
     AbsenceFromJSON,
     AbsenceToJSON,
-    AbsencesUserIdGet400ResponseFromJSON,
-    AbsencesUserIdGet400ResponseToJSON,
     AbsencesUserIdPost200ResponseFromJSON,
     AbsencesUserIdPost200ResponseToJSON,
     AbsencesUserIdPostRequestFromJSON,

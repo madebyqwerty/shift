@@ -30,7 +30,7 @@ export interface User {
      * @type {string}
      * @memberof User
      */
-    id?: string;
+    id: string;
 }
 
 /**
@@ -39,6 +39,7 @@ export interface User {
 export function instanceOfUser(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "id" in value;
 
     return isInstance;
 }
@@ -54,7 +55,7 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
     return {
         
         'name': json['name'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
+        'id': json['id'],
     };
 }
 

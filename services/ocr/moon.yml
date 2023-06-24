@@ -1,0 +1,7 @@
+type: "tool"
+language: "python"
+
+tasks:
+  start:
+    command: "python main.py"
+    local: true

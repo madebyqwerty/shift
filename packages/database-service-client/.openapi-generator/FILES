@@ -1,7 +1,10 @@
+apis/AbsencesApi.ts
 apis/UsersApi.ts
 apis/index.ts
 index.ts
 models/Absence.ts
+models/AbsencesUserIdPost200Response.ts
+models/AbsencesUserIdPostRequest.ts
 models/ModelError.ts
 models/User.ts
 models/UsersPostRequest.ts

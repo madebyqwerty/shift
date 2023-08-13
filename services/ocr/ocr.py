@@ -17,7 +17,7 @@ class db():
         response = requests.get(url).json()
 
         users = {}
-        for user in response["data"]["users"]: users[user["name"]] = user["id"]
+        for user in response: users[user["name"]] = user["id"]
 
         return users
     

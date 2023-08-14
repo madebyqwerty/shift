@@ -65,6 +65,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install moon
+        run: curl -fsSL https://moonrepo.dev/install/moon.sh | bash
+
+      - name: Scaffold docker
+        run: moon docker scaffold web
+
       - name: Build ${{matrix.service.name}} Docker image
         uses: docker/build-push-action@v2
         with:

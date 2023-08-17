@@ -5,7 +5,7 @@ services:
     image: ghcr.io/madebyqwerty/web:latest
     restart: always
     ports:
-      - "5002:5002"
+      - 5002:5002
     networks:
       - shift-infra
 
@@ -14,7 +14,7 @@ services:
     image: ghcr.io/madebyqwerty/database-service:latest
     restart: always
     ports:
-      - "5000:5000"
+      - 5000:5000
     depends_on:
       - postgres
       - rabbitmq
@@ -24,13 +24,13 @@ services:
   ocr-service:
     container_name: ocr-service
     image: ghcr.io/madebyqwerty/ocr-service:latest
+    #build: services/ocr/
     restart: always
     env_file: .env
     ports:
       - 5001:5001
     networks:
       - shift-infra
-    env_file: .env
 
   postgres:
     image: postgres:latest

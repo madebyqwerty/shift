@@ -4,6 +4,7 @@ import numpy as np
 
 debug_mode = False
 DEBUG_IMG_SCALE = 0.15
+DATABASE_URL = "http://database-service:5000/api"
 
 class QRCodeError(Exception):
     pass
@@ -13,17 +14,13 @@ class NamesDetectionError(Exception):
 
 class db():
     def get_class(id): #TODO: Request databáze
-        url = "http://localhost:5000/api/users"
+        url = f"{DATABASE_URL}/users"
         response = requests.get(url).json()
-
-        users = {}
-        for user in response: users[user["name"]] = user["id"]
-
-        return users
+        return response
     
     def save(records):
         for record in records:
-            url = f"http://localhost:5000/api/absences/{record['id']}"
+            url = f"{DATABASE_URL}/absences/{record['id']}"
             data = {"lesson": record["lesson"], "date": record["date"]}
             requests.post(url, json=data)
 
@@ -217,7 +214,9 @@ class Image():
                                 year = datetime.datetime.today().strftime("%Y")
                                 day = absence // 10
                                 date = datetime.datetime.strptime(f"{year}-W{week_number}-{1+day}", "%Y-W%W-%w").strftime('%Y-%m-%d')
-                                record = {"id": students[data[0]], "lesson": absence-(day*10), "date": date}
+                                for student in students:
+                                    if student["name"] == data[0]:
+                                        record = {"id": student["id"], "lesson": absence-(day*10), "date": date}
                                 if not record in records: 
                                     records.append(record)
                         if not last_valid_name == data[0]:
@@ -388,11 +387,13 @@ class Engine():
 
         return None
 
-    def slice_processing(img, last_valid_name:str, students_ids):
+    def slice_processing(img, last_valid_name:str, raw_students:dict):
         """
         Image slice processing
         """
-        students = list(students_ids.keys())
+        students = []
+        for student in raw_students:
+            students.append(student["name"])
 
         #Limit list to prevent bad name detection
         if last_valid_name == None: last_valid_name = 0

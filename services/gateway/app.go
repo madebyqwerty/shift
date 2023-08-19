@@ -38,9 +38,6 @@ func main() {
 	api := app.Group("/api")
 	api.Get("/hello", handlers.Hello)
 
-	// Handle not founds
-	app.Use(handlers.NotFound)
-
 	// Listen on port 3000
 	log.Fatal(app.Listen(*port)) // go run app.go -port=:3000
 }

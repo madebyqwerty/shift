@@ -24,3 +24,6 @@ tasks:
   serve-api:
     command: "npx serve docs/"
     local: true
+  prisma/push:
+    command: "npx prisma db push --skip-generate"
+    local: true

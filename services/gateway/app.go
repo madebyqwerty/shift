@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/madebyqwerty/shift/handlers"
+	"github.com/madebyqwerty/shift/handlers/scan"
 	"github.com/madebyqwerty/shift/rabbitmq"
 
 	"flag"
@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	port = flag.String("port", ":5002", "Port to listen on")
+	port = flag.String("port", ":5003", "Port to listen on")
 	prod = flag.Bool("prod", false, "Enable prefork in Production")
 )
 
@@ -35,8 +35,7 @@ func main() {
 	defer rabbitmq.Conn.Close()
 
 	// Routes
-	api := app.Group("/api")
-	api.Get("/hello", handlers.Hello)
+	scan.SetupScan(app)
 
 	// Listen on port 3000
 	log.Fatal(app.Listen(*port)) // go run app.go -port=:3000

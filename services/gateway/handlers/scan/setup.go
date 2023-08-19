@@ -3,6 +3,7 @@ package scan
 import (
 	"log"
 
+	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 	"github.com/madebyqwerty/shift/rabbitmq"
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -36,4 +37,5 @@ func SetupScan(app *fiber.App) {
 	}
 
 	scan.Post("/", Scan)
+	app.Get("/ws/:id", websocket.New(ScanWs))
 }

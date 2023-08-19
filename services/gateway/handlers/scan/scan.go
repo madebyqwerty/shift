@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 	"github.com/madebyqwerty/shift/utils"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -27,6 +28,7 @@ func Scan(c *fiber.Ctx) error {
 	}
 
 	res := new(Response)
+	res.Id = uuid.NewString()
 
 	if val, err := utils.FileToBase64(file); err != nil {
 		log.Fatalln(err)
@@ -64,5 +66,6 @@ func Scan(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"status": "succes",
+		"id":     res.Id,
 	})
 }

@@ -42,7 +42,7 @@ func main() {
 	})
 
 	// RabbitMQ
-	rabbitmq.Init()
+	rabbitmq.Init(*prod)
 	defer rabbitmq.Conn.Close()
 
 	// Routes

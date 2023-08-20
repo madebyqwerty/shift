@@ -52,6 +52,11 @@ jobs:
               file: "./services/ocr/Dockerfile",
               context: "./services/ocr",
             },
+            {
+              name: "gateway",
+              file: "./services/gateway/Dockerfile",
+              contecx: "./services/gateway",
+            },
           ]
 
     steps:

@@ -1,9 +1,9 @@
 import { RouterContext } from "../deps.ts";
 
+type Data = Record<string, unknown> | Record<string, unknown>[];
+
 export type Body =
-  | {
-      data: Record<string, unknown>;
-    }
+  | Data
   | {
       errors: Record<string, string[]>;
     };
@@ -19,22 +19,20 @@ export type Controller<T extends string = "/"> = (
 
 export const oakify =
   <T extends string>(controller: Controller<T>) =>
-  (ctx: RouterContext<T>) => {
-    controller(ctx).then(({ status, body }) => {
-      ctx.response.status = status;
-      ctx.response.body = body;
-    });
+  async (ctx: RouterContext<T>) => {
+    const { status, body } = await controller(ctx);
+    console.log(body);
+    ctx.response.status = status;
+    ctx.response.body = body;
   };
 
-export const success = <T extends Record<string, unknown>>(
-  data: T
-): Response => ({
+export const success = <T extends Data>(data: T): Response => ({
   status: 200,
-  body: { data },
+  body: data,
 });
 
 export const error = (
-  errors: Record<string, string[]>,
+  errors: Record<string, any[]>,
   status: 400 | 404 | 500 = 400
 ): Response => ({
   status,

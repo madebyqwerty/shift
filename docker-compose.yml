@@ -2,38 +2,34 @@ version: "3"
 services:
   web:
     container_name: web
-    image: node:18-alpine
+    image: ghcr.io/madebyqwerty/web:latest
     restart: always
-    build:
-      context: ./
-      dockerfile: ./apps/web/Dockerfile
-      target: base
     ports:
-      - "3000:3000"
+      - "5002:5002"
+    networks:
+      - shift-infra
 
   database-service:
     container_name: database-service
-    image: deno
+    image: ghcr.io/madebyqwerty/database-service:latest
     restart: always
-    build:
-      context: ./services/database
-      dockerfile: Dockerfile
-      target: base
     ports:
       - "5000:5000"
     depends_on:
       - postgres
       - rabbitmq
+    networks:
+      - shift-infra
 
   ocr-service:
     container_name: ocr-service
+    image: ghcr.io/madebyqwerty/ocr-service:latest
     restart: always
-    build:
-      context: ./services/ocr
-      dockerfile: Dockerfile
-      target: base
+    env_file: .env
     ports:
       - 5001:5001
+    networks:
+      - shift-infra
 
   postgres:
     image: postgres:latest
@@ -47,6 +43,9 @@ services:
       - 5432:5432
     volumes:
       - database_postgres:/var/lib/postgresql/data
+    networks:
+      - shift-infra
+
   rabbitmq:
     container_name: rabbitmq
     image: rabbitmq:3-management
@@ -54,6 +53,13 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
+    networks:
+      - shift-infra
+
+networks:
+  shift-infra:
+    attachable: true
+    name: shift-infra
 
 volumes:
   database_postgres:

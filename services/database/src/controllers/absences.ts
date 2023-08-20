@@ -9,7 +9,7 @@ export const getByUserId: Controller<"/:userId"> = async (ctx) => {
   if (!isValidUUID(userId)) {
     return error(
       {
-        userId: "not-valid",
+        userId: ["not-valid"],
       },
       400
     );
@@ -22,7 +22,7 @@ export const getByUserId: Controller<"/:userId"> = async (ctx) => {
     .where("Absence.userId", "=", userId)
     .execute();
 
-  return success({ absences });
+  return success(absences);
 };
 
 const absenceBody = z.object({
@@ -37,11 +37,11 @@ export const createAbsence: Controller<"/:userId"> = async (ctx) => {
   const result = absenceBody.safeParse(await body.value);
 
   if (!result.success) {
-    return error(result.error.flatten());
+    return error(result.error.formErrors.fieldErrors);
   }
 
   if (!isValidUUID(userId)) {
-    return error({ id: "not-valid" });
+    return error({ id: ["not-valid"] });
   }
 
   const newAbsence = await db
@@ -50,5 +50,5 @@ export const createAbsence: Controller<"/:userId"> = async (ctx) => {
     .returning(["id", "lesson", "date"])
     .execute();
 
-  return success({ newAbsence });
+  return success(newAbsence);
 };

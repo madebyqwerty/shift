@@ -1,19 +1,20 @@
 package main
 
 import (
-	"github.com/madebyqwerty/shift/handlers"
+	"github.com/madebyqwerty/shift/handlers/scan"
 	"github.com/madebyqwerty/shift/rabbitmq"
 
 	"flag"
 	"log"
 
+	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
 var (
-	port = flag.String("port", ":5002", "Port to listen on")
+	port = flag.String("port", ":5003", "Port to listen on")
 	prod = flag.Bool("prod", false, "Enable prefork in Production")
 )
 
@@ -30,16 +31,22 @@ func main() {
 	app.Use(recover.New())
 	app.Use(logger.New())
 
+	// Setup websockets
+	// @see https://docs.gofiber.io/contrib/websocket/#example
+	app.Use("/ws", func(c *fiber.Ctx) error {
+		if websocket.IsWebSocketUpgrade(c) {
+			c.Locals("allowed", true)
+			return c.Next()
+		}
+		return fiber.ErrUpgradeRequired
+	})
+
 	// RabbitMQ
 	rabbitmq.Init()
 	defer rabbitmq.Conn.Close()
 
 	// Routes
-	api := app.Group("/api")
-	api.Get("/hello", handlers.Hello)
-
-	// Handle not founds
-	app.Use(handlers.NotFound)
+	scan.SetupScan(app)
 
 	// Listen on port 3000
 	log.Fatal(app.Listen(*port)) // go run app.go -port=:3000

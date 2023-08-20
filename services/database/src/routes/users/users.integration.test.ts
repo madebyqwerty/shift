@@ -1,5 +1,7 @@
-import { assert } from "https://deno.land/std@0.160.0/_util/assert.ts";
-import { assertEquals } from "https://deno.land/std@0.160.0/testing/asserts.ts";
+import {
+  assertEquals,
+  assert,
+} from "https://deno.land/std@0.160.0/testing/asserts.ts";
 import { isValidUUID } from "../../utils/isValidUUID.ts";
 import { serverURL } from "../../constants.ts";
 
@@ -44,7 +46,7 @@ Deno.test("Should not create a user", async () => {
   assertEquals(res.status, 400);
   const user = await res.json();
 
-  assertEquals(user.fieldErrors.name[0], "required");
+  assertEquals(user.errors.name, ["required"]);
 });
 
 Deno.test("Should get all users", async () => {
@@ -87,7 +89,7 @@ Deno.test(
 
     const user = await res.json();
 
-    assertEquals(user.id, "not-valid");
+    assertEquals(user.errors.id, ["not-valid"]);
   }
 );
 
@@ -99,6 +101,6 @@ Deno.test(
     assertEquals(res.status, 404);
     const user = await res.json();
 
-    assertEquals(user.user, "not-found");
+    assertEquals(user.errors.user, ["not-found"]);
   }
 );

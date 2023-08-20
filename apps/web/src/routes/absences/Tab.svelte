@@ -3,7 +3,7 @@
 </script>
 
 <button
-	class="w-full rounded flex items-center justify-center px-0.5 py-1 {active
+	class="w-max rounded flex items-center justify-center px-4 py-1 {active
 		? 'bg-primary-500 text-primary-950'
 		: ''}"
 >

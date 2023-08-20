@@ -1,5 +1,5 @@
 
-import cv2, qrcode, pytesseract, time, ast, requests, json, datetime
+import cv2, qrcode, pytesseract, time, ast, requests, datetime
 import numpy as np
 
 debug_mode = False

@@ -1,0 +1,8 @@
+type: object
+properties:
+  errors:
+    type: object
+    additionalProperties:
+      type: array
+      items:
+        type: string

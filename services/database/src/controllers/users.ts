@@ -5,7 +5,7 @@ import { Controller, error, success } from "../utils/oakify.ts";
 
 export const getAllUsers: Controller<"/"> = async () => {
   const users = await db.selectFrom("User").selectAll().execute();
-  return success({ users });
+  return success(users);
 };
 
 export const getUser: Controller<"/:id"> = async (ctx) => {
@@ -14,7 +14,7 @@ export const getUser: Controller<"/:id"> = async (ctx) => {
   if (!isValidUUID(id)) {
     return error(
       {
-        id: "not-valid",
+        id: ["not-valid"],
       },
       400
     );
@@ -29,13 +29,13 @@ export const getUser: Controller<"/:id"> = async (ctx) => {
   if (!user) {
     return error(
       {
-        user: "not-found",
+        user: ["not-found"],
       },
       404
     );
   }
 
-  return success({ user });
+  return success(user);
 };
 
 const userPostReqBodySchema = z.object({
@@ -43,12 +43,13 @@ const userPostReqBodySchema = z.object({
 });
 
 export const createUser: Controller<"/"> = async ({ request }) => {
-  const body = await request.body({ type: "json" });
+  const body = request.body({ type: "json" });
 
-  const result = userPostReqBodySchema.safeParse(body.value);
+  const result = userPostReqBodySchema.safeParse(await body.value);
 
   if (!result.success) {
-    return error(result.error.flatten(), 400);
+    console.log(result);
+    return error({ ...result.error.formErrors.fieldErrors }, 400);
   }
 
   const [user] = await db
@@ -59,5 +60,5 @@ export const createUser: Controller<"/"> = async ({ request }) => {
     .returning(["id", "name"])
     .execute();
 
-  return success({ user });
+  return success(user);
 };

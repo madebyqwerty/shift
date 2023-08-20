@@ -106,5 +106,4 @@ def scan():
     return jsonify({"error": "Missing image"}), 400
     
 if __name__ == '__main__':
-    # app.run("0.0.0.0", 5001, debug=True)
     app.run("0.0.0.0", 5001)

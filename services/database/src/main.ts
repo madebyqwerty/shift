@@ -1,43 +1,9 @@
-import { port } from "./constants.ts";
-import { userRouter } from "./routes/users/users.ts";
-import { absenceRouter } from "./routes/absences.ts";
-import { Application, oakCors } from "./deps.ts";
-import { queueRouter } from "./routes/queue.ts";
+import { RabbitMQ, UserRequestQueue } from "./rabbitmq.ts";
 
-export const app = new Application();
+const client = await RabbitMQ.init();
 
-app.use(async (ctx, next) => {
-  await next();
-  const rt = ctx.response.headers.get("X-Response-Time");
-  console.log("═════════════════════════════════");
-  console.info(
-    `🌐 ${ctx.request.method}: ${ctx.request.url} by ${ctx.request.ip}`
-  );
-  console.info(`🕒 proccesed in ${rt}`);
-  console.info("STATUS:", ctx.response.status);
-});
-
-// Middleware function to set Access-Control-Allow-Origin header
-app.use(oakCors());
-
-app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  ctx.response.headers.set("X-Response-Time", `${ms}ms`);
-});
-
-app.use(userRouter.routes());
-app.use(userRouter.allowedMethods());
-app.use(absenceRouter.routes());
-app.use(absenceRouter.allowedMethods());
-app.use(queueRouter.routes());
-app.use(queueRouter.allowedMethods());
-
-app.addEventListener("listen", () => {
-  console.log("═════════════════════════════════");
-  console.log(`      🚀 LAUNCHING on ${port}    `);
-  console.log("═════════════════════════════════");
-});
-
-await app.listen({ port });
+// User request queue
+const channel = await client.createChannel();
+const queue = await client.createQueue(channel, "user_request_queue");
+const userRequestQueue = new UserRequestQueue(client, channel, queue);
+await userRequestQueue.consumeFromQueue();

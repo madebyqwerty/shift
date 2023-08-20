@@ -3,10 +3,8 @@ import { db } from "../kysely.ts";
 import { isValidUUID } from "../utils/isValidUUID.ts";
 import { Controller, error, success } from "../utils/oakify.ts";
 
-export const getAllUsers: Controller<"/"> = async () => {
-  const users = await db.selectFrom("User").selectAll().execute();
-  return success(users);
-};
+export const getAllUsers = async () =>
+  await db.selectFrom("User").selectAll().execute();
 
 export const getUser: Controller<"/:id"> = async (ctx) => {
   const { id } = ctx.params;

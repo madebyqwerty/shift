@@ -1,59 +1,64 @@
+import { getAllUsers } from "./controllers/users.ts";
 import { amqp } from "./deps.ts";
-
-interface Channels {
-  welcome: amqp.AmqpChannel;
-}
+import { Meta, log } from "./logger.ts";
 
 export class RabbitMQ {
   connection: amqp.AmqpConnection;
-  channels: Channels;
-  readonly welcome: WelcomeQueue;
 
-  private constructor(connection: amqp.AmqpConnection, channels: Channels) {
+  private constructor(connection: amqp.AmqpConnection) {
     this.connection = connection;
-    this.channels = channels;
-    this.welcome = new WelcomeQueue(this);
   }
 
   static async init() {
     const connection = await amqp.connect();
-    const channels = {
-      welcome: await connection.openChannel(),
-    };
 
-    return new RabbitMQ(connection, channels);
+    console.log("🚀 Started AMQP connection");
+
+    return new RabbitMQ(connection);
   }
 
   async createChannel() {
     return await this.connection.openChannel();
   }
+
+  async createQueue(channel: amqp.AmqpChannel, queue: string) {
+    return await channel.declareQueue({ queue });
+  }
 }
 
-class WelcomeQueue {
+export class UserRequestQueue {
   readonly client: RabbitMQ;
   readonly channel: amqp.AmqpChannel;
+  readonly queue: amqp.QueueDeclareOk;
 
-  constructor(client: RabbitMQ) {
+  constructor(
+    client: RabbitMQ,
+    channel: amqp.AmqpChannel,
+    queue: amqp.QueueDeclareOk
+  ) {
     this.client = client;
-    this.channel = client.channels.welcome;
+    this.channel = channel;
+    this.queue = queue;
   }
 
-  async sendHelloWorldToWelcomeQueue() {
-    await this.channel.publish(
-      { routingKey: "welcome" },
-      { contentType: "application/json" },
-      new TextEncoder().encode(JSON.stringify({ message: "Hello World" }))
-    );
-  }
+  async consumeFromQueue() {
+    log.info("Stared onsuming from user_queue", Meta.rabbit);
+    await this.channel.consume({ queue: this.queue.queue }, async () => {
+      log.info("Received request for all users", "rabbitMQ");
+      const userQueue = await this.client.createQueue(
+        this.channel,
+        "user_queue"
+      );
 
-  async consumeHelloWorldFromWelcomeQueue() {
-    await this.channel.declareQueue({ queue: "welcome" });
-    await this.channel.consume(
-      { queue: "welcome" },
-      async (args, props, data) => {
-        console.log("Received:", new TextDecoder().decode(data));
-        await this.channel.ack({ deliveryTag: args.deliveryTag });
-      }
-    );
+      log.info("Fetching all users from database", Meta.db);
+      const users = await getAllUsers();
+
+      log.info("Sending all users back to user_queue", Meta.rabbit);
+      this.channel.publish(
+        { routingKey: userQueue.queue },
+        { contentType: "application/json" },
+        new TextEncoder().encode(JSON.stringify(users))
+      );
+    });
   }
 }

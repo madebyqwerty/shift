@@ -21,6 +21,18 @@ services:
     networks:
       - shift-infra
 
+  gateway:
+    container_name: gateway
+    image: ghcr.io/madebyqwerty/gateway:latest
+    restart: always
+    ports:
+      - 5003:5003
+    networks:
+      - shift-infra
+    depends_on:
+      - rabbitmq
+      - postgres
+
   ocr-service:
     container_name: ocr-service
     image: ghcr.io/madebyqwerty/ocr-service:latest

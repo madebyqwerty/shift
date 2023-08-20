@@ -715,9 +715,14 @@
   },
   "npm": {
     "specifiers": {
+      "fp-ts": "fp-ts@2.16.1",
       "kysely": "kysely@0.25.0"
     },
     "packages": {
+      "fp-ts@2.16.1": {
+        "integrity": "sha512-by7U5W8dkIzcvDofUcO42yl9JbnHTEDBrzu3pt5fKT+Z4Oy85I21K80EYJYdjQGC2qum4Vo55Ag57iiIK4FYuA==",
+        "dependencies": {}
+      },
       "kysely@0.25.0": {
         "integrity": "sha512-srn0efIMu5IoEBk0tBmtGnoUss4uwvxtbFQWG/U2MosfqIace1l43IFP1PmEpHRDp+Z79xIcKEqmHH3dAvQdQA==",
         "dependencies": {}

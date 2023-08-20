@@ -6,6 +6,9 @@ import { Controller, error, success } from "../utils/oakify.ts";
 export const getAllUsers = async () =>
   await db.selectFrom("User").selectAll().execute();
 
+export const getAllUsersOak: Controller<"/"> = async () =>
+  success(await getAllUsers());
+
 export const getUser: Controller<"/:id"> = async (ctx) => {
   const { id } = ctx.params;
 

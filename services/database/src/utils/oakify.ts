@@ -21,7 +21,6 @@ export const oakify =
   <T extends string>(controller: Controller<T>) =>
   async (ctx: RouterContext<T>) => {
     const { status, body } = await controller(ctx);
-    console.log(body);
     ctx.response.status = status;
     ctx.response.body = body;
   };
@@ -32,7 +31,7 @@ export const success = <T extends Data>(data: T): Response => ({
 });
 
 export const error = (
-  errors: Record<string, any[]>,
+  errors: Record<string, unknown[]>,
   status: 400 | 404 | 500 = 400
 ): Response => ({
   status,

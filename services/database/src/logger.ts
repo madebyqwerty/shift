@@ -6,8 +6,8 @@ export const log = new Logger();
 log.addStream(
   new ConsoleStream().withFormat(
     new TokenReplacer()
-      .withFormat("{level} {metadata} {dateTime} {msg} ")
-      .withDateTimeFormat("hh:mm:ss YY/MM/DD")
+      .withFormat("[{level} {dateTime}] {metadata} > {msg} ")
+      .withDateTimeFormat("YY/MM/DD hh:mm:ss")
       .withLevelPadding(4)
       .withColor()
   )
@@ -16,4 +16,5 @@ log.addStream(
 export enum Meta {
   rabbit = "🐰 RabbitMQ",
   db = "🐘 Postgres",
+  oak = "🌳 Oak",
 }

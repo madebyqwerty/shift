@@ -6,12 +6,12 @@
 ![Security](https://github.com/gofiber/boilerplate/workflows/Security/badge.svg)
 ![Linter](https://github.com/gofiber/boilerplate/workflows/Linter/badge.svg)
 
-
 ## IDE Development
 
 ### Visual Studio Code
 
 Use the following plugins, in this boilerplate project:
+
 - Name: Go
   - ID: golang.go
   - Description: Rich Go language support for Visual Studio Code
@@ -21,8 +21,7 @@ Use the following plugins, in this boilerplate project:
 
 ## Development
 
-### Start the application 
-
+### Start the application
 
 ```bash
 go run app.go
@@ -67,6 +66,5 @@ docker run -d -p 3000:3000 gofiber ./app -prod
 ```
 
 Go to http://localhost:3000:
-
 
 ![Go Fiber Docker Boilerplate](./go_fiber_boilerplate.gif)

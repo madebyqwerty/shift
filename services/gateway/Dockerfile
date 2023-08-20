@@ -2,7 +2,7 @@
 FROM golang:1.19 AS build
 
 # `boilerplate` should be replaced with your project name
-WORKDIR /go/src/boilerplate
+WORKDIR /go/src/gateway
 
 # Copy all the Code and stuff to compile everything
 COPY . .
@@ -23,8 +23,8 @@ WORKDIR /app
 RUN mkdir ./static
 COPY ./static ./static
 
-# `boilerplate` should be replaced here as well
-COPY --from=build /go/src/boilerplate/app .
+# `gateway` should be replaced here as well
+COPY --from=build /go/src/gateway/app .
 
 # Add packages
 RUN apk -U upgrade \

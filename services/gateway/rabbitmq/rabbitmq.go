@@ -8,11 +8,11 @@ import (
 
 var Conn *amqp.Connection
 
-func Init(prod bool) {
+func Init(docker bool) {
 	var err error
 	var connectionUrl string
 
-	if prod {
+	if docker {
 		connectionUrl = "amqp://guest:guest@rabbitmq:5672/"
 	} else {
 		connectionUrl = "amqp://guest:guest@localhost:5672/"

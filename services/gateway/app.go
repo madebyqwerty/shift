@@ -14,8 +14,9 @@ import (
 )
 
 var (
-	port = flag.String("port", ":5003", "Port to listen on")
-	prod = flag.Bool("prod", false, "Enable prefork in Production")
+	port   = flag.String("port", ":5003", "Port to listen on")
+	prod   = flag.Bool("prod", false, "Enable prefork in Production")
+	docker = flag.Bool("docker", false, "Enable docker mode")
 )
 
 func main() {
@@ -42,12 +43,12 @@ func main() {
 	})
 
 	// RabbitMQ
-	rabbitmq.Init(*prod)
+	rabbitmq.Init(*docker)
 	defer rabbitmq.Conn.Close()
 
 	// Routes
 	scan.SetupScan(app)
 
-	// Listen on port 3000
-	log.Fatal(app.Listen("5003")) // go run app.go -port=:3000
+	// Listen on port
+	log.Fatal(app.Listen(*port))
 }

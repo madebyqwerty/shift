@@ -24,10 +24,9 @@ COPY --from=build /go/src/gateway/app .
 
 # Add packages
 RUN apk -U upgrade \
-    && apk add --no-cache dumb-init ca-certificates \
+    && apk add --no-cache ca-certificates \
     && chmod +x /app/app
 
-# Exposes port 3000 because our program listens on that port
 EXPOSE 5003
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--", "/app/app"]
+ENTRYPOINT ["./app", "-docker", "-port", ":5003"]

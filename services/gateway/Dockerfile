@@ -19,10 +19,6 @@ FROM alpine:latest as release
 
 WORKDIR /app
 
-# Create the `public` dir and copy all the assets into it
-RUN mkdir ./static
-COPY ./static ./static
-
 # `gateway` should be replaced here as well
 COPY --from=build /go/src/gateway/app .
 

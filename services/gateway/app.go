@@ -10,6 +10,7 @@ import (
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
@@ -47,6 +48,7 @@ func main() {
 	defer rabbitmq.Conn.Close()
 
 	// Routes
+	app.Get("/status", monitor.New())
 	scan.SetupScan(app)
 
 	// Listen on port

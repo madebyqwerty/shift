@@ -25,12 +25,10 @@ services:
 
   gateway:
     container_name: gateway
-    build:
-      context: ./services/gateway
-      dockerfile: Dockerfile
+    image: ghcr.io/madebyqwerty/gateway:latest
     restart: always
     ports:
-      - 3000:3000
+      - 5003:5003
     networks:
       - shift-infra
     depends_on:

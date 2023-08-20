@@ -30,4 +30,4 @@ RUN apk -U upgrade \
 # Exposes port 3000 because our program listens on that port
 EXPOSE 5003
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--", "/app/app", "-prod"]

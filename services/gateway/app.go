@@ -49,5 +49,5 @@ func main() {
 	scan.SetupScan(app)
 
 	// Listen on port 3000
-	log.Fatal(app.Listen(*port)) // go run app.go -port=:3000
+	log.Fatal(app.Listen("5003")) // go run app.go -port=:3000
 }

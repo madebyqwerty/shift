@@ -55,7 +55,7 @@ jobs:
             {
               name: "gateway",
               file: "./services/gateway/Dockerfile",
-              contecx: "./services/gateway",
+              context: "./services/gateway",
             },
           ]
 

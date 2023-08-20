@@ -44,7 +44,7 @@ export class UserRequestQueue {
   async consumeFromQueue() {
     log.debug("Started onsuming from user_queue", Meta.rabbit);
     await this.channel.consume({ queue: this.queue.queue }, async () => {
-      log.debug("Received request for all users", "rabbitMQ");
+      log.debug("Received request for all users", Meta.rabbit);
       const userQueue = await this.client.createQueue(
         this.channel,
         "user_queue"

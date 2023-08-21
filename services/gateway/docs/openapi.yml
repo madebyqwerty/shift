@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
   title: Database service API
   version: 0.0.1
@@ -8,16 +8,16 @@ info:
   contact:
     name: Tomáš Kebrle
 servers:
-  - url: http://localhost:5000/api
+  - url: http://localhost:5003/
 
 paths:
-  /users:
+  /api/users:
     $ref: "./paths/users.yml"
 
-  /users/{userId}:
+  /api/users/{userId}:
     $ref: "./paths/users_id.yml"
 
-  /absences/{userId}:
+  /api/absences/{userId}:
     $ref: "./paths/absences.yml"
 
 components:

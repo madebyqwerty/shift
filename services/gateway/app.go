@@ -11,6 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
+	"github.com/gofiber/fiber/v2/middleware/proxy"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
@@ -49,6 +50,12 @@ func main() {
 
 	// Routes
 	app.Get("/status", monitor.New())
+	app.Static("/docs", "./docs")
+
+	// Temporarily rewrite all request to /api to localhost:5000 until moved to gateway
+	app.All("api/*", func(c *fiber.Ctx) error {
+		return proxy.Do(c, "http://localhost:5000"+c.Path())
+	})
 	scan.SetupScan(app)
 
 	// Listen on port

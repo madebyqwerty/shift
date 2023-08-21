@@ -5,6 +5,7 @@ info:
   description: REST API for interacting with the database service.
   license:
     name: Proprietary
+    identifier: proprietary
   contact:
     name: Tomáš Kebrle
 servers:

@@ -8,3 +8,10 @@ tasks:
   dev:
     command: "air ."
     local: true
+  generate:
+    platform: "system"
+    command: "openapi-generator-cli generate -i ./docs/openapi.yml -g typescript-fetch -o ../../packages/database-service-client"
+    inputs:
+      - "docs/openapi.yml"
+    outputs:
+      - "/packages/database-service-client"

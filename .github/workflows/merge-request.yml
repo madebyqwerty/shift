@@ -1,0 +1,87 @@
+name: Build and Publish Docker Images
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install Moon
+        run: npm install -g @moonrepo/cli
+
+      - name: Run CI
+        run: moon ci
+
+      - uses: "moonrepo/run-report-action@v1"
+        if: success() || failure()
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-publish:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          [
+            {
+              name: "database-service",
+              file: "./services/database/Dockerfile",
+              context: "./services/database",
+            },
+            { name: "web", file: "./apps/web/Dockerfile", context: "." },
+            {
+              name: "ocr-service",
+              file: "./services/ocr/Dockerfile",
+              context: "./services/ocr",
+            },
+            {
+              name: "gateway",
+              file: "./services/gateway/Dockerfile",
+              context: "./services/gateway",
+            },
+          ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install moon
+        run: curl -fsSL https://moonrepo.dev/install/moon.sh | bash
+
+      - name: Scaffold docker
+        run: moon docker scaffold web
+
+      - name: Build ${{matrix.service.name}} Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{matrix.service.context}}
+          file: ${{matrix.service.file}}
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{matrix.service.name}}:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/${{matrix.service.name}}:latest

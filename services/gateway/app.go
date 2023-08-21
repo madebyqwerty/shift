@@ -10,12 +10,14 @@ import (
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
 var (
-	port = flag.String("port", ":5003", "Port to listen on")
-	prod = flag.Bool("prod", false, "Enable prefork in Production")
+	port   = flag.String("port", ":5003", "Port to listen on")
+	prod   = flag.Bool("prod", false, "Enable prefork in Production")
+	docker = flag.Bool("docker", false, "Enable docker mode")
 )
 
 func main() {
@@ -42,12 +44,13 @@ func main() {
 	})
 
 	// RabbitMQ
-	rabbitmq.Init()
+	rabbitmq.Init(*docker)
 	defer rabbitmq.Conn.Close()
 
 	// Routes
+	app.Get("/status", monitor.New())
 	scan.SetupScan(app)
 
-	// Listen on port 3000
-	log.Fatal(app.Listen(*port)) // go run app.go -port=:3000
+	// Listen on port
+	log.Fatal(app.Listen(*port))
 }

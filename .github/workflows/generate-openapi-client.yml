@@ -2,8 +2,8 @@ name: Generate OpenAPI client
 
 on:
   pull_request:
-    branches:
-      - main
+    types:
+      - closed
 
 permissions:
   contents: write
@@ -31,12 +31,7 @@ jobs:
       - name: Generate client
         run: moon run database:generate
 
-      - name: Commit generated client
-        run: |
-          git config --global user.email "dev@tomaskebrle.cz"
-          git config --global user.name "Tomáš Kebrle"
-          if [[ -n $(git status -s) ]]; then
-            git add .
-            git commit --quiet -m "Generate OpenAPI client"
-            git push origin HEAD:${{ github.head_ref }}
-          fi
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: update generated client [skip ci]"

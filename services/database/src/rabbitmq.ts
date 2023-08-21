@@ -10,11 +10,22 @@ export class RabbitMQ {
   }
 
   static async init() {
-    const connection = await amqp.connect();
+    try {
+      const hostname = log.debug(
+        Deno.args.includes("-docker") ? "rabbitmq" : "localhost",
+        Meta.rabbit,
+        "Connecting to RabbitMQ on hostname"
+      );
 
-    log.info("Connected to RabbitMQ", Meta.rabbit);
+      const connection = await amqp.connect({
+        hostname: hostname,
+      });
+      log.info(`Connected to RabbitMQ`, Meta.rabbit);
 
-    return new RabbitMQ(connection);
+      return new RabbitMQ(connection);
+    } catch (err) {
+      log.critical("Failed to create a connection", Meta.rabbit, err);
+    }
   }
 
   async createChannel() {

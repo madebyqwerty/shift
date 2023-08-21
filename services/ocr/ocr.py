@@ -1,10 +1,10 @@
 
-import cv2, qrcode, pytesseract, time, ast, requests, datetime
 import numpy as np
+import cv2, qrcode, pytesseract, time, ast, pika, datetime
 
 debug_mode = False
 DEBUG_IMG_SCALE = 0.15
-DATABASE_URL = "http://database-service:5000/api"
+RABBITMQ_HOST = "127.0.0.1"
 
 class QRCodeError(Exception):
     pass
@@ -14,15 +14,32 @@ class NamesDetectionError(Exception):
 
 class db():
     def get_class(id): #TODO: Request databáze
-        url = f"{DATABASE_URL}/users"
-        response = requests.get(url).json()
-        return response
-    
+        connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST))
+        channel = connection.channel()
+
+        channel.queue_declare(queue='user_request_queue')
+        channel.basic_publish(exchange='',
+                            routing_key='user_request_queue',
+                            body=str({"class_id": id}))
+
+        channel.queue_declare(queue='user_queue')
+        def callback(ch, method, properties, body):
+            channel.stop_consuming()
+            connection.close()
+            return body
+
+        channel.basic_consume(queue='user_queue', on_message_callback=callback, auto_ack=True)
+        channel.start_consuming()
+
     def save(records):
-        for record in records:
-            url = f"{DATABASE_URL}/absences/{record['id']}"
-            data = {"lesson": record["lesson"], "date": record["date"]}
-            requests.post(url, json=data)
+        connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST))
+        channel = connection.channel()
+
+        channel.queue_declare(queue='absence_queue')
+        channel.basic_publish(exchange='',
+                            routing_key='absence_queue',
+                            body=str(records))
+        connection.close()
 
 class Image():
     """

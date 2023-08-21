@@ -4,7 +4,7 @@ import cv2, qrcode, pytesseract, time, ast, pika, datetime
 
 debug_mode = False
 DEBUG_IMG_SCALE = 0.15
-RABBITMQ_HOST = "127.0.0.1"
+RABBITMQ_HOST = "rabbitmq"
 
 class QRCodeError(Exception):
     pass

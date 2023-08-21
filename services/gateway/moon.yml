@@ -10,6 +10,7 @@ tasks:
     local: true
   generate:
     platform: "system"
+    local: true
     command: "openapi-generator-cli generate -i ./docs/openapi.yml -g typescript-fetch -o ../../packages/database-service-client"
     inputs:
       - "docs/openapi.yml"

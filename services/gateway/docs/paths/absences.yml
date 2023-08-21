@@ -7,8 +7,6 @@ get:
       required: true
       schema:
         type: string
-  tags:
-    - Absences
   responses:
     "200":
       description: The list of absences.
@@ -30,9 +28,6 @@ post:
       required: true
       schema:
         type: string
-
-  tags:
-    - Absences
   requestBody:
     required: true
     content:

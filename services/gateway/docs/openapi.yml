@@ -20,6 +20,12 @@ paths:
   /api/absences/{userId}:
     $ref: "./paths/absences.yml"
 
+  /scan:
+    $ref: "./paths/scan.yml"
+
+  /ws/scan/{userId}:
+    $ref: "./paths/ws_scan.yml"
+
 components:
   schemas:
     Absence:

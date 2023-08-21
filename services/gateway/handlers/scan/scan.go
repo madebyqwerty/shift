@@ -45,14 +45,12 @@ func Scan(c *fiber.Ctx) error {
 	}
 
 	bodyJson, err := json.Marshal(res)
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
 	if err != nil {
 		log.Fatalln(err)
 	}
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+
+	defer cancel()
 
 	if err := Channel.PublishWithContext(ctx, "", Queue.Name, false, false, amqp.Publishing{
 		ContentType: "application/json",
@@ -60,12 +58,11 @@ func Scan(c *fiber.Ctx) error {
 	}); err != nil {
 		log.Fatalln(err)
 		return c.JSON(fiber.Map{
-			"status": "not-succes",
+			"errors": []string{"rabbimq/failed-to-publish"},
 		})
 	}
 
 	return c.JSON(fiber.Map{
-		"status": "succes",
-		"id":     res.Id,
+		"scan_id": res.Id,
 	})
 }

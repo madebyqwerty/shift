@@ -1,14 +1,7 @@
 get:
   summary: A user with the given ID
-  tags:
-    - Users
   parameters:
-    - name: userId
-      in: path
-      description: ID of the user to get
-      required: true
-      schema:
-        type: string
+    - $ref: "../parameters/userId.yml"
   responses:
     200:
       description: The user.

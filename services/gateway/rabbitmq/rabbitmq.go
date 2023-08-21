@@ -8,9 +8,17 @@ import (
 
 var Conn *amqp.Connection
 
-func Init() {
+func Init(docker bool) {
 	var err error
-	Conn, err = amqp.Dial("amqp://guest:guest@localhost:5672/")
+	var connectionUrl string
+
+	if docker {
+		connectionUrl = "amqp://guest:guest@rabbitmq:5672/"
+	} else {
+		connectionUrl = "amqp://guest:guest@localhost:5672/"
+	}
+
+	Conn, err = amqp.Dial(connectionUrl)
 	if err != nil {
 		log.Fatalf("Failed to connect to RabbitMQ: %v", err)
 	}

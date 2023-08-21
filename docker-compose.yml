@@ -16,21 +16,41 @@ services:
     ports:
       - 5000:5000
     depends_on:
-      - postgres
-      - rabbitmq
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - shift-infra
+
+  gateway:
+    container_name: gateway
+    image: ghcr.io/madebyqwerty/gateway:latest
+    restart: always
+    ports:
+      - 5003:5003
+    networks:
+      - shift-infra
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   ocr-service:
     container_name: ocr-service
     image: ghcr.io/madebyqwerty/ocr-service:latest
-    #build: services/ocr/
     restart: always
     env_file: .env
     ports:
       - 5001:5001
     networks:
       - shift-infra
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   postgres:
     image: postgres:latest
@@ -46,6 +66,11 @@ services:
       - database_postgres:/var/lib/postgresql/data
     networks:
       - shift-infra
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -55,6 +80,11 @@ services:
       - 15672:15672
     networks:
       - shift-infra
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
 
 networks:
   shift-infra:

@@ -12,10 +12,7 @@ class NamesDetectionError(Exception):
     pass
 
 class db():
-    def get_class(id, host): #TODO: Request databáze
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host))
-        channel = connection.channel()
-
+    def get_class(id, connection): #TODO: Request databáze
         channel.queue_declare(queue='user_request_queue')
         channel.basic_publish(exchange='',
                             routing_key='user_request_queue',
@@ -30,10 +27,7 @@ class db():
         channel.basic_consume(queue='user_queue', on_message_callback=callback, auto_ack=True)
         channel.start_consuming()
 
-    def save(records, host):
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host))
-        channel = connection.channel()
-
+    def save(records, connection):
         channel.queue_declare(queue='absence_queue')
         channel.basic_publish(exchange='',
                             routing_key='absence_queue',
@@ -104,8 +98,6 @@ class Image():
 
         x, y, w, h = best_rect
 
-        #if debug_mode: cv2.imshow("Table img", Image.resize(binary[y:y+h, x:x+w], DEBUG_IMG_SCALE)) #image_scale
-
         if debug_mode: print(f"Crop image to {[y-25, y+h+250, x-25, x+w+25]}")
 
         img = img[y-25:y+h+25, x-25:x+w+25]
@@ -153,11 +145,11 @@ class Image():
         if debug_mode: print("Rotation done")
         return fixed_img
     
-    def slice_and_process(img, qr_data, week_number, host):
+    def slice_and_process(img, qr_data, week_number, connection):
         """
         Slice image and process data
         """
-        students = db.get_class(qr_data["class_id"], host)
+        students = db.get_class(qr_data["class_id"], connection)
 
         height = img.shape[0]
         width = img.shape[1]   
@@ -326,7 +318,7 @@ class Engine():
     """
     Primary functions
     """
-    def process(input_img, week_number, host):
+    def process(input_img, week_number, connection):
         """
         Image processing for the required data
         """
@@ -346,17 +338,17 @@ class Engine():
         img, qr_data = Qr.process(filtered_img) #Get qr data, flip if needed
         table_img = Image.crop_table(img)
 
-        data = Image.slice_and_process(table_img, qr_data, week_number, host)
+        data = Image.slice_and_process(table_img, qr_data, week_number, connection)
 
         if debug_mode: print("Save to database")
 
-        db.save(data, host)
+        db.save(data, connection)
 
         if debug_mode: print(f"Done in {int((time.time()-start)*100)/100}")
 
-        """if debug_mode:
-            cv2.waitKey(0) #Q for closing the window
-            cv2.destroyAllWindows()"""
+        #if debug_mode:
+        #    cv2.waitKey(0)
+        #    cv2.destroyAllWindows()"""
 
         return data
 
@@ -498,4 +490,6 @@ if "__main__" == __name__:
     #img = Qr.create("01557898-f61c-11ed-b67e-0242ac120002")
     #img.save("Qr.jpg")
 
-    print(Engine.process(cv2.imread("ocr-service/imgs/img1.jpg"), 22, "127.0.0.1"))
+    connection = pika.BlockingConnection(pika.ConnectionParameters("127.0.0.1"))
+    channel = connection.channel()
+    print(Engine.process(cv2.imread("ocr-service/imgs/img1.jpg"), 22, channel))

@@ -22,10 +22,10 @@ def main():
         out = Engine.process(img, int(data["week_number"]), RABBITMQ_HOST)
         print(out)
 
-        channel.queue_declare(queue=f"scan:{data['id']}")
+        channel.queue_declare(queue=f"scan:shift")
         channel.basic_publish(exchange='',
-                            routing_key=f"scan:{data['id']}",
-                            body='{"status": "DONE", "scan_id": "shift"}')
+                            routing_key=f"scan:shift",
+                            body=str({"status": "DONE", "scan_id": data["id"]}))
 
     channel.basic_consume(queue='ocr-queue', on_message_callback=callback, auto_ack=True)
 

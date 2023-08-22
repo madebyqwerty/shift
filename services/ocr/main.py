@@ -1,109 +1,43 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from flasgger import Swagger
+
+from ocr import Engine
 import numpy as np
-import os, ocr, cv2
+import pika, sys, os, json, base64, cv2, argparse
 
-app = Flask(__name__)
-app.secret_key = os.environ["SECRET_KEY"]
-CORS(app)
+parser = argparse.ArgumentParser(description='OCR service test')
+parser.add_argument('--docker_mode', default=False, type=bool, help='Is in docker?')
+args = parser.parse_args()
 
-swagger_config = {
-    "headers": [
-    ],
-    "specs": [
-        {
-            "endpoint": 'apispec_1',
-            "route": '/apispec_1.json',
-            "rule_filter": lambda rule: True,
-            "model_filter": lambda tag: True,
-        }
-    ],
-    "static_url_path": "/flasgger_static",
-    "swagger_ui": True,
-    "specs_route": "/docs"
-}
-swagger = Swagger(app, config=swagger_config)
+if args.docker_mode: RABBITMQ_HOST = "rabbitmq"
+else: RABBITMQ_HOST = "127.0.0.1"
 
-@app.route(f"/api/status", methods=["GET"])
-def status():
-    """
-    GET to check the status of the application
-    ---
-    responses:
-      200:
-        description: OK
-        schema:
-          id: Status
-          properties:
-            status:
-              type: string
-              description: The status of the application
-              default: ok
-    """
-    return jsonify(status="OK")
+def main():
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
+    channel = connection.channel()
 
-@app.route(f"/api/scan", methods=["POST"])
-def scan():
-    """
-    POST for image processing
-    ---
-    parameters:
-      - name: img
-        in: formData
-        type: string
-        format: binary
-        description: Image to process
-        required: true
-      - name: week_number
-        in: formData
-        type: string
-        format: date
-        description: Weeknumber
-        required: true
+    def callback(ch, method, properties, body):
+        data = json.loads(body)
+        nparr = np.frombuffer(base64.b64decode(data["img"]), np.uint8)
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-    responses:
-        200:
-            description: A list of students absence
-            schema:
-                type: array
-                items:
-                    type: object
-                    properties:
-                        id:
-                            type: string
-                            description: The ID of the student
-                        absence:
-                            type: integer
-                            description: The nuber of hour
-                        date:
-                            type: date
-                            description: Date od absence
-        404:
-            description: Process error
-        400:
-            description: Missing image
-        400:
-            description: No week number
+        out = Engine.process(img, int(data["week_number"]), RABBITMQ_HOST)
+        print(out)
 
-    """
-    week_number = request.form.get('week_number')
+        channel.queue_declare(queue=f"scan:shift")
+        channel.basic_publish(exchange='',
+                            routing_key=f"scan:shift",
+                            body=str({"status": "DONE", "scan_id": data["id"]}))
 
-    if week_number == None:
-        return jsonify({"error": "No week number"}), 400
-    
-    file = request.files.get("img")
+    channel.basic_consume(queue='ocr-queue', on_message_callback=callback, auto_ack=True)
 
+    print('Consuming from ocr_queue')
+    channel.start_consuming()
 
-    image = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
-
-    try:
-        data = ocr.Engine.process(image, week_number)
-        return jsonify(data), 200
-    except: 
-        return jsonify({"error": "Process error"}), 404
-    
-    return jsonify({"error": "Missing image"}), 400
-    
 if __name__ == '__main__':
-    app.run("0.0.0.0", 5001)
+    try:
+        main()
+    except KeyboardInterrupt:
+        print('Interrupted')
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)

@@ -9,8 +9,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-ENV SECRET_KEY="kjsakldjaslkjdasljk"
-
 EXPOSE 5001
 
-CMD ["python3", "main.py"]
+CMD ["python3", "-u", "main.py", "--docker_mode", "True"]

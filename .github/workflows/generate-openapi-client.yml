@@ -29,7 +29,7 @@ jobs:
         run: npm install -g @moonrepo/cli
 
       - name: Generate client
-        run: moon run database:generate
+        run: moon run gateway:generate
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4

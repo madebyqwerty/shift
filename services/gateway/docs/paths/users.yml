@@ -1,7 +1,5 @@
 get:
   summary: List of all users
-  tags:
-    - Users
   responses:
     "200":
       description: The list of users.
@@ -16,8 +14,6 @@ get:
 
 post:
   summary: Creates a new user.
-  tags:
-    - Users
   requestBody:
     required: true
     content:

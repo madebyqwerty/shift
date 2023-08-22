@@ -1,9 +1,14 @@
 
 from ocr import Engine
 import numpy as np
-import pika, sys, os, json, base64, cv2
+import pika, sys, os, json, base64, cv2, argparse
 
-RABBITMQ_HOST = "rabbitmq"
+parser = argparse.ArgumentParser(description='OCR service test')
+parser.add_argument('--docker_mode', default=False, type=bool, help='Is in docker?')
+args = parser.parse_args()
+
+if args.docker_mode: RABBITMQ_HOST = "rabbitmq"
+else: RABBITMQ_HOST = "127.0.0.1"
 
 def main():
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
@@ -14,7 +19,7 @@ def main():
         nparr = np.frombuffer(base64.b64decode(data["img"]), np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-        output = Engine.process(img, int(data["week_number"]))
+        output = Engine.process(img, int(data["week_number"]), RABBITMQ_HOST)
 
         channel.queue_declare(queue=f"scan:{data['id']}")
         channel.basic_publish(exchange='',

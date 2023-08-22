@@ -4,7 +4,6 @@ import cv2, qrcode, pytesseract, time, ast, pika, datetime
 
 debug_mode = False
 DEBUG_IMG_SCALE = 0.15
-RABBITMQ_HOST = "rabbitmq"
 
 class QRCodeError(Exception):
     pass
@@ -13,8 +12,8 @@ class NamesDetectionError(Exception):
     pass
 
 class db():
-    def get_class(id): #TODO: Request databáze
-        connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST))
+    def get_class(id, host): #TODO: Request databáze
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host))
         channel = connection.channel()
 
         channel.queue_declare(queue='user_request_queue')
@@ -31,8 +30,8 @@ class db():
         channel.basic_consume(queue='user_queue', on_message_callback=callback, auto_ack=True)
         channel.start_consuming()
 
-    def save(records):
-        connection = pika.BlockingConnection(pika.ConnectionParameters(RABBITMQ_HOST))
+    def save(records, host):
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host))
         channel = connection.channel()
 
         channel.queue_declare(queue='absence_queue')
@@ -154,11 +153,11 @@ class Image():
         if debug_mode: print("Rotation done")
         return fixed_img
     
-    def slice_and_process(img, qr_data, week_number):
+    def slice_and_process(img, qr_data, week_number, host):
         """
         Slice image and process data
         """
-        students = db.get_class(qr_data["class_id"])
+        students = db.get_class(qr_data["class_id"], host)
 
         height = img.shape[0]
         width = img.shape[1]   
@@ -327,7 +326,7 @@ class Engine():
     """
     Primary functions
     """
-    def process(input_img, week_number):
+    def process(input_img, week_number, host):
         """
         Image processing for the required data
         """
@@ -347,11 +346,11 @@ class Engine():
         img, qr_data = Qr.process(filtered_img) #Get qr data, flip if needed
         table_img = Image.crop_table(img)
 
-        data = Image.slice_and_process(table_img, qr_data, week_number)
+        data = Image.slice_and_process(table_img, qr_data, week_number, host)
 
         if debug_mode: print("Save to database")
 
-        db.save(data)
+        db.save(data, host)
 
         if debug_mode: print(f"Done in {int((time.time()-start)*100)/100}")
 
@@ -499,4 +498,4 @@ if "__main__" == __name__:
     #img = Qr.create("01557898-f61c-11ed-b67e-0242ac120002")
     #img.save("Qr.jpg")
 
-    print(Engine.process(cv2.imread("ocr-service/imgs/img1.jpg"), 22))
+    print(Engine.process(cv2.imread("ocr-service/imgs/img1.jpg"), 22, "127.0.0.1"))

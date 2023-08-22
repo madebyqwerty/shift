@@ -25,7 +25,7 @@ def main():
         channel.queue_declare(queue=f"scan:{data['id']}")
         channel.basic_publish(exchange='',
                             routing_key=f"scan:{data['id']}",
-                            body='{"status": "DONE", "scan_id": "None"}')
+                            body='{"status": "DONE", "scan_id": "shift"}')
 
     channel.basic_consume(queue='ocr-queue', on_message_callback=callback, auto_ack=True)
 

@@ -27,7 +27,8 @@ func main() {
 
 	// Create fiber app
 	app := fiber.New(fiber.Config{
-		Prefork: *prod, // go run app.go -prod
+		Prefork:   *prod, // go run app.go -prod
+		BodyLimit: 20 * 1024 * 1024,
 	})
 
 	// Middleware

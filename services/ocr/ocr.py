@@ -1,6 +1,6 @@
 
 import numpy as np
-import cv2, qrcode, pytesseract, time, ast, pika, datetime
+import cv2, qrcode, pytesseract, time, ast, pika, datetime, json
 
 debug_mode = False
 DEBUG_IMG_SCALE = 0.15
@@ -12,7 +12,9 @@ class NamesDetectionError(Exception):
     pass
 
 class db():
-    def get_class(id, connection): #TODO: Request databáze
+    def get_class(id, connection, table_img, qr_data, week_number): #TODO: Request databáze
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host=connection))
+        channel = connection.channel()
         channel.queue_declare(queue='user_request_queue')
         channel.basic_publish(exchange='',
                             routing_key='user_request_queue',
@@ -22,12 +24,15 @@ class db():
         def callback(ch, method, properties, body):
             channel.stop_consuming()
             connection.close()
-            return body
+            Image.slice_and_process(table_img, qr_data, week_number, json.loads(body))
 
         channel.basic_consume(queue='user_queue', on_message_callback=callback, auto_ack=True)
-        channel.start_consuming()
+        data = channel.start_consuming()
+        return data
 
     def save(records, connection):
+        connection = pika.BlockingConnection(pika.ConnectionParameters(host=connection))
+        channel = connection.channel()
         channel.queue_declare(queue='absence_queue')
         channel.basic_publish(exchange='',
                             routing_key='absence_queue',
@@ -145,12 +150,10 @@ class Image():
         if debug_mode: print("Rotation done")
         return fixed_img
     
-    def slice_and_process(img, qr_data, week_number, connection):
+    def slice_and_process(img, qr_data, week_number, students):
         """
         Slice image and process data
         """
-        students = db.get_class(qr_data["class_id"], connection)
-
         height = img.shape[0]
         width = img.shape[1]   
 
@@ -338,7 +341,7 @@ class Engine():
         img, qr_data = Qr.process(filtered_img) #Get qr data, flip if needed
         table_img = Image.crop_table(img)
 
-        data = Image.slice_and_process(table_img, qr_data, week_number, connection)
+        data = db.get_class(qr_data["class_id"], connection, table_img, qr_data, week_number)
 
         if debug_mode: print("Save to database")
 
@@ -395,7 +398,7 @@ class Engine():
 
         return None
 
-    def slice_processing(img, last_valid_name:str, raw_students:dict):
+    def slice_processing(img, last_valid_name:str, raw_students:list):
         """
         Image slice processing
         """
@@ -491,5 +494,4 @@ if "__main__" == __name__:
     #img.save("Qr.jpg")
 
     connection = pika.BlockingConnection(pika.ConnectionParameters("127.0.0.1"))
-    channel = connection.channel()
-    print(Engine.process(cv2.imread("ocr-service/imgs/img1.jpg"), 22, channel))
+    print(Engine.process(cv2.imread("ocr-service/imgs/img1.jpg"), 22, connection))

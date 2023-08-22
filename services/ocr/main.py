@@ -19,7 +19,8 @@ def main():
         nparr = np.frombuffer(base64.b64decode(data["img"]), np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-        Engine.process(img, int(data["week_number"]), connection)
+        out = Engine.process(img, int(data["week_number"]), RABBITMQ_HOST)
+        print(out)
 
         channel.queue_declare(queue=f"scan:{data['id']}")
         channel.basic_publish(exchange='',

@@ -2,8 +2,6 @@ package scan
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
 
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
@@ -16,7 +14,7 @@ func ScanWs(c *websocket.Conn) {
 
 	if err != nil {
 		c.WriteJSON(fiber.Map{
-			"error": "Could not connect to queue, make sure you have the correct id",
+			"errors": []string{"rabbitmq/failed-to-establish-connection"},
 		})
 		c.Close()
 	}
@@ -37,7 +35,7 @@ func ScanWs(c *websocket.Conn) {
 
 	if err != nil {
 		c.WriteJSON(fiber.Map{
-			"error": "Could not connect to queue, make sure you have the correct id",
+			"errors": []string{"rabbitmq/failed-to-declare-queue"},
 		})
 		c.Close()
 		return
@@ -55,7 +53,7 @@ func ScanWs(c *websocket.Conn) {
 
 	if err != nil {
 		c.WriteJSON(fiber.Map{
-			"error": "Could not connect to queue, make sure you have the correct id",
+			"errors": []string{"rabbitmq/failed-to-consume-from-queue"},
 		})
 	}
 
@@ -63,26 +61,22 @@ func ScanWs(c *websocket.Conn) {
 
 	go func() {
 		for d := range msgs {
-			fmt.Println(string(d.Body))
-
-			var dat map[string]interface{}
-			if err := json.Unmarshal(d.Body, &dat); err != nil {
-				log.Fatalln(err)
+			var data map[string]interface{}
+			if err := json.Unmarshal(d.Body, &data); err != nil {
+				c.WriteJSON(fiber.Map{
+					"status": "error",
+					"errors": []string{"rabbitmq/failed-to-parse-data"},
+				})
 			}
 
-			if dat["status"] == "done" {
-				c.WriteJSON(fiber.Map{
-					"status": "done",
-					"data":   dat["data"],
-				})
+			c.WriteJSON(data)
+
+			if data["status"] == "DONE" {
 				c.Close()
 				ch.Close()
 				break
 			}
 
-			c.WriteJSON(fiber.Map{
-				"data": string(d.Body),
-			})
 		}
 	}()
 

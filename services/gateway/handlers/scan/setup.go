@@ -6,14 +6,15 @@ import (
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 	"github.com/madebyqwerty/shift/rabbitmq"
+	"github.com/madebyqwerty/shift/utils/flags"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-var Queue amqp.Queue
+var OcrQueue amqp.Queue
+var ScanQueue amqp.Queue
 var Channel *amqp.Channel
 
 func SetupScan(app *fiber.App) {
-	scan := app.Group("/scan")
 
 	var err error
 	Channel, err = rabbitmq.Conn.Channel()
@@ -21,9 +22,8 @@ func SetupScan(app *fiber.App) {
 		log.Fatalf("Error opening channel: %s", err)
 	}
 
-	var errq error
-
-	Queue, errq = Channel.QueueDeclare(
+	var ocrErr error
+	OcrQueue, ocrErr = Channel.QueueDeclare(
 		"ocr-queue",
 		false,
 		false,
@@ -32,10 +32,18 @@ func SetupScan(app *fiber.App) {
 		nil,
 	)
 
-	if errq != nil {
-		log.Fatalf("Error declaring queue: %s", errq)
+	if ocrErr != nil {
+		log.Println(flags.RabbitMQ, "Error declaring queue", ocrErr)
 	}
 
+	var scanErr error
+	ScanQueue, scanErr = Channel.QueueDeclare("scan:shift", false, false, false, false, nil)
+
+	if scanErr != nil {
+		log.Println(flags.RabbitMQ, "Error declaring queue", scanErr)
+	}
+
+	scan := app.Group("/scan")
 	scan.Post("/", Scan)
 	app.Get("/ws/:id", websocket.New(ScanWs))
 }

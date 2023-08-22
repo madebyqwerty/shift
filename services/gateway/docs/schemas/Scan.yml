@@ -6,7 +6,7 @@ properties:
   img:
     type: string
     format: binary
-    description: The image of the absence table. (max 4mb)
+    description: The image of the absence table. (max 20mb)
   week_number:
     type: integer
     description: The week number of the absence table.

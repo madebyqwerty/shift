@@ -1,9 +1,9 @@
 name: Generate OpenAPI client
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write

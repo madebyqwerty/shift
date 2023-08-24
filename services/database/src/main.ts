@@ -5,6 +5,7 @@ import { userRouter } from "./routes/users/users.ts";
 import { absenceRouter } from "./routes/absences.ts";
 import { Application, oakCors } from "./deps.ts";
 import { Meta, log } from "./logger.ts";
+import { AbsenceQueueController } from "./queues/absence-queue.ts";
 
 // Oak stuff
 export const app = new Application();
@@ -41,8 +42,17 @@ app.listen({ port });
 
 // RabbitMQ stuff
 const client = await RabbitMQ.init();
-// User request queue
 const channel = await client.createChannel();
+// User request queue
 const queue = await client.createQueue(channel, "user_request_queue");
 const userRequestQueue = new UserRequestQueue(client, channel, queue);
 userRequestQueue.consumeFromQueue();
+
+// Absence queue
+const absenceQueue = await client.createQueue(channel, "absence_queue");
+const absenceQueueController = new AbsenceQueueController(
+  client,
+  channel,
+  absenceQueue
+);
+absenceQueueController.consumeFromQueue();

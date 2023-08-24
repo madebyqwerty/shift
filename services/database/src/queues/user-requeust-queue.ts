@@ -2,8 +2,9 @@ import { getAllUsers } from "../controllers/users.ts";
 import { amqp } from "../deps.ts";
 import { log, Meta } from "../logger.ts";
 import { RabbitMQ } from "../rabbitmq.ts";
+import { CustomConsumerQueue } from "./queue.ts";
 
-export class UserRequestQueue {
+export class UserRequestQueue implements CustomConsumerQueue {
   readonly client: RabbitMQ;
   readonly channel: amqp.AmqpChannel;
   readonly queue: amqp.QueueDeclareOk;

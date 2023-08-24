@@ -6,6 +6,7 @@ import { absenceRouter } from "./routes/absences.ts";
 import { Application, oakCors } from "./deps.ts";
 import { Meta, log } from "./logger.ts";
 import { AbsenceQueueController } from "./queues/absence-queue.ts";
+import { ScanQueue } from "./queues/scan-queue.ts";
 
 // Oak stuff
 export const app = new Application();
@@ -48,11 +49,16 @@ const queue = await client.createQueue(channel, "user_request_queue");
 const userRequestQueue = new UserRequestQueue(client, channel, queue);
 userRequestQueue.consumeFromQueue();
 
+// ScanQueue
+const scanQueue = await client.createQueue(channel, "scan:shift");
+const scanQueueController = new ScanQueue(client, channel, scanQueue);
+
 // Absence queue
 const absenceQueue = await client.createQueue(channel, "absence_queue");
 const absenceQueueController = new AbsenceQueueController(
   client,
   channel,
-  absenceQueue
+  absenceQueue,
+  scanQueueController
 );
 absenceQueueController.consumeFromQueue();

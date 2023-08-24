@@ -12,7 +12,7 @@ export interface CustomConsumerQueue extends CustomQueue {
 }
 
 export interface CustomPublisherQueue extends CustomQueue {
-  publishMessage: <T extends Record<string, string>>(
+  publishMessage: <T extends Record<string, unknown>>(
     message: T
   ) => Promise<void>;
 }

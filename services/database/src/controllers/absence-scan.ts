@@ -6,11 +6,11 @@ export type AbsenceScan = {
   date: string;
 };
 
-export const createAbsenceScan = async (absences: AbsenceScan[]) => {
+export const createAbsenceScan = async (absences: AbsenceScan[]) =>
   await db
     .insertInto("AbsenceScan")
     .values({
-      absences: absences,
+      absences: JSON.stringify(absences),
     })
-    .execute();
-};
+    .returning("id")
+    .executeTakeFirst();

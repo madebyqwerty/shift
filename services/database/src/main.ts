@@ -1,4 +1,5 @@
-import { RabbitMQ, UserRequestQueue } from "./rabbitmq.ts";
+import { RabbitMQ } from "./rabbitmq.ts";
+import { UserRequestQueue } from "./queues/user-requeust-queue.ts";
 import { port } from "./constants.ts";
 import { userRouter } from "./routes/users/users.ts";
 import { absenceRouter } from "./routes/absences.ts";

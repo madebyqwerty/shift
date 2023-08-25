@@ -2,15 +2,19 @@ import { db } from "../kysely.ts";
 
 export type AbsenceScan = {
   id: string;
-  absence: number;
-  date: string;
+  data: Array<{
+    id: string;
+    absence: number;
+    date: string;
+  }>;
 };
 
-export const createAbsenceScan = async (absences: AbsenceScan[]) =>
+export const createAbsenceScan = async (scan: AbsenceScan) =>
   await db
     .insertInto("AbsenceScan")
     .values({
-      absences: JSON.stringify(absences),
+      absences: JSON.stringify(scan.data),
+      id: scan.id,
     })
     .returning("id")
     .executeTakeFirst();

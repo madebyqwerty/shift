@@ -30,24 +30,36 @@ export class AbsenceQueueController implements CustomConsumerQueue {
     await this.channel.consume(this.queue, async (args, _props, data) => {
       log.debug("Received request to create a new absenceScan", Meta.rabbit);
 
-      const absences = uint8ArrayToJson<AbsenceScan[]>(data);
+      const message = uint8ArrayToJson<AbsenceScan>(data);
 
-      if (absences.length === 0) {
+      if (!("absences" in message)) {
+        log.error(
+          `No absences in message: ${JSON.stringify(message)}`,
+          Meta.rabbit
+        );
+        await this.channel.ack({ deliveryTag: args.deliveryTag });
+        return;
+      }
+
+      if (message.data.length === 0) {
         log.debug(Meta.rabbit, "No absences found");
         this.scanQueue.publishMessage({
           status: "ERROR",
           errors: ["postgres/no-absences-found"],
         });
+        await this.channel.ack({ deliveryTag: args.deliveryTag });
+        return;
       }
 
-      const result = await createAbsenceScan(absences);
+      const result = await createAbsenceScan(message);
 
       if (isUndefined(result)) {
         this.scanQueue.publishMessage({
           status: "ERROR",
           errors: ["postgres/failed-to-save-absences"],
         });
-        log.error(Meta.db, "Failed to save absences");
+        log.error("Failed to save absences", Meta.db);
+        await this.channel.ack({ deliveryTag: args.deliveryTag });
         return;
       }
 
@@ -55,10 +67,10 @@ export class AbsenceQueueController implements CustomConsumerQueue {
 
       this.scanQueue.publishMessage({
         status: "SAVED",
-        "absence-scan-id": result?.id,
+        absence_scan_id: result?.id,
       });
 
-      log.debug(Meta.rabbit, "Sent SAVED status to scanQueue");
+      log.debug("Sent SAVED status to scanQueue", Meta.rabbit);
       await this.channel.ack({ deliveryTag: args.deliveryTag });
     });
   }

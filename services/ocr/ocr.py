@@ -2,7 +2,7 @@
 import numpy as np
 import cv2, qrcode, pytesseract, time, ast, pika, datetime, json
 
-debug_mode = False
+debug_mode = True
 DEBUG_IMG_SCALE = 0.15
 
 class QRCodeError(Exception):
@@ -15,6 +15,9 @@ class db():
     def get_class(id, connection, table_img, qr_data, week_number): #TODO: Request databáze
         connection = pika.BlockingConnection(pika.ConnectionParameters(host=connection))
         channel = connection.channel()
+
+        if debug_mode: print("Sending request to user_request_queue")
+
         channel.queue_declare(queue='user_request_queue')
         channel.basic_publish(exchange='',
                             routing_key='user_request_queue',
@@ -30,9 +33,17 @@ class db():
         data = channel.start_consuming()
         return data
 
-    def save(records, connection):
+    def save(records, connection, scan_id):
+        if not records: records = []
+        records = {
+            "id": scan_id,
+            "data": records
+        }
         connection = pika.BlockingConnection(pika.ConnectionParameters(host=connection))
         channel = connection.channel()
+
+        if debug_mode: print("Sending data to absence_queue")
+
         channel.queue_declare(queue='absence_queue')
         channel.basic_publish(exchange='',
                             routing_key='absence_queue',
@@ -321,7 +332,7 @@ class Engine():
     """
     Primary functions
     """
-    def process(input_img, week_number, connection):
+    def process(input_img, week_number, connection, scan_id):
         """
         Image processing for the required data
         """
@@ -345,7 +356,7 @@ class Engine():
 
         if debug_mode: print("Save to database")
 
-        db.save(data, connection)
+        db.save(data, connection, scan_id)
 
         if debug_mode: print(f"Done in {int((time.time()-start)*100)/100}")
 

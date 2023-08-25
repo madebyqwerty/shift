@@ -39,8 +39,8 @@ services:
 
   ocr-service:
     container_name: ocr-service
-    #image: ghcr.io/madebyqwerty/ocr-service:latest
-    build: services/ocr/
+    image: ghcr.io/madebyqwerty/ocr-service:latest
+    #build: services/ocr/
     restart: always
     env_file: .env
     ports:

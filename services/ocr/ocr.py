@@ -21,7 +21,7 @@ class db():
         channel.queue_declare(queue='user_request_queue')
         channel.basic_publish(exchange='',
                             routing_key='user_request_queue',
-                            body=str({"class_id": id}))
+                            body=json.dumps({"class_id": id}))
 
         channel.queue_declare(queue='user_queue')
         def callback(ch, method, properties, body):
@@ -47,7 +47,7 @@ class db():
         channel.queue_declare(queue='absence_queue')
         channel.basic_publish(exchange='',
                             routing_key='absence_queue',
-                            body=str(records))
+                            body=json.dumps(records))
         connection.close()
 
 class Image():

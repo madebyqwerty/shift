@@ -17,9 +17,6 @@ tasks:
   prisma/push:
     command: "npx prisma db push --skip-generate"
     local: true
-  prisma/generate:
-    command: "npx prisma generate"
-    local: true
   seed:
     command: "deno run --allow-read --allow-net --allow-env --allow-write src/utils/seed.ts"
     local: true

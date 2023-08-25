@@ -19,8 +19,8 @@ def main():
         nparr = np.frombuffer(base64.b64decode(data["img"]), np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-        out = Engine.process(img, int(data["week_number"]), RABBITMQ_HOST)
-        print(out)
+        out = Engine.process(img, int(data["week_number"]), RABBITMQ_HOST, data["id"])
+        print(f"Sending data to scan:shift")
 
         channel.queue_declare(queue=f"scan:shift")
         channel.basic_publish(exchange='',

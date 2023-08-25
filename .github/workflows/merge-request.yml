@@ -1,4 +1,4 @@
-name: Build and Publish Docker Images
+name: Docker
 
 on:
   pull_request:
@@ -38,6 +38,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         service:
           [

@@ -25,6 +25,7 @@ export class RabbitMQ {
       return new RabbitMQ(connection);
     } catch (err) {
       log.critical("Failed to create a connection", Meta.rabbit, err);
+      Deno.exit(1);
     }
   }
 
@@ -34,42 +35,5 @@ export class RabbitMQ {
 
   async createQueue(channel: amqp.AmqpChannel, queue: string) {
     return await channel.declareQueue({ queue });
-  }
-}
-
-export class UserRequestQueue {
-  readonly client: RabbitMQ;
-  readonly channel: amqp.AmqpChannel;
-  readonly queue: amqp.QueueDeclareOk;
-
-  constructor(
-    client: RabbitMQ,
-    channel: amqp.AmqpChannel,
-    queue: amqp.QueueDeclareOk
-  ) {
-    this.client = client;
-    this.channel = channel;
-    this.queue = queue;
-  }
-
-  async consumeFromQueue() {
-    log.debug("Started onsuming from user_queue", Meta.rabbit);
-    await this.channel.consume({ queue: this.queue.queue }, async () => {
-      log.debug("Received request for all users", Meta.rabbit);
-      const userQueue = await this.client.createQueue(
-        this.channel,
-        "user_queue"
-      );
-
-      log.debug("Fetching all users from database", Meta.db);
-      const users = await getAllUsers();
-
-      log.debug("Sending all users back to user_queue", Meta.rabbit);
-      this.channel.publish(
-        { routingKey: userQueue.queue },
-        { contentType: "application/json" },
-        new TextEncoder().encode(JSON.stringify(users))
-      );
-    });
   }
 }

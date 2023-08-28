@@ -71,12 +71,6 @@ func ScanWs(c *websocket.Conn) {
 
 			c.WriteJSON(data)
 
-			if data["status"] == "DONE" {
-				c.Close()
-				ch.Close()
-				break
-			}
-
 		}
 	}()
 

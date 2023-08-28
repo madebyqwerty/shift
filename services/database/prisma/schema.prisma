@@ -25,3 +25,8 @@ model Absence {
   lesson Int
   date   DateTime
 }
+
+model AbsenceScan {
+  id       String @id @default(dbgenerated("gen_random_uuid()"))
+  absences Json
+}

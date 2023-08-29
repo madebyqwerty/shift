@@ -35,7 +35,7 @@ class db():
 
     def save(records, connection, scan_id):
         if not records: records = []
-        records = {
+        records_dict = {
             "id": scan_id,
             "absences": records
         }
@@ -47,7 +47,7 @@ class db():
         channel.queue_declare(queue='absence_queue')
         channel.basic_publish(exchange='',
                             routing_key='absence_queue',
-                            body=json.dumps(records))
+                            body=json.dumps(records_dict))
         connection.close()
 
 class Image():

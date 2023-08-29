@@ -26,6 +26,9 @@ paths:
   /ws/scan/{userId}:
     $ref: "./paths/ws_scan.yml"
 
+  /scan/complete:
+    $ref: "./paths/scan_complete.yml"
+
 components:
   schemas:
     Absence:

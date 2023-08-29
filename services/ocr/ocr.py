@@ -37,7 +37,7 @@ class db():
         if not records: records = []
         records = {
             "id": scan_id,
-            "data": records
+            "absences": records
         }
         connection = pika.BlockingConnection(pika.ConnectionParameters(host=connection))
         channel = connection.channel()

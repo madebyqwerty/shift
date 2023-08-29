@@ -65,7 +65,7 @@ func ScanWs(c *websocket.Conn) {
 		for d := range msgs {
 			var data map[string]interface{}
 			if err := json.Unmarshal(d.Body, &data); err != nil {
-				log.Error(flags.GO, "Failed to parse data:", string(d.Body))
+				log.Error(flags.GO, "Failed to parse data:", string(d.Body), "error:", err)
 				c.WriteJSON(fiber.Map{
 					"status": "error",
 					"errors": []string{"rabbitmq/failed-to-parse-data"},

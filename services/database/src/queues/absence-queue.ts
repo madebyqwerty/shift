@@ -31,6 +31,7 @@ export class AbsenceQueueController implements CustomConsumerQueue {
       log.debug("Received request to create a new absenceScan", Meta.rabbit);
 
       const message = uint8ArrayToJson<AbsenceScan>(data);
+      const scan_id = message.id;
 
       if (!("absences" in message)) {
         log.error(
@@ -41,11 +42,12 @@ export class AbsenceQueueController implements CustomConsumerQueue {
         return;
       }
 
-      if (message.data.length === 0) {
+      if (message.absences.length === 0) {
         log.debug(Meta.rabbit, "No absences found");
         this.scanQueue.publishMessage({
           status: "ERROR",
           errors: ["postgres/no-absences-found"],
+          scan_id,
         });
         await this.channel.ack({ deliveryTag: args.deliveryTag });
         return;
@@ -57,6 +59,7 @@ export class AbsenceQueueController implements CustomConsumerQueue {
         this.scanQueue.publishMessage({
           status: "ERROR",
           errors: ["postgres/failed-to-save-absences"],
+          scan_id,
         });
         log.error("Failed to save absences", Meta.db);
         await this.channel.ack({ deliveryTag: args.deliveryTag });
@@ -67,7 +70,7 @@ export class AbsenceQueueController implements CustomConsumerQueue {
 
       this.scanQueue.publishMessage({
         status: "SAVED",
-        absence_scan_id: result?.id,
+        scan_id: result?.id,
       });
 
       log.debug("Sent SAVED status to scanQueue", Meta.rabbit);

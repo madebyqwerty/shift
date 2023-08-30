@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 5001
 
-CMD ["python3", "-u", "main.py", "--docker_mode", "True"]
+CMD ["python3", "-u", "main.py", "--docker_mode"]

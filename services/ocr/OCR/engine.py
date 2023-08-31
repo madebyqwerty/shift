@@ -213,7 +213,7 @@ class Engine():
 
         print("Save to database")
 
-        db.save(data, connection, scan_id)
+        db.save_absence_scan(data, connection, scan_id)
 
         print(f"Done in {int((time.time()-start)*100)/100}")
 

@@ -23,7 +23,7 @@ class db():
 
         return data
 
-    def save(records, connection, scan_id):
+    def save_absence_scan(records, connection, scan_id):
         channel = connection.channel()
         
         records_dict = {

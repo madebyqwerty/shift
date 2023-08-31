@@ -2,6 +2,8 @@
 from OCR.errors import *
 import cv2, qrcode, pytesseract, ast
 
+BANNED_CHARS = ",.|\\/=—-1234567890()[]><!?:„“ "
+
 class Qr():
     """
     Qr code stuff
@@ -67,8 +69,7 @@ class OCR():
         cords, text = [], []
         for i in range(len(data["text"])):
             raw_text = data["text"][i]
-            banned_chars = ",.|\\/=—-1234567890()[]><!?:„“ "
-            for char in banned_chars:
+            for char in BANNED_CHARS:
                 raw_text = raw_text.replace(char, "")
 
             if not raw_text == "" and len(raw_text) > 3:

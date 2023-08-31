@@ -83,6 +83,8 @@ func Scan(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"errors": []string{"rabbimq/failed-to-publish-to-scan-queue"},
 		})
+	} else {
+		log.Println(flags.RabbitMQ, "Send data to procces to OCR")
 	}
 
 	return c.JSON(fiber.Map{

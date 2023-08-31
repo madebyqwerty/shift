@@ -5,7 +5,9 @@ import (
 
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
 	"github.com/madebyqwerty/shift/rabbitmq"
+	"github.com/madebyqwerty/shift/utils/flags"
 )
 
 // Sends back the status of scanning back to client using websockets
@@ -63,10 +65,12 @@ func ScanWs(c *websocket.Conn) {
 		for d := range msgs {
 			var data map[string]interface{}
 			if err := json.Unmarshal(d.Body, &data); err != nil {
+				log.Error(flags.GO, "Failed to parse data:", string(d.Body), "error:", err)
 				c.WriteJSON(fiber.Map{
 					"status": "error",
 					"errors": []string{"rabbitmq/failed-to-parse-data"},
 				})
+				return
 			}
 
 			c.WriteJSON(data)

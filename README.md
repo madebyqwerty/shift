@@ -8,8 +8,6 @@ This project uses [Moonrepo](https://moonrepo.dev) to orchestrate the tasks, so 
 curl -fsSL https://moonrepo.dev/install/moon.sh | bash
 ```
 
-^[1]: More on https://moonrepo.dev/docs/install
-
 I recommend to read through the docs of moonrepo, but the basics you want to know are:
 
 `moon project <name_of_project>` - Gets information about the project and tasks you can run

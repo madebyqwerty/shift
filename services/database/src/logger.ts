@@ -17,4 +17,5 @@ export enum Meta {
   rabbit = "🐰 RabbitMQ",
   db = "🐘 Postgres",
   oak = "🌳 Oak",
+  deno = "🐢 Deno",
 }

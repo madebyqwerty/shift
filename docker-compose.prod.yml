@@ -2,9 +2,7 @@ version: "3"
 services:
   web:
     container_name: web
-    build:
-      context: ./
-      dockerfile: apps/web/Dockerfile
+    image: ghcr.io/madebyqwerty/web:latest
     restart: always
     ports:
       - 5002:5002
@@ -13,7 +11,7 @@ services:
 
   database-service:
     container_name: database-service
-    build: services/database/
+    image: ghcr.io/madebyqwerty/database-service:latest
     restart: always
     ports:
       - 5000:5000
@@ -27,7 +25,7 @@ services:
 
   gateway:
     container_name: gateway
-    build: services/database/
+    image: ghcr.io/madebyqwerty/gateway:latest
     restart: always
     ports:
       - 5003:5003
@@ -41,7 +39,8 @@ services:
 
   ocr-service:
     container_name: ocr-service
-    build: services/ocr/
+    image: ghcr.io/madebyqwerty/ocr-service:latest
+    #build: services/ocr/
     restart: always
     env_file: .env
     ports:

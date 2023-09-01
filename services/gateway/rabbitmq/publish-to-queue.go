@@ -19,10 +19,10 @@ func PublishToQueue(channel *amqp.Channel, queue amqp.Queue, data []byte) error 
 		ContentType: "application/json",
 		Body:        data,
 	}); err != nil {
-		log.Printf(flags.RabbitMQ, "Error publishing to %s queue %s", queue.Name, err.Error())
+		log.Printf("%s Error publishing to %s queue %s", flags.RabbitMQ, queue.Name, err.Error())
 		return errors.New("rabbitmq/failed-to-publish-to-" + queue.Name + "-queue")
 	} else {
-		log.Printf(flags.RabbitMQ, "Sending absence data to %s queue", queue.Name)
+		log.Printf("%s Sending absence data to %s queue", flags.RabbitMQ, queue.Name)
 	}
 	return nil
 }

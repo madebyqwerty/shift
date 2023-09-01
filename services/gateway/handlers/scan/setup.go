@@ -52,5 +52,7 @@ func SetupScan(app *fiber.App) {
 
 	scan := app.Group("/scan")
 	scan.Post("/", Scan)
+	scan.Post("/complete/:scan_id", ScanComplete)
 	app.Get("/ws/:id", websocket.New(ScanWs))
+
 }

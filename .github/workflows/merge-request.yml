@@ -1,9 +1,13 @@
-name: Build and Publish Docker Images
+name: Docker
 
 on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+    branches:
+      - main
+
 
 permissions:
   contents: write
@@ -38,6 +42,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         service:
           [

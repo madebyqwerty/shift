@@ -7,6 +7,7 @@ import { Application, oakCors } from "./deps.ts";
 import { Meta, log } from "./logger.ts";
 import { AbsenceQueueController } from "./queues/absence-queue.ts";
 import { ScanQueue } from "./queues/scan-queue.ts";
+import { ScanCompleteQueueController } from "./queues/scan-complete-queue.ts";
 
 // Oak stuff
 export const app = new Application();
@@ -62,3 +63,16 @@ const absenceQueueController = new AbsenceQueueController(
   scanQueueController
 );
 absenceQueueController.consumeFromQueue();
+
+// AbsenceCompleteScan
+const scanCompleteScanQueue = await client.createQueue(
+  channel,
+  "scan_complete"
+);
+const scanCompleteQueueController = new ScanCompleteQueueController(
+  client,
+  channel,
+  scanCompleteScanQueue,
+  scanQueueController
+);
+scanCompleteQueueController.consumeFromQueue();

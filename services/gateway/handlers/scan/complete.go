@@ -12,6 +12,11 @@ import (
 	"github.com/madebyqwerty/shift/utils/flags"
 )
 
+type ScanCompleteWithScanId struct {
+	*openapi.ScanComplete
+	ScanId string `json:"scan_id"`
+}
+
 func ScanComplete(c *fiber.Ctx) error {
 	absenceData := new(openapi.ScanComplete)
 	fmt.Println(string(c.Body()))
@@ -22,7 +27,12 @@ func ScanComplete(c *fiber.Ctx) error {
 		})
 	}
 
-	absenceDataJSON, _ := json.Marshal(absenceData)
+	absenceDataWithScanId := &ScanCompleteWithScanId{
+		ScanComplete: absenceData,
+		ScanId:       c.Params("scan_id"),
+	}
+
+	absenceDataJSON, _ := json.Marshal(absenceDataWithScanId)
 
 	err := rabbitmq.PublishToQueue(Channel, ScanCompleteQueue, absenceDataJSON)
 	if err != nil {

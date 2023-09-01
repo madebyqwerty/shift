@@ -27,7 +27,7 @@ class db():
         channel = connection.channel()
         
         records_dict = {
-            "id": scan_id,
+            "user_id": scan_id,
             "absences": records
         }
 

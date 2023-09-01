@@ -32,7 +32,7 @@ def main():
             channel.queue_declare(queue=f"scan:shift")
             channel.basic_publish(exchange='',
                                 routing_key=f"scan:shift",
-                                body=json.dumps({"status": "Error", "errors": e, "scan_id": data["id"]}))
+                                body=json.dumps({"status": "ERROR", "errors": [e], "scan_id": data["id"]}))
 
     channel.basic_consume(queue='ocr-queue', on_message_callback=callback, auto_ack=True)
 

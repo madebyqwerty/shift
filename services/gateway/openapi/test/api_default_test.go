@@ -13,23 +13,20 @@ import (
 	"context"
 	"testing"
 
-	openapiclient "github.com/madebyqwerty/shift"
+	openapiclient "github.com/madebyqwerty/shift/openapi"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func Test_openapi_DefaultAPIService(t *testing.T) {
 
+	t.Skip("skip test")
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
 	t.Run("Test DefaultAPIService ApiAbsencesUserIdGet", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
-
-		var userId string
-
-		resp, httpRes, err := apiClient.DefaultAPI.ApiAbsencesUserIdGet(context.Background(), userId).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.ApiAbsencesUserIdGet(context.Background(), "ca740fad-7add-4e56-818b-29cfde87416f").Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

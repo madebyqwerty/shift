@@ -5,7 +5,7 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export type Absence = {
-    userId: string;
+    user_id: string;
     id: Generated<string>;
     lesson: number;
     date: Timestamp;

@@ -95,7 +95,8 @@ Class | Method | HTTP request | Description
  - [ApiUsersPostRequest](docs/ApiUsersPostRequest.md)
  - [Error](docs/Error.md)
  - [Scan](docs/Scan.md)
- - [ScanCompleteInner](docs/ScanCompleteInner.md)
+ - [ScanComplete](docs/ScanComplete.md)
+ - [ScanCompleteAbsencesInner](docs/ScanCompleteAbsencesInner.md)
  - [ScanPost200Response](docs/ScanPost200Response.md)
  - [User](docs/User.md)
 

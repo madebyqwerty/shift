@@ -608,11 +608,11 @@ type ApiScanCompleteScanIdPostRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	scanId string
-	scanCompleteInner *[]ScanCompleteInner
+	scanComplete *ScanComplete
 }
 
-func (r ApiScanCompleteScanIdPostRequest) ScanCompleteInner(scanCompleteInner []ScanCompleteInner) ApiScanCompleteScanIdPostRequest {
-	r.scanCompleteInner = &scanCompleteInner
+func (r ApiScanCompleteScanIdPostRequest) ScanComplete(scanComplete ScanComplete) ApiScanCompleteScanIdPostRequest {
+	r.scanComplete = &scanComplete
 	return r
 }
 
@@ -654,8 +654,8 @@ func (a *DefaultAPIService) ScanCompleteScanIdPostExecute(r ApiScanCompleteScanI
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.scanCompleteInner == nil {
-		return nil, reportError("scanCompleteInner is required and must be specified")
+	if r.scanComplete == nil {
+		return nil, reportError("scanComplete is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -676,7 +676,7 @@ func (a *DefaultAPIService) ScanCompleteScanIdPostExecute(r ApiScanCompleteScanI
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.scanCompleteInner
+	localVarPostBody = r.scanComplete
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return nil, err

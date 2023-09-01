@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -13,7 +12,8 @@ docs/ApiUsersPostRequest.md
 docs/DefaultAPI.md
 docs/Error.md
 docs/Scan.md
-docs/ScanCompleteInner.md
+docs/ScanComplete.md
+docs/ScanCompleteAbsencesInner.md
 docs/ScanPost200Response.md
 docs/User.md
 git_push.sh
@@ -26,8 +26,8 @@ model__scan_post_200_response.go
 model_absence.go
 model_error.go
 model_scan.go
-model_scan_complete_inner.go
+model_scan_complete.go
+model_scan_complete_absences_inner.go
 model_user.go
 response.go
-test/api_default_test.go
 utils.go

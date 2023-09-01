@@ -296,9 +296,20 @@ components:
       - week_number
       type: object
     ScanComplete:
-      items:
-        $ref: '#/components/schemas/ScanComplete_inner'
-      type: array
+      example:
+        absences:
+        - date: 2020-01-01T00:00:00.000+00:00
+          user_id: user_id
+          absence: 0.8008281904610115
+        - date: 2020-01-01T00:00:00.000+00:00
+          user_id: user_id
+          absence: 0.8008281904610115
+      properties:
+        absences:
+          items:
+            $ref: '#/components/schemas/ScanComplete_absences_inner'
+          type: array
+      type: object
     _api_users_post_request:
       properties:
         name:
@@ -343,7 +354,11 @@ components:
           example: 5f9b0a5a-0b0a-4c7a-8b0a-5a0b0a4c7a8b
           type: string
       type: object
-    ScanComplete_inner:
+    ScanComplete_absences_inner:
+      example:
+        date: 2020-01-01T00:00:00.000+00:00
+        user_id: user_id
+        absence: 0.8008281904610115
       properties:
         user_id:
           description: "When the user has more than one hour of absence, every hour\

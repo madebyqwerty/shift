@@ -346,7 +346,7 @@ No authorization required
 
 ## ScanCompleteScanIdPost
 
-> ScanCompleteScanIdPost(ctx, scanId).ScanCompleteInner(scanCompleteInner).Execute()
+> ScanCompleteScanIdPost(ctx, scanId).ScanComplete(scanComplete).Execute()
 
 Complete a scan
 
@@ -364,11 +364,11 @@ import (
 
 func main() {
     scanId := "scanId_example" // string | ID of the scan
-    scanCompleteInner := []openapiclient.ScanCompleteInner{*openapiclient.NewScanCompleteInner()} // []ScanCompleteInner | 
+    scanComplete := *openapiclient.NewScanComplete() // ScanComplete | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ScanCompleteScanIdPost(context.Background(), scanId).ScanCompleteInner(scanCompleteInner).Execute()
+    r, err := apiClient.DefaultAPI.ScanCompleteScanIdPost(context.Background(), scanId).ScanComplete(scanComplete).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ScanCompleteScanIdPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -392,7 +392,7 @@ Other parameters are passed through a pointer to a apiScanCompleteScanIdPostRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **scanCompleteInner** | [**[]ScanCompleteInner**](ScanCompleteInner.md) |  | 
+ **scanComplete** | [**ScanComplete**](ScanComplete.md) |  | 
 
 ### Return type
 

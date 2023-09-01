@@ -16,3 +16,11 @@ tasks:
       - "docs/openapi.yml"
     outputs:
       - "/packages/database-service-client"
+  generate-go:
+    platform: "system"
+    local: true
+    command: "openapi-generator-cli generate -i ./docs/openapi.yml -g go -o ./schema"
+    inputs:
+      - "docs/openapi.yml"
+    outputs:
+      - "/packages/database-service-client"

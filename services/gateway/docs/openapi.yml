@@ -14,19 +14,19 @@ paths:
   /api/users:
     $ref: "./paths/users.yml"
 
-  /api/users/{userId}:
+  /api/users/{user_id}:
     $ref: "./paths/users_id.yml"
 
-  /api/absences/{userId}:
+  /api/absences/{user_id}:
     $ref: "./paths/absences.yml"
 
   /scan:
     $ref: "./paths/scan.yml"
 
-  /ws/scan/{userId}:
+  /ws/scan/{user_id}:
     $ref: "./paths/ws_scan.yml"
 
-  /scan/complete:
+  /scan/complete/{scan_id}:
     $ref: "./paths/scan_complete.yml"
 
 components:

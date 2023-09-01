@@ -1,4 +1,4 @@
-type: list
+type: array
 items:
   type: object
   properties:
@@ -12,4 +12,4 @@ items:
       type: string
       format: date
       description: The date of the absence.
-      example: 2020-01-01
+      example: "2020-01-01"

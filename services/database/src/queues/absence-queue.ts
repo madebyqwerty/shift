@@ -28,10 +28,9 @@ export class AbsenceQueueController implements CustomConsumerQueue {
   async consumeFromQueue() {
     log.debug("Started onsuming from absence-queue", Meta.rabbit);
     await this.channel.consume(this.queue, async (args, _props, data) => {
-      log.debug("Received request to create a new absenceScan", Meta.rabbit);
-
       const message = uint8ArrayToJson<AbsenceScan>(data);
-      const scan_id = message.id;
+      log.debug("Received request to create a new absenceScan", Meta.rabbit);
+      const scan_id = message.user_id;
 
       if (!("absences" in message)) {
         log.error(
@@ -70,7 +69,7 @@ export class AbsenceQueueController implements CustomConsumerQueue {
 
       this.scanQueue.publishMessage({
         status: "SAVED",
-        scan_id: result?.id,
+        scan_id,
       });
 
       log.debug("Sent SAVED status to scanQueue", Meta.rabbit);

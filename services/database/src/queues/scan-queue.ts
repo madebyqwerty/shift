@@ -2,6 +2,7 @@ import { AmqpChannel } from "https://deno.land/x/amqp@v0.23.1/mod.ts";
 import { RabbitMQ } from "../rabbitmq.ts";
 import { CustomPublisherQueue } from "./queue.ts";
 import { QueueDeclareOk } from "https://deno.land/x/amqp@v0.23.1/src/amqp_types.ts";
+import { Meta, log } from "../logger.ts";
 
 export class ScanQueue implements CustomPublisherQueue {
   client: RabbitMQ;
@@ -17,14 +18,18 @@ export class ScanQueue implements CustomPublisherQueue {
   publishMessage: <T extends Record<string, unknown>>(
     message: T
   ) => Promise<void> = async (message) => {
-    await this.channel.publish(
-      {
-        routingKey: this.queue.queue,
-      },
-      {
-        contentType: "application/json",
-      },
-      new TextEncoder().encode(JSON.stringify(message))
-    );
+    await this.channel
+      .publish(
+        {
+          routingKey: this.queue.queue,
+        },
+        {
+          contentType: "application/json",
+        },
+        new TextEncoder().encode(JSON.stringify(message))
+      )
+      .catch((e) =>
+        log.error("Failed to publish message to scan:shift" + e, Meta.rabbit)
+      );
   };
 }

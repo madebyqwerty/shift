@@ -1,15 +1,17 @@
 <script>
-	import Sidebar from '$lib/components/Sidebar.svelte';
+	import Sidebar from '$lib/components/sidebar/Sidebar.svelte';
 	import { fly } from 'svelte/transition';
 	import '../app.css';
+	import toast, { Toaster } from 'svelte-french-toast';
+	import Scans from '$lib/components/scans/Scans.svelte';
+	import { browser } from '$app/environment';
 </script>
 
 <div
-	class="w-full min-h-screen bg-base-100 text-base-950 grid grid-cols-[400px_1fr] grid-rows-1 font-nunito-sans"
+	class="w-full min-h-screen bg-background text-base-950 grid grid-cols-[255px_1fr] grid-rows-1 font-nunito-sans"
 >
-	<div class="p-6">
-		<Sidebar />
-	</div>
+	<Toaster />
+	<Sidebar />
 	<main
 		class="p-6"
 		in:fly={{ x: 200, duration: 300, delay: 300 }}
@@ -17,4 +19,7 @@
 	>
 		<slot />
 	</main>
+	{#if browser}
+		<Scans />
+	{/if}
 </div>

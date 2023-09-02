@@ -41,6 +41,9 @@
 						<span class="inline-flex items-center gap-2">
 							<FileScan size={18} />
 							Skeny
+							<div class="bg-primary/20 text-foreground rounded-full w-6 h-6">
+								{Object.keys($scanStore).length}
+							</div>
 						</span>
 						{#if open}
 							<ChevronsDownUp class="h-4 w-4" />
@@ -54,10 +57,10 @@
 		<Collapsible.Content class="space-y-2">
 			{#each Object.entries($scanStore) as [id, scan], i (id)}
 				<Card.Root>
-					<Card.Content class="flex items-center justify-between p-4">
+					<Card.Content class="flex items-center justify-between p-4 py-2">
 						<HoverCard.Root>
 							<HoverCard.Trigger>
-								<span class="inline-flex items-center gap-2 px-3.5">
+								<span class="inline-flex items-center gap-2">
 									<Scan size={18} />
 									Sken {i + 1}
 								</span>
@@ -69,7 +72,7 @@
 								<BarLoader size={100} color="rgb(34 197 94)" />
 							</div>
 						{:else if scan.status === 'SAVED'}
-							<Button variant="link" href="/scans/{id}">Zobrazit</Button>
+							<Button variant="link" class="p-0" href="/scans/{id}">Zobrazit</Button>
 						{:else if scan.status === 'ERROR'}
 							<span class="text-red-500 p-2">Něco se pokazilo</span>
 						{:else if scan.status === 'PROCCESED'}

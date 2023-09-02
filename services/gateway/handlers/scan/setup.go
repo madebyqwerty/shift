@@ -14,6 +14,7 @@ var OcrQueue amqp.Queue
 var ScanQueue amqp.Queue
 var ScanCompleteQueue amqp.Queue
 var Channel *amqp.Channel
+var Broadcast = make(<-chan amqp.Delivery)
 
 func SetupScan(app *fiber.App) {
 
@@ -50,9 +51,40 @@ func SetupScan(app *fiber.App) {
 		log.Println(flags.RabbitMQ, "Error declaring queue", scanErr)
 	}
 
+	q, err := Channel.QueueDeclare(
+		"scan:shift",
+		false,
+		false,
+		false,
+		false,
+		nil,
+	)
+
+	if err != nil {
+		log.Println(flags.RabbitMQ, "Failed to declare scan:shift queue")
+	}
+
+	Broadcast, err = Channel.Consume(
+		q.Name,
+		"",
+		false,
+		false,
+		false,
+		false,
+		nil,
+	)
+
+	if err != nil {
+		log.Println(flags.RabbitMQ, "Failed to start consuming from scan:shift queue")
+	} else {
+		log.Println(flags.RabbitMQ, "Consuming from scan:shift queue")
+	}
+
 	scan := app.Group("/scan")
 	scan.Post("/", Scan)
 	scan.Post("/complete/:scan_id", ScanComplete)
-	app.Get("/ws/:id", websocket.New(ScanWs))
 
+	// WebSockets
+	go RunHub()
+	app.Get("/ws/:id", websocket.New(ScanWs))
 }

@@ -7,6 +7,8 @@ models/ApiAbsencesUserIdPostRequest.ts
 models/ApiUsersPostRequest.ts
 models/ModelError.ts
 models/Scan.ts
+models/ScanComplete.ts
+models/ScanCompleteAbsencesInner.ts
 models/ScanPost200Response.ts
 models/User.ts
 models/index.ts

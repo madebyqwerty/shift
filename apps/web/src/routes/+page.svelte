@@ -1,5 +1,4 @@
 <script>
-	import { ChevronRight } from 'lucide-svelte';
 	import { fly } from 'svelte/transition';
 </script>
 
@@ -13,8 +12,5 @@
 		<div class="w-16 h-1 bg-primary-500 rounded mb-2" />
 		<p>Verze 0.0.1</p>
 	</span>
-	<a href="/absences"
-		><span class="flex justify-center items-center text-lg">Absence <ChevronRight size={28} /></span
-		></a
-	>
+	<a href="/absences"><span class="flex justify-center items-center text-lg">Absence </span></a>
 </div>

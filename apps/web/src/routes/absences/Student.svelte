@@ -1,9 +1,8 @@
 <script lang="ts">
 	import type { Student, Absence } from '$lib/types';
 	import { slide } from 'svelte/transition';
-	import { ChevronRight, Check, X } from 'lucide-svelte';
 	import type { User } from '@shift/database-service-client';
-	import { absencesClient, usersClient } from '$lib/api/client';
+	import { api } from '$lib/api/client';
 
 	export let student: User;
 	let open = false;
@@ -13,7 +12,7 @@
 	}
 
 	async function getAbsences() {
-		const data = await absencesClient.absencesUserIdGet({
+		const data = await api.apiAbsencesUserIdGet({
 			userId: student.id
 		});
 
@@ -29,9 +28,7 @@
 		on:click={switchState}
 	>
 		<span class="flex flex-row justify-center items-center">
-			<span class="duration-100 {open ? 'rotate-90' : ''}">
-				<ChevronRight size={18} />
-			</span>
+			<p class="duration-100 {open ? 'rotate-90' : ''}" />
 			<p class="font-semibold text-base-950">{student.name}</p>
 		</span>
 	</button>

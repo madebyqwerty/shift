@@ -1,0 +1,376 @@
+openapi: 3.0.3
+info:
+  contact:
+    name: Tomáš Kebrle
+  description: REST API for interacting with the database service.
+  license:
+    name: Proprietary
+  title: Database service API
+  version: 0.0.1
+servers:
+- url: http://localhost:5003/
+paths:
+  /api/users:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/User'
+                type: array
+          description: The list of users.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+      summary: List of all users
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_api_users_post_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: The created user.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+      summary: Creates a new user.
+  /api/users/{user_id}:
+    get:
+      parameters:
+      - description: ID of the user
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: The user.
+        "400":
+          content:
+            application/json:
+              example:
+                id:
+                - invalid
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The user ID is invalid.
+        "404":
+          content:
+            application/json:
+              example:
+                user:
+                - not-found
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The user was not found.
+      summary: A user with the given ID
+  /api/absences/{user_id}:
+    get:
+      parameters:
+      - description: ID of the user to get
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Absence'
+                type: array
+          description: The list of absences.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+      summary: List of all absences for a user
+    post:
+      parameters:
+      - description: ID of the user to get
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_api_absences__user_id__post_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_api_absences__user_id__post_200_response'
+          description: The absence was successfully created
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+      summary: Creates a new absence.
+  /scan:
+    post:
+      requestBody:
+        content:
+          multipart/formdata:
+            schema:
+              $ref: '#/components/schemas/Scan'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_scan_post_200_response'
+          description: The absence was successfully created
+        "400":
+          content:
+            application/json:
+              schema:
+                items:
+                  enum:
+                  - rabbitmq/failed-to-publish
+                  - scan/fail
+                  type: string
+                type: array
+          description: The request was invalid
+      summary: Scan absence table
+  /ws/scan/{user_id}:
+    get:
+      parameters:
+      - description: ID of the user
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+      responses:
+        "101":
+          content:
+            text/plain:
+              schema:
+                example: Switching protocols
+                type: string
+          description: Switching protocols
+          headers:
+            Sec-WebSocket-Protocol:
+              schema:
+                enum:
+                - scan
+                type: string
+      summary: Connect to websocket (will fail with 101 if not a websocket)
+  /scan/complete/{scan_id}:
+    post:
+      parameters:
+      - description: ID of the scan
+        in: path
+        name: scanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanComplete'
+        required: true
+      summary: Complete a scan
+components:
+  parameters:
+    userId:
+      description: ID of the user
+      in: path
+      name: userId
+      required: true
+      schema:
+        type: string
+    scanComplete:
+      description: ID of the scan
+      in: path
+      name: scanId
+      required: true
+      schema:
+        type: string
+  responses:
+    error:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Error
+  schemas:
+    Absence:
+      example:
+        name: John Doe
+        userId: 7d6fd0c4-6b3d-46d9-9840-5e8874c9c646
+        id: f7cabd53-49e1-4c93-b59e-6035811b134d
+        lesson: 2
+        date: 2023-05-14
+      properties:
+        name:
+          description: The user's name
+          type: string
+        userId:
+          description: The user's id
+          type: string
+        id:
+          description: The absence's id.
+          type: string
+        lesson:
+          description: The lesson number
+          type: number
+        date:
+          description: Date of the absence
+          type: string
+      required:
+      - date
+      - id
+      - lesson
+      - name
+      - userId
+      type: object
+    User:
+      example:
+        name: John Doe
+        id: f7cabd53-49e1-4c93-b59e-6035811b134d
+      properties:
+        name:
+          description: The user's name.
+          type: string
+        id:
+          description: The user's id.
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    Error:
+      properties:
+        errors:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+      type: object
+    Scan:
+      properties:
+        img:
+          description: The image of the absence table. (max 20mb)
+          format: binary
+          type: string
+        week_number:
+          description: The week number of the absence table.
+          type: integer
+      required:
+      - img
+      - week_number
+      type: object
+    ScanComplete:
+      example:
+        absences:
+        - date: 2020-01-01T00:00:00.000+00:00
+          user_id: user_id
+          absence: 0.8008281904610115
+        - date: 2020-01-01T00:00:00.000+00:00
+          user_id: user_id
+          absence: 0.8008281904610115
+      properties:
+        absences:
+          items:
+            $ref: '#/components/schemas/ScanComplete_absences_inner'
+          type: array
+      type: object
+    _api_users_post_request:
+      properties:
+        name:
+          description: The user's name.
+          example: John Doe
+          type: string
+      type: object
+    _api_absences__user_id__post_request:
+      properties:
+        lesson:
+          example: 3
+          type: number
+        date:
+          example: 2023-05-14
+          type: string
+      type: object
+    _api_absences__user_id__post_200_response:
+      example:
+        date: 2023-05-14
+        lesson: 2
+        id: 7d6fd0c4-6b3d-46d9-9840-5e8874c9c646
+      properties:
+        id:
+          description: The absence id.
+          example: 7d6fd0c4-6b3d-46d9-9840-5e8874c9c646
+          type: string
+        lesson:
+          description: The lesson number
+          example: 2
+          type: number
+        date:
+          description: Date of the absence
+          example: 2023-05-14
+          type: string
+      type: object
+    _scan_post_200_response:
+      example:
+        scan_id: 5f9b0a5a-0b0a-4c7a-8b0a-5a0b0a4c7a8b
+      properties:
+        scan_id:
+          description: The id of the scan
+          example: 5f9b0a5a-0b0a-4c7a-8b0a-5a0b0a4c7a8b
+          type: string
+      type: object
+    ScanComplete_absences_inner:
+      example:
+        date: 2020-01-01T00:00:00.000+00:00
+        user_id: user_id
+        absence: 0.8008281904610115
+      properties:
+        user_id:
+          description: "When the user has more than one hour of absence, every hour\
+            \ of his absence will be in this array with a user_id."
+          type: string
+        absence:
+          description: "Only one hour of absence, if he has another hour it will be\
+            \ in another item in this list."
+          type: number
+        date:
+          description: The date of the absence.
+          example: 2020-01-01
+          format: date
+          type: string
+      type: object

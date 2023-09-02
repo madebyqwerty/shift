@@ -7,6 +7,6 @@ export const uint8ArrayToJson: <T>(arr: Uint8Array) => T = (arr) => {
     return JSON.parse(decoded);
   } catch {
     log.error(`Failed to parse JSON: ${decoded}`, Meta.deno);
-    return [];
+    return null;
   }
 };

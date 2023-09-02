@@ -1,0 +1,10 @@
+post:
+  parameters:
+    - $ref: "../parameters/scanComplete.yml"
+  summary: Complete a scan
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/ScanComplete.yml"

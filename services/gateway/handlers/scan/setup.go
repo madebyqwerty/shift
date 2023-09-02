@@ -12,6 +12,7 @@ import (
 
 var OcrQueue amqp.Queue
 var ScanQueue amqp.Queue
+var ScanCompleteQueue amqp.Queue
 var Channel *amqp.Channel
 
 func SetupScan(app *fiber.App) {
@@ -43,7 +44,15 @@ func SetupScan(app *fiber.App) {
 		log.Println(flags.RabbitMQ, "Error declaring queue", scanErr)
 	}
 
+	var scanCompleteErr error
+	ScanCompleteQueue, scanCompleteErr = Channel.QueueDeclare("scan_complete", false, false, false, false, nil)
+	if scanCompleteErr != nil {
+		log.Println(flags.RabbitMQ, "Error declaring queue", scanErr)
+	}
+
 	scan := app.Group("/scan")
 	scan.Post("/", Scan)
+	scan.Post("/complete/:scan_id", ScanComplete)
 	app.Get("/ws/:id", websocket.New(ScanWs))
+
 }

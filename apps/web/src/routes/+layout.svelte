@@ -2,11 +2,15 @@
 	import Sidebar from '$lib/components/sidebar/Sidebar.svelte';
 	import { fly } from 'svelte/transition';
 	import '../app.css';
+	import toast, { Toaster } from 'svelte-french-toast';
+	import Scans from '$lib/components/scans/Scans.svelte';
+	import { browser } from '$app/environment';
 </script>
 
 <div
 	class="w-full min-h-screen bg-background text-base-950 grid grid-cols-[255px_1fr] grid-rows-1 font-nunito-sans"
 >
+	<Toaster />
 	<Sidebar />
 	<main
 		class="p-6"
@@ -15,4 +19,7 @@
 	>
 		<slot />
 	</main>
+	{#if browser}
+		<Scans />
+	{/if}
 </div>

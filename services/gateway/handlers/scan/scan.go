@@ -69,6 +69,8 @@ func Scan(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"errors": []string{"rabbimq/failed-to-publish-to-orc-queue"},
 		})
+	} else {
+		log.Println(flags.RabbitMQ, "Sent image to be proccesed to OCR")
 	}
 
 	scanRes := ScanResponse{Status: "STARTED", ScanId: res.Id}
@@ -84,7 +86,7 @@ func Scan(c *fiber.Ctx) error {
 			"errors": []string{"rabbitmq/failed-to-publish-to-scan-queue"},
 		})
 	} else {
-		log.Println(flags.RabbitMQ, "Send data to procces to OCR")
+		log.Println(flags.RabbitMQ, "Notified scan:shift of new scan")
 	}
 
 	return c.JSON(fiber.Map{

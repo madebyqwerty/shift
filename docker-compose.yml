@@ -27,7 +27,7 @@ services:
 
   gateway:
     container_name: gateway
-    build: services/database/
+    build: services/gateway/
     restart: always
     ports:
       - 5003:5003

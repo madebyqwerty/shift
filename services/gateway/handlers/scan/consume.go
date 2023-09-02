@@ -2,10 +2,10 @@ package scan
 
 import (
 	"encoding/json"
+	"log"
 
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/log"
 	"github.com/madebyqwerty/shift/rabbitmq"
 	"github.com/madebyqwerty/shift/utils/flags"
 )
@@ -65,7 +65,7 @@ func ScanWs(c *websocket.Conn) {
 		for d := range msgs {
 			var data map[string]interface{}
 			if err := json.Unmarshal(d.Body, &data); err != nil {
-				log.Error(flags.GO, "Failed to parse data:", string(d.Body), "error:", err)
+				log.Println(flags.GO, "Failed to parse data:", string(d.Body), "error:", err)
 				c.WriteJSON(fiber.Map{
 					"status": "error",
 					"errors": []string{"rabbitmq/failed-to-parse-data"},
@@ -73,10 +73,24 @@ func ScanWs(c *websocket.Conn) {
 				return
 			}
 
-			c.WriteJSON(data)
+			_, _, err := c.ReadMessage()
+			if err != nil {
+
+				log.Println(err)
+				log.Println(flags.Fiber, "Closing websocket connection")
+				close(forever)
+				break
+			}
+
+			log.Println(flags.Fiber, "Received message from scan:shift and sending it to websocket")
+			if err := c.WriteJSON(data); err != nil {
+				log.Println(flags.Fiber, "error sending message to scan:shift", err)
+			}
 
 		}
 	}()
 
 	<-forever
+
+	log.Println("Ending connection for", id)
 }

@@ -22,11 +22,12 @@ def main():
 
         try:
             out = Engine.process(img, int(data["week_number"]), connection2, data["id"])
-
             channel.queue_declare(queue=f"scan:shift")
-            channel.basic_publish(exchange='',
-                                routing_key=f"scan:shift",
-                                body=json.dumps({"status": "PROCCESED", "scan_id": data["id"]}))
+            
+            if len(out) == 0:
+                channel.basic_publish(exchange='', routing_key=f"scan:shift", body=json.dumps({"status": "ERROR", "errors": ["scan/empty-absences"], "scan_id": data["id"]}))
+            else:
+                channel.basic_publish(exchange='', routing_key=f"scan:shift", body=json.dumps({"status": "PROCCESED", "scan_id": data["id"]}))
             
         except Exception as e:
             channel.queue_declare(queue=f"scan:shift")

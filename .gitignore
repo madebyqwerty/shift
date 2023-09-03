@@ -3,10 +3,6 @@
 .moon/cache
 .moon/docker
 
-# moon
-.moon/cache
-.moon/docker
-
 # node
 node_modules
 

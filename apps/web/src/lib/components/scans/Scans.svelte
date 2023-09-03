@@ -11,7 +11,7 @@
 
 	let open: boolean = Object.keys($scanStore).length !== 0;
 
-	const socket = new WebSocket('ws://localhost:5003/ws/shift');
+	const socket = new WebSocket('ws://gateway.shift.parmaindustries.eu/ws/shift');
 
 	socket.addEventListener('open', () => {
 		toast.success('Připojeno k serveru');

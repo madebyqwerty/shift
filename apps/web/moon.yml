@@ -29,6 +29,7 @@ tasks:
       - 'build'
 
   test:
+    local: true
     command: 'vitest'
     inputs:
       - '@group(svelte)'

@@ -24,16 +24,16 @@ class db():
         return data
 
     def save_absence_scan(records, connection, scan_id):
-        channel = connection.channel()
-        
-        records_dict = {
-            "user_id": scan_id,
-            "absences": records
-        }
+        if len(records) > 0:
+            channel = connection.channel()
+            records_dict = {
+                "scan_id": scan_id,
+                "absences": records
+            }
 
-        print("Sending data to absence_queue")
+            print("Sending data to absence_queue")
 
-        channel.queue_declare(queue='absence_queue')
-        channel.basic_publish(exchange='',
-                            routing_key='absence_queue',
-                            body=json.dumps(records_dict))
+            channel.queue_declare(queue='absence_queue')
+            channel.basic_publish(exchange='',
+                                routing_key='absence_queue',
+                                body=json.dumps(records_dict))

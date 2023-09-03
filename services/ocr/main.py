@@ -35,6 +35,7 @@ def main():
                                 routing_key=f"scan:shift",
                                 body=json.dumps({"status": "ERROR", "errors": [e], "scan_id": data["id"]}))
 
+    channel.queue_declare(queue=f"ocr-queue")
     channel.basic_consume(queue='ocr-queue', on_message_callback=callback, auto_ack=True)
 
     print('Consuming from ocr_queue')

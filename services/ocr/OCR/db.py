@@ -27,7 +27,7 @@ class db():
         if len(records) > 0:
             channel = connection.channel()
             records_dict = {
-                "user_id": scan_id,
+                "scan_id": scan_id,
                 "absences": records
             }
 

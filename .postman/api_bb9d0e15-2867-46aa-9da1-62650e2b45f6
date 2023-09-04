@@ -8,16 +8,29 @@ id = bb9d0e15-2867-46aa-9da1-62650e2b45f6
 [config.relations]
 
 [config.relations.collections]
-rootDirectory = services/gateway/collections
-files[] = {"id":"27173972-1252942f-4f3b-4346-bbdf-ea199c5285b3","path":"Shift API Collection.json","metaData":{"generateCollectionPreferences":"{\"updateCollectionSync\":true}"}}
+rootDirectory = services/database/collections
+files[] = {"id":"27173972-1b6caa86-3f23-4219-a897-515fb82af2aa","path":"Shift API.json","metaData":{"generateCollectionPreferences":"{\"requestNameSource\":\"Fallback\",\"indentCharacter\":\"Space\",\"parametersResolution\":\"Schema\",\"folderStrategy\":\"Paths\",\"includeAuthInfoInExample\":true,\"enableOptionalParameters\":true,\"keepImplicitHeaders\":false,\"includeDeprecated\":true,\"alwaysInheritAuthentication\":false,\"updateCollectionSync\":true,\"requestParametersResolution\":\"Schema\",\"exampleParametersResolution\":\"Schema\"}"}}
 
 [config.relations.collections.metaData]
 
 [config.relations.apiDefinition]
-rootDirectory = services/gateway/docs
+rootDirectory = services/database/docs
 files[] = {"path":"openapi.yml","metaData":{}}
-files[] = {"path":"openapitools.json","metaData":{}}
+files[] = {"path":"parameters/scanComplete.yml","metaData":{}}
+files[] = {"path":"parameters/userId.yml","metaData":{}}
+files[] = {"path":"paths/absences.yml","metaData":{}}
+files[] = {"path":"paths/scan.yml","metaData":{}}
+files[] = {"path":"paths/scan_complete.yml","metaData":{}}
+files[] = {"path":"paths/users.yml","metaData":{}}
+files[] = {"path":"paths/users_id.yml","metaData":{}}
+files[] = {"path":"paths/ws_scan.yml","metaData":{}}
 files[] = {"path":"responses/error.yml","metaData":{}}
+files[] = {"path":"responses/status.yml","metaData":{}}
+files[] = {"path":"schemas/Absence.yml","metaData":{}}
+files[] = {"path":"schemas/Error.yml","metaData":{}}
+files[] = {"path":"schemas/Scan.yml","metaData":{}}
+files[] = {"path":"schemas/ScanComplete.yml","metaData":{}}
+files[] = {"path":"schemas/User.yml","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
 type = openapi:3

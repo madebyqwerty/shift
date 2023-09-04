@@ -1,0 +1,36 @@
+get:
+  summary: List of all users
+  responses:
+    "200":
+      description: The list of users.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../schemas/User.yml"
+    "400":
+      $ref: "../responses/error.yml"
+
+post:
+  summary: Creates a new user.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The user's name.
+              example: John Doe
+  responses:
+    "200":
+      description: The created user.
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/User.yml"
+    "400":
+      $ref: "../responses/error.yml"

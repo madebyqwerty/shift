@@ -1,0 +1,17 @@
+get:
+  summary: Connect to websocket (will fail with 101 if not a websocket)
+  parameters:
+    - $ref: "../parameters/userId.yml"
+  responses:
+    "101":
+      description: Switching protocols
+      headers:
+        Sec-WebSocket-Protocol:
+          schema:
+            type: string
+            enum: [scan]
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: Switching protocols

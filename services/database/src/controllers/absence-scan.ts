@@ -23,11 +23,11 @@ export const createAbsenceScan = async (scan: AbsenceScan) =>
     .executeTakeFirst();
 
 export const getAbsenceScan = async (id: string) =>
-  await db
+  (await db
     .selectFrom("AbsenceScan")
     .selectAll()
     .where("AbsenceScan.id", "=", id)
-    .execute();
+    .executeTakeFirst()) ?? {};
 
 export const getAllAbsenceScans = async () =>
   await db.selectFrom("AbsenceScan").selectAll().execute();

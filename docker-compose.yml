@@ -31,8 +31,7 @@ services:
     restart: always
     ports:
       - 5003:5003
-    networks:
-      - shift-infra
+    network_mode: "host"
     depends_on:
       postgres:
         condition: service_healthy

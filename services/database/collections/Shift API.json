@@ -1,0 +1,1080 @@
+{
+	"info": {
+		"_postman_id": "1b6caa86-3f23-4219-a897-515fb82af2aa",
+		"name": "Shift API",
+		"description": "REST API for interacting with the database service.\n\nContact Support:\n Name: Tomáš Kebrle",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "27173972-1b6caa86-3f23-4219-a897-515fb82af2aa"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "{user_id}",
+							"item": [
+								{
+									"name": "A user with the given ID",
+									"id": "1791a8d5-ad5d-48f3-bb75-f1b08baae9ae",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/users/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "850c877d-9354-4803-9f05-6748aad82690",
+											"name": "The user.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "http://localhost:5003/api/users/:user_id",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5003",
+													"path": [
+														"api",
+														"users",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\"\n}"
+										},
+										{
+											"id": "9e609651-b5d2-441e-98b4-23212ab65d41",
+											"name": "The user ID is invalid.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/users/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+										},
+										{
+											"id": "9e7ebd3a-b98a-43b2-a705-b004cea50803",
+											"name": "The user was not found.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/users/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+										}
+									]
+								}
+							],
+							"id": "ef406677-2029-4ec9-98f6-c3e869b84bb8"
+						},
+						{
+							"name": "List of all users",
+							"id": "dfb3c05a-ee0a-4c39-85fe-318c9df723d6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "d684376c-1523-4f0f-bd58-7c5ed9479fca",
+									"name": "The list of users.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "localhost:5003/api/users",
+											"host": [
+												"localhost"
+											],
+											"port": "5003",
+											"path": [
+												"api",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"name\": \"<string>\",\n    \"id\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"id\": \"<string>\"\n  }\n]"
+								},
+								{
+									"id": "7a17bd8b-e465-4ffe-9447-77ce09212750",
+									"name": "Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+								}
+							]
+						},
+						{
+							"name": "Creates a new user.",
+							"id": "4a927080-937b-41ce-8adc-e1173d64757c",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "15607795-cf6d-4f66-adb4-375d828cd801",
+									"name": "The created user.",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\"\n}"
+								},
+								{
+									"id": "09b456a2-2b07-4c68-bf0d-5ddb1ce03c60",
+									"name": "Error",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+								}
+							]
+						}
+					],
+					"id": "2d8f69cb-250c-4fb7-93b4-f9d9b2fd8309"
+				},
+				{
+					"name": "absences",
+					"item": [
+						{
+							"name": "{user_id}",
+							"item": [
+								{
+									"name": "List of all absences for a user",
+									"id": "b3015821-1033-41d1-9973-1abb4dbc23ce",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/absences/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"absences",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "72358dfc-4767-4c09-aa4b-fcf975bc13a8",
+											"name": "The list of absences.",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/absences/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"absences",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "[\n  {\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lesson\": \"<number>\",\n    \"date\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lesson\": \"<number>\",\n    \"date\": \"<string>\"\n  }\n]"
+										},
+										{
+											"id": "fca6787e-dc49-47d7-92af-24799222bce5",
+											"name": "Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/absences/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"absences",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+										}
+									]
+								},
+								{
+									"name": "Creates a new absence.",
+									"id": "23050642-3e85-40f0-be4c-c490f51a16de",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"lesson\": \"<number>\",\n  \"date\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/absences/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"absences",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "4b2a4e59-5ddb-4a36-857f-cf7e54ce1204",
+											"name": "The absence was successfully created",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"lesson\": \"<number>\",\n  \"date\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/absences/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"absences",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"id\": \"<string>\",\n  \"lesson\": \"<number>\",\n  \"date\": \"<string>\"\n}"
+										},
+										{
+											"id": "d5743f48-b2ef-4478-a7e5-93f19da5402d",
+											"name": "Error",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"lesson\": \"<number>\",\n  \"date\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/absences/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"absences",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+										}
+									]
+								}
+							],
+							"id": "1d5744a9-6092-493c-8f02-f42e8bad04d8"
+						}
+					],
+					"id": "d2324a25-3372-4759-9b5b-1064efcfca1f"
+				}
+			],
+			"id": "70245aca-4b09-4ce2-84af-cf72cfa4b1d7"
+		},
+		{
+			"name": "scan",
+			"item": [
+				{
+					"name": "complete",
+					"item": [
+						{
+							"name": "{scan_id}",
+							"item": [
+								{
+									"name": "Complete a scan",
+									"id": "66af683c-d7fd-49ad-9a4b-97d3aa897cf3",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"absences\": [{\"user_id\":\"77c85432-eea6-41b1-a1f4-7389b2d5dc4e\", \"absence\": 9, \"date\": \"2023-04-05\"}]\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/scan/complete/16855316-2806-41cf-b10d-5c55dac2c98a",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"scan",
+												"complete",
+												"16855316-2806-41cf-b10d-5c55dac2c98a"
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "2dd963ef-c63b-432c-938b-39babd4a8de8",
+											"name": "Scan was succesfuly send to be completed",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"absences\": [\n    {\n      \"user_id\": \"<string>\",\n      \"absence\": \"<number>\",\n      \"date\": \"<date>\"\n    },\n    {\n      \"user_id\": \"<string>\",\n      \"absence\": \"<number>\",\n      \"date\": \"<date>\"\n    }\n  ]\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/scan/complete/:scan_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"scan",
+														"complete",
+														":scan_id"
+													],
+													"variable": [
+														{
+															"key": "scan_id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"status\": \"ERROR\",\n  \"message\": \"<string>\"\n}"
+										}
+									]
+								}
+							],
+							"id": "d9f9a218-ee1f-4d3a-9574-1bdc563a77e7"
+						}
+					],
+					"id": "a5270eb3-2c5a-4a5f-bce6-16bc1f1a63c1"
+				},
+				{
+					"name": "Scan absence table",
+					"id": "02710c99-e018-4938-a8fe-24fdf7357441",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/formdata"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "img",
+									"type": "file",
+									"src": "/home/tomaskebrle/Downloads/img1.jpg"
+								},
+								{
+									"key": "week_number",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/scan",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"scan"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "6db98513-4c4f-496f-9c94-062c5dff7c7d",
+							"name": "The absence was successfully created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "multipart/formdata"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"img\": \"<string>\",\n  \"week_number\": \"<integer>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/scan",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"scan"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"scan_id\": \"<string>\"\n}"
+						},
+						{
+							"id": "e24949a9-6ef7-4776-b16e-5e950e855f71",
+							"name": "The request was invalid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "multipart/formdata"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"img\": \"<string>\",\n  \"week_number\": \"<integer>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/scan",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"scan"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  \"scan/fail\",\n  \"scan/fail\"\n]"
+						}
+					]
+				}
+			],
+			"id": "a2e0896c-6566-426b-b9ce-4984ba2dcf21"
+		},
+		{
+			"name": "ws",
+			"item": [
+				{
+					"name": "scan",
+					"item": [
+						{
+							"name": "{user_id}",
+							"item": [
+								{
+									"name": "Connect to websocket (will fail with 101 if not a websocket)",
+									"id": "05fd17cd-3464-4a06-800d-155f5c24418e",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/ws/scan/:user_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"ws",
+												"scan",
+												":user_id"
+											],
+											"variable": [
+												{
+													"key": "user_id",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "10162449-1cd7-4a58-817f-f3c83a634953",
+											"name": "Switching protocols",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "text/plain"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/ws/scan/:user_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"ws",
+														"scan",
+														":user_id"
+													],
+													"variable": [
+														{
+															"key": "user_id"
+														}
+													]
+												}
+											},
+											"status": "Switching Protocols",
+											"code": 101,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												},
+												{
+													"disabled": false,
+													"description": {
+														"content": "",
+														"type": "text/plain"
+													},
+													"key": "Sec-WebSocket-Protocol",
+													"value": "scan"
+												}
+											],
+											"cookie": [],
+											"body": "<string>"
+										}
+									]
+								}
+							],
+							"id": "b0d163b4-3824-44e0-90a5-d69709b3bade"
+						}
+					],
+					"id": "ce72d979-b36d-4a6a-8351-946065a5ca13"
+				}
+			],
+			"id": "d27d20c3-7396-41c3-8b93-35fb5fdebec8"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bf3360d8-c2e9-4b41-9ad7-c205096bee39",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "797e7629-8b9f-4c7d-9571-ab674cbdfd5f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "98d9964c-5838-4956-8225-057e4a836ff9",
+			"key": "baseUrl",
+			"value": "localhost:5003",
+			"type": "any"
+		}
+	]
+}

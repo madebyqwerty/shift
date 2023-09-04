@@ -1,0 +1,39 @@
+openapi: "3.0.3"
+info:
+  title: Database service API
+  version: 0.0.1
+  description: REST API for interacting with the database service.
+  license:
+    name: Proprietary
+  contact:
+    name: Tomáš Kebrle
+servers:
+  - url: http://localhost:5003
+
+paths:
+  /api/users:
+    $ref: "./paths/users.yml"
+
+  /api/users/{user_id}:
+    $ref: "./paths/users_id.yml"
+
+  /api/absences/{user_id}:
+    $ref: "./paths/absences.yml"
+
+  /scan:
+    $ref: "./paths/scan.yml"
+
+  /ws/scan/{user_id}:
+    $ref: "./paths/ws_scan.yml"
+
+  /scan/complete/{scan_id}:
+    $ref: "./paths/scan_complete.yml"
+
+components:
+  schemas:
+    Absence:
+      $ref: "./schemas/Absence.yml"
+    User:
+      $ref: "./schemas/User.yml"
+    Error:
+      $ref: "./schemas/Error.yml"

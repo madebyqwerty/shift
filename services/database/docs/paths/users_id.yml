@@ -1,0 +1,30 @@
+get:
+  summary: A user with the given ID
+  parameters:
+    - $ref: "../parameters/userId.yml"
+  responses:
+    200:
+      description: The user.
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/User.yml"
+    400:
+      description: The user ID is invalid.
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yml"
+          example:
+            id:
+              - invalid
+
+    404:
+      description: The user was not found.
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/Error.yml"
+          example:
+            user:
+              - not-found

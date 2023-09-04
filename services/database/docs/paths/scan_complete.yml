@@ -1,0 +1,24 @@
+post:
+  parameters:
+    - $ref: "../parameters/scanComplete.yml"
+  summary: Complete a scan
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/ScanComplete.yml"
+  responses:
+    "200":
+      description: Scan was succesfuly send to be completed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: "../responses/status.yml"
+              message:
+                type: string
+                example: rabbitmq/send-to-scan-complete-queue
+      

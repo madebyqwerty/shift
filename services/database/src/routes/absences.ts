@@ -6,5 +6,5 @@ export const absenceRouter = new Router({
   prefix: "/api/absences",
 });
 
-absenceRouter.get("/:userId", oakify(getByUserId));
-absenceRouter.post("/:userId", oakify(createAbsence));
+absenceRouter.get("/:user_id", oakify(getByUserId));
+absenceRouter.post("/:user_id", oakify(createAbsence));

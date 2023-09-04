@@ -7,7 +7,7 @@
 	import { browser } from '$app/environment';
 	import { Focus } from 'lucide-svelte';
 	import { onMount } from 'svelte';
-	import { api } from '$lib/api/client';
+	import { client } from '$lib/api/client';
 
 	let Device: any;
 
@@ -26,13 +26,10 @@
 
 	onMount(async () => {
 		try {
-		
 			const packageModule = await import('svelte-device-info');
-
 
 			Device = packageModule.default;
 
-		
 			console.log(Device);
 		} catch (error) {
 			console.error('Error importing npm package:', error);

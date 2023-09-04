@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1b6caa86-3f23-4219-a897-515fb82af2aa",
+		"_postman_id": "a6154cb3-17bf-49ba-b5b1-2eb26ad41049",
 		"name": "Shift API",
 		"description": "REST API for interacting with the database service.\n\nContact Support:\n Name: Tomáš Kebrle",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "27173972-1b6caa86-3f23-4219-a897-515fb82af2aa"
+		"_uid": "27173972-a6154cb3-17bf-49ba-b5b1-2eb26ad41049"
 	},
 	"item": [
 		{
@@ -18,7 +18,7 @@
 							"item": [
 								{
 									"name": "A user with the given ID",
-									"id": "1791a8d5-ad5d-48f3-bb75-f1b08baae9ae",
+									"id": "5affb0c8-f4b3-49b3-8422-cc3eac25561c",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -50,7 +50,7 @@
 									},
 									"response": [
 										{
-											"id": "850c877d-9354-4803-9f05-6748aad82690",
+											"id": "a080a38e-05c6-460f-ad12-389babc92145",
 											"name": "The user.",
 											"originalRequest": {
 												"method": "GET",
@@ -82,6 +82,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "json",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -92,7 +93,7 @@
 											"body": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\"\n}"
 										},
 										{
-											"id": "9e609651-b5d2-441e-98b4-23212ab65d41",
+											"id": "4e50401e-ac12-4651-8fac-c14e34f77d82",
 											"name": "The user ID is invalid.",
 											"originalRequest": {
 												"method": "GET",
@@ -122,6 +123,7 @@
 											"status": "Bad Request",
 											"code": 400,
 											"_postman_previewlanguage": "json",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -132,7 +134,7 @@
 											"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
 										},
 										{
-											"id": "9e7ebd3a-b98a-43b2-a705-b004cea50803",
+											"id": "ae5585c6-c9f4-4127-b1c6-05c5f80b9c00",
 											"name": "The user was not found.",
 											"originalRequest": {
 												"method": "GET",
@@ -162,6 +164,7 @@
 											"status": "Not Found",
 											"code": 404,
 											"_postman_previewlanguage": "json",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -174,11 +177,11 @@
 									]
 								}
 							],
-							"id": "ef406677-2029-4ec9-98f6-c3e869b84bb8"
+							"id": "9e46d0c5-e9ea-4dbb-b995-783334d06624"
 						},
 						{
 							"name": "List of all users",
-							"id": "dfb3c05a-ee0a-4c39-85fe-318c9df723d6",
+							"id": "77ab0c66-bd17-4fac-8f28-83c26e1c7360",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -203,7 +206,7 @@
 							},
 							"response": [
 								{
-									"id": "d684376c-1523-4f0f-bd58-7c5ed9479fca",
+									"id": "0df681e5-b72c-4c8a-844f-01f5737ce275",
 									"name": "The list of users.",
 									"originalRequest": {
 										"method": "GET",
@@ -228,6 +231,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -238,7 +242,7 @@
 									"body": "[\n  {\n    \"name\": \"<string>\",\n    \"id\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"id\": \"<string>\"\n  }\n]"
 								},
 								{
-									"id": "7a17bd8b-e465-4ffe-9447-77ce09212750",
+									"id": "8fea9fd4-0b1c-476b-b13e-668a4bd38905",
 									"name": "Error",
 									"originalRequest": {
 										"method": "GET",
@@ -262,6 +266,7 @@
 									"status": "Bad Request",
 									"code": 400,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -275,7 +280,7 @@
 						},
 						{
 							"name": "Creates a new user.",
-							"id": "4a927080-937b-41ce-8adc-e1173d64757c",
+							"id": "7089d074-423d-4944-af12-2bef57e85ea7",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -314,7 +319,7 @@
 							},
 							"response": [
 								{
-									"id": "15607795-cf6d-4f66-adb4-375d828cd801",
+									"id": "5a06cdf9-5a06-4b5f-a5ef-31dd01f7e50c",
 									"name": "The created user.",
 									"originalRequest": {
 										"method": "POST",
@@ -352,6 +357,7 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -362,7 +368,7 @@
 									"body": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\"\n}"
 								},
 								{
-									"id": "09b456a2-2b07-4c68-bf0d-5ddb1ce03c60",
+									"id": "81ee9665-e321-456f-b595-c409e0592495",
 									"name": "Error",
 									"originalRequest": {
 										"method": "POST",
@@ -400,6 +406,7 @@
 									"status": "Bad Request",
 									"code": 400,
 									"_postman_previewlanguage": "json",
+									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -412,7 +419,7 @@
 							]
 						}
 					],
-					"id": "2d8f69cb-250c-4fb7-93b4-f9d9b2fd8309"
+					"id": "cd9d1c2f-0049-470d-8b4e-62aa72b01a4a"
 				},
 				{
 					"name": "absences",
@@ -422,7 +429,7 @@
 							"item": [
 								{
 									"name": "List of all absences for a user",
-									"id": "b3015821-1033-41d1-9973-1abb4dbc23ce",
+									"id": "2f657b89-fa6a-472e-ab14-cc4f1cbc7d2a",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -454,7 +461,7 @@
 									},
 									"response": [
 										{
-											"id": "72358dfc-4767-4c09-aa4b-fcf975bc13a8",
+											"id": "a9a0c78c-bcbf-4c9c-9950-398b2bda7ba3",
 											"name": "The list of absences.",
 											"originalRequest": {
 												"method": "GET",
@@ -484,6 +491,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "json",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -494,7 +502,7 @@
 											"body": "[\n  {\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lesson\": \"<number>\",\n    \"date\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lesson\": \"<number>\",\n    \"date\": \"<string>\"\n  }\n]"
 										},
 										{
-											"id": "fca6787e-dc49-47d7-92af-24799222bce5",
+											"id": "6c94b6f5-46a3-44ed-8108-10bfb78ac1ea",
 											"name": "Error",
 											"originalRequest": {
 												"method": "GET",
@@ -524,6 +532,7 @@
 											"status": "Bad Request",
 											"code": 400,
 											"_postman_previewlanguage": "json",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -537,7 +546,7 @@
 								},
 								{
 									"name": "Creates a new absence.",
-									"id": "23050642-3e85-40f0-be4c-c490f51a16de",
+									"id": "adc83e83-bf33-4842-897f-0074c2f39b10",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -583,7 +592,7 @@
 									},
 									"response": [
 										{
-											"id": "4b2a4e59-5ddb-4a36-857f-cf7e54ce1204",
+											"id": "c27139ee-7dfe-4e33-8dd2-8e25789329e5",
 											"name": "The absence was successfully created",
 											"originalRequest": {
 												"method": "POST",
@@ -627,6 +636,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "json",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -637,7 +647,7 @@
 											"body": "{\n  \"id\": \"<string>\",\n  \"lesson\": \"<number>\",\n  \"date\": \"<string>\"\n}"
 										},
 										{
-											"id": "d5743f48-b2ef-4478-a7e5-93f19da5402d",
+											"id": "044eb463-ad42-44cb-80da-10b3e2505626",
 											"name": "Error",
 											"originalRequest": {
 												"method": "POST",
@@ -681,6 +691,7 @@
 											"status": "Bad Request",
 											"code": 400,
 											"_postman_previewlanguage": "json",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -693,13 +704,13 @@
 									]
 								}
 							],
-							"id": "1d5744a9-6092-493c-8f02-f42e8bad04d8"
+							"id": "e17811b1-2969-4b5a-8940-b7abada6906e"
 						}
 					],
-					"id": "d2324a25-3372-4759-9b5b-1064efcfca1f"
+					"id": "2bf07905-8026-4947-ad03-9d73f543f1d2"
 				}
 			],
-			"id": "70245aca-4b09-4ce2-84af-cf72cfa4b1d7"
+			"id": "2856ed27-9500-41e6-bc85-b09586040c8a"
 		},
 		{
 			"name": "scan",
@@ -712,7 +723,7 @@
 							"item": [
 								{
 									"name": "Complete a scan",
-									"id": "66af683c-d7fd-49ad-9a4b-97d3aa897cf3",
+									"id": "2c13c2ce-433d-4dfd-8196-540db29f6130",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -752,7 +763,7 @@
 									},
 									"response": [
 										{
-											"id": "2dd963ef-c63b-432c-938b-39babd4a8de8",
+											"id": "f8b31c77-7f3a-429e-b417-74bfaf81e54a",
 											"name": "Scan was succesfuly send to be completed",
 											"originalRequest": {
 												"method": "POST",
@@ -796,6 +807,7 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "json",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -808,14 +820,14 @@
 									]
 								}
 							],
-							"id": "d9f9a218-ee1f-4d3a-9574-1bdc563a77e7"
+							"id": "955fda5a-60f9-49c9-839b-7ec650a7a597"
 						}
 					],
-					"id": "a5270eb3-2c5a-4a5f-bce6-16bc1f1a63c1"
+					"id": "49f59bb8-d441-4200-be19-f0a1f556f93d"
 				},
 				{
 					"name": "Scan absence table",
-					"id": "02710c99-e018-4938-a8fe-24fdf7357441",
+					"id": "c64061d9-d89c-474c-b8ec-a4e35aed0f2c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -837,7 +849,9 @@
 								{
 									"key": "img",
 									"type": "file",
-									"src": "/home/tomaskebrle/Downloads/img1.jpg"
+									"src": [
+										"/home/tomaskebrle/Downloads/img1.jpg"
+									]
 								},
 								{
 									"key": "week_number",
@@ -858,7 +872,7 @@
 					},
 					"response": [
 						{
-							"id": "6db98513-4c4f-496f-9c94-062c5dff7c7d",
+							"id": "045a19b4-f723-46e4-bec8-863499238184",
 							"name": "The absence was successfully created",
 							"originalRequest": {
 								"method": "POST",
@@ -889,6 +903,7 @@
 							"status": "OK",
 							"code": 200,
 							"_postman_previewlanguage": "json",
+							"_postman_previewtype": "html",
 							"header": [
 								{
 									"key": "Content-Type",
@@ -899,7 +914,7 @@
 							"body": "{\n  \"scan_id\": \"<string>\"\n}"
 						},
 						{
-							"id": "e24949a9-6ef7-4776-b16e-5e950e855f71",
+							"id": "e7561fb5-974c-4889-bd35-1650a026fcb4",
 							"name": "The request was invalid",
 							"originalRequest": {
 								"method": "POST",
@@ -930,6 +945,7 @@
 							"status": "Bad Request",
 							"code": 400,
 							"_postman_previewlanguage": "json",
+							"_postman_previewtype": "html",
 							"header": [
 								{
 									"key": "Content-Type",
@@ -942,7 +958,7 @@
 					]
 				}
 			],
-			"id": "a2e0896c-6566-426b-b9ce-4984ba2dcf21"
+			"id": "4ffd2999-36d0-4eaa-89b5-e6f0e5f9a3ef"
 		},
 		{
 			"name": "ws",
@@ -955,7 +971,7 @@
 							"item": [
 								{
 									"name": "Connect to websocket (will fail with 101 if not a websocket)",
-									"id": "05fd17cd-3464-4a06-800d-155f5c24418e",
+									"id": "cbb97abf-e02b-43aa-8043-72f700f5793f",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -987,7 +1003,7 @@
 									},
 									"response": [
 										{
-											"id": "10162449-1cd7-4a58-817f-f3c83a634953",
+											"id": "d0c93247-8efb-4ea7-b1e3-bcfb44844658",
 											"name": "Switching protocols",
 											"originalRequest": {
 												"method": "GET",
@@ -1017,6 +1033,7 @@
 											"status": "Switching Protocols",
 											"code": 101,
 											"_postman_previewlanguage": "text",
+											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -1038,20 +1055,20 @@
 									]
 								}
 							],
-							"id": "b0d163b4-3824-44e0-90a5-d69709b3bade"
+							"id": "9c1f85d7-c861-4d52-a6ce-32595c3ba7af"
 						}
 					],
-					"id": "ce72d979-b36d-4a6a-8351-946065a5ca13"
+					"id": "65ff3d46-de64-4cc4-a0c0-ed552f94c6c7"
 				}
 			],
-			"id": "d27d20c3-7396-41c3-8b93-35fb5fdebec8"
+			"id": "f9268704-c8bb-492a-b5e8-355e37a95660"
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "bf3360d8-c2e9-4b41-9ad7-c205096bee39",
+				"id": "80ccda21-95d3-40c9-a095-bf73a25bc9ef",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1061,7 +1078,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "797e7629-8b9f-4c7d-9571-ab674cbdfd5f",
+				"id": "58abd5f5-eded-483b-8d50-f689716f611a",
 				"type": "text/javascript",
 				"exec": [
 					""

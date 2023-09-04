@@ -1,0 +1,14 @@
+get:
+    parameters:
+        - $ref: "../parameters/scanId.yml"
+    summary: Get information about absence scan
+    responses:
+        "200":
+            description: "An absence"
+            content:
+                application/json:
+                    schema:
+                        $ref: "../schemas/Absences.yml"
+        "400":
+            $ref: "../responses/error.yml"
+            

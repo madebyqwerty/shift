@@ -1,13 +1,18 @@
 post:
   parameters:
-    - $ref: "../parameters/scanComplete.yml"
+    - $ref: "../parameters/scanId.yml"
   summary: Complete a scan
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: "../schemas/ScanComplete.yml"
+          type: object
+          properties:
+            absences:
+                type: array
+                items:
+                   $ref: "../schemas/Absences.yml"
   responses:
     "200":
       description: Scan was succesfuly send to be completed

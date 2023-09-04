@@ -29,6 +29,12 @@ paths:
   /scan/complete/{scan_id}:
     $ref: "./paths/scan_complete.yml"
 
+  /api/absence-scan/{scan_id}:
+    $ref: "./paths/absence-scan.yml"
+
+  /api/absence-scan/:
+    $ref: "./paths/all-absence-scans.yml"
+
 components:
   schemas:
     Absence:
@@ -37,3 +43,5 @@ components:
       $ref: "./schemas/User.yml"
     Error:
       $ref: "./schemas/Error.yml"
+    Absences:
+      $ref: "./schemas/Absences.yml"

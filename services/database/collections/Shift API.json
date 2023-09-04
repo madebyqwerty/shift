@@ -61,14 +61,13 @@
 													}
 												],
 												"url": {
-													"raw": "http://localhost:5003//api/users/:user_id",
+													"raw": "http://localhost:5003/api/users/:user_id",
 													"protocol": "http",
 													"host": [
 														"localhost"
 													],
 													"port": "5003",
 													"path": [
-														"",
 														"api",
 														"users",
 														":user_id"
@@ -1074,7 +1073,8 @@
 		{
 			"id": "98d9964c-5838-4956-8225-057e4a836ff9",
 			"key": "baseUrl",
-			"value": "localhost:5003"
+			"value": "localhost:5003",
+			"type": "any"
 		}
 	]
 }

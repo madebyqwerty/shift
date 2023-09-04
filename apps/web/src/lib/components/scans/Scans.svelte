@@ -1,9 +1,8 @@
 <script lang="ts">
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import * as Card from '$lib/components/ui/card';
-	import { Separator } from '$lib/components/ui/separator';
+	import * as Separator from '$lib/components/ui/separator';
 
-	import { Pulse } from 'svelte-loading-spinners';
 	import { ChevronsDownUp, ChevronsUpDown, FileScan, Scan } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { scanStore, type WebSocketEvent } from '$lib/stores/scanWebsocket';
@@ -96,7 +95,7 @@
 					</Card.Content>
 
 					{#if i !== Object.entries($scanStore).length - 1}
-						<Separator />
+						<Separator.Root />
 					{/if}
 				{:else}
 					<Card.Content class="flex items-center justify-between p-4">

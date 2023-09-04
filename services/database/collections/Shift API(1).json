@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "a6154cb3-17bf-49ba-b5b1-2eb26ad41049",
+		"_postman_id": "0c81817d-aa93-49d2-9b68-f2e3bd6f6c63",
 		"name": "Shift API",
 		"description": "REST API for interacting with the database service.\n\nContact Support:\n Name: Tomáš Kebrle",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_uid": "27173972-a6154cb3-17bf-49ba-b5b1-2eb26ad41049"
+		"_uid": "27173972-0c81817d-aa93-49d2-9b68-f2e3bd6f6c63"
 	},
 	"item": [
 		{
@@ -18,7 +18,7 @@
 							"item": [
 								{
 									"name": "A user with the given ID",
-									"id": "5affb0c8-f4b3-49b3-8422-cc3eac25561c",
+									"id": "4440a30b-e07a-4383-9958-915e88aea349",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -50,7 +50,7 @@
 									},
 									"response": [
 										{
-											"id": "a080a38e-05c6-460f-ad12-389babc92145",
+											"id": "f2e97e74-76dd-4368-a98d-817c87ba89f5",
 											"name": "The user.",
 											"originalRequest": {
 												"method": "GET",
@@ -61,12 +61,10 @@
 													}
 												],
 												"url": {
-													"raw": "http://localhost:5003/api/users/:user_id",
-													"protocol": "http",
+													"raw": "{{baseUrl}}/api/users/:user_id",
 													"host": [
-														"localhost"
+														"{{baseUrl}}"
 													],
-													"port": "5003",
 													"path": [
 														"api",
 														"users",
@@ -82,7 +80,6 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "json",
-											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -93,7 +90,7 @@
 											"body": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\"\n}"
 										},
 										{
-											"id": "4e50401e-ac12-4651-8fac-c14e34f77d82",
+											"id": "61b22ff4-f701-4beb-8043-fe4b5fa577ae",
 											"name": "The user ID is invalid.",
 											"originalRequest": {
 												"method": "GET",
@@ -123,7 +120,6 @@
 											"status": "Bad Request",
 											"code": 400,
 											"_postman_previewlanguage": "json",
-											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -131,10 +127,10 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+											"body": "{\n  \"errors\": {\n    \"aliquip1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Duis_1d\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ameteb\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fugiat_\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
 										},
 										{
-											"id": "ae5585c6-c9f4-4127-b1c6-05c5f80b9c00",
+											"id": "19a9b4ba-be1d-4670-b6e0-002a5eba35ad",
 											"name": "The user was not found.",
 											"originalRequest": {
 												"method": "GET",
@@ -164,7 +160,6 @@
 											"status": "Not Found",
 											"code": 404,
 											"_postman_previewlanguage": "json",
-											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -172,16 +167,16 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+											"body": "{\n  \"errors\": {\n    \"aliquip1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Duis_1d\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ameteb\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fugiat_\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
 										}
 									]
 								}
 							],
-							"id": "9e46d0c5-e9ea-4dbb-b995-783334d06624"
+							"id": "1445df59-3a62-4d18-87d2-ffc4cff6de17"
 						},
 						{
 							"name": "List of all users",
-							"id": "77ab0c66-bd17-4fac-8f28-83c26e1c7360",
+							"id": "954775ad-7e49-465d-ad98-8b394a0a1903",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -206,7 +201,7 @@
 							},
 							"response": [
 								{
-									"id": "0df681e5-b72c-4c8a-844f-01f5737ce275",
+									"id": "62482ab2-9e70-46d3-8b3c-23d85521981d",
 									"name": "The list of users.",
 									"originalRequest": {
 										"method": "GET",
@@ -217,11 +212,10 @@
 											}
 										],
 										"url": {
-											"raw": "localhost:5003/api/users",
+											"raw": "{{baseUrl}}/api/users",
 											"host": [
-												"localhost"
+												"{{baseUrl}}"
 											],
-											"port": "5003",
 											"path": [
 												"api",
 												"users"
@@ -231,7 +225,6 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
-									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -242,7 +235,7 @@
 									"body": "[\n  {\n    \"name\": \"<string>\",\n    \"id\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"id\": \"<string>\"\n  }\n]"
 								},
 								{
-									"id": "8fea9fd4-0b1c-476b-b13e-668a4bd38905",
+									"id": "6ab8246b-e4f6-49b0-b300-a530f44cf4b8",
 									"name": "Error",
 									"originalRequest": {
 										"method": "GET",
@@ -266,7 +259,6 @@
 									"status": "Bad Request",
 									"code": 400,
 									"_postman_previewlanguage": "json",
-									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -274,13 +266,13 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+									"body": "{\n  \"errors\": {\n    \"aliquip1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Duis_1d\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ameteb\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fugiat_\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
 								}
 							]
 						},
 						{
 							"name": "Creates a new user.",
-							"id": "7089d074-423d-4944-af12-2bef57e85ea7",
+							"id": "ff547f8d-3582-44d3-8ebc-8ef9f781445d",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true
 							},
@@ -319,7 +311,7 @@
 							},
 							"response": [
 								{
-									"id": "5a06cdf9-5a06-4b5f-a5ef-31dd01f7e50c",
+									"id": "400842ad-4a58-435c-92aa-622da0452156",
 									"name": "The created user.",
 									"originalRequest": {
 										"method": "POST",
@@ -357,7 +349,6 @@
 									"status": "OK",
 									"code": 200,
 									"_postman_previewlanguage": "json",
-									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -368,7 +359,7 @@
 									"body": "{\n  \"name\": \"<string>\",\n  \"id\": \"<string>\"\n}"
 								},
 								{
-									"id": "81ee9665-e321-456f-b595-c409e0592495",
+									"id": "7d37b4d4-612f-4372-9650-e182635cd46a",
 									"name": "Error",
 									"originalRequest": {
 										"method": "POST",
@@ -406,7 +397,6 @@
 									"status": "Bad Request",
 									"code": 400,
 									"_postman_previewlanguage": "json",
-									"_postman_previewtype": "html",
 									"header": [
 										{
 											"key": "Content-Type",
@@ -414,12 +404,12 @@
 										}
 									],
 									"cookie": [],
-									"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+									"body": "{\n  \"errors\": {\n    \"aliquip1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Duis_1d\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ameteb\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fugiat_\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
 								}
 							]
 						}
 					],
-					"id": "cd9d1c2f-0049-470d-8b4e-62aa72b01a4a"
+					"id": "c961a841-cedb-4fbb-bb05-fc52dfbc43e9"
 				},
 				{
 					"name": "absences",
@@ -429,7 +419,7 @@
 							"item": [
 								{
 									"name": "List of all absences for a user",
-									"id": "2f657b89-fa6a-472e-ab14-cc4f1cbc7d2a",
+									"id": "dea9b746-b3a4-45d9-bbf4-b5b85367f005",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -461,7 +451,7 @@
 									},
 									"response": [
 										{
-											"id": "a9a0c78c-bcbf-4c9c-9950-398b2bda7ba3",
+											"id": "797d6b18-7485-4395-8a7a-6d41fc48214f",
 											"name": "The list of absences.",
 											"originalRequest": {
 												"method": "GET",
@@ -491,7 +481,6 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "json",
-											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -502,7 +491,7 @@
 											"body": "[\n  {\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lesson\": \"<number>\",\n    \"date\": \"<string>\"\n  },\n  {\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"lesson\": \"<number>\",\n    \"date\": \"<string>\"\n  }\n]"
 										},
 										{
-											"id": "6c94b6f5-46a3-44ed-8108-10bfb78ac1ea",
+											"id": "c935882e-1703-4955-8f5e-8e865b106f0b",
 											"name": "Error",
 											"originalRequest": {
 												"method": "GET",
@@ -532,7 +521,6 @@
 											"status": "Bad Request",
 											"code": 400,
 											"_postman_previewlanguage": "json",
-											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -540,13 +528,13 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+											"body": "{\n  \"errors\": {\n    \"aliquip1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Duis_1d\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ameteb\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fugiat_\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
 										}
 									]
 								},
 								{
 									"name": "Creates a new absence.",
-									"id": "adc83e83-bf33-4842-897f-0074c2f39b10",
+									"id": "edb1f68f-6ed8-4eae-9b2e-4e0cdc786713",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -592,7 +580,7 @@
 									},
 									"response": [
 										{
-											"id": "c27139ee-7dfe-4e33-8dd2-8e25789329e5",
+											"id": "f3aad6d3-a14d-452f-9f44-e6daaf46ea93",
 											"name": "The absence was successfully created",
 											"originalRequest": {
 												"method": "POST",
@@ -636,7 +624,6 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "json",
-											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -647,7 +634,7 @@
 											"body": "{\n  \"id\": \"<string>\",\n  \"lesson\": \"<number>\",\n  \"date\": \"<string>\"\n}"
 										},
 										{
-											"id": "044eb463-ad42-44cb-80da-10b3e2505626",
+											"id": "94597a27-b7fc-457b-a914-e6e2afab2c28",
 											"name": "Error",
 											"originalRequest": {
 												"method": "POST",
@@ -691,7 +678,6 @@
 											"status": "Bad Request",
 											"code": 400,
 											"_postman_previewlanguage": "json",
-											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -699,18 +685,244 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"errors\": {\n    \"dolor_a\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+											"body": "{\n  \"errors\": {\n    \"aliquip1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Duis_1d\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ameteb\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fugiat_\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
 										}
 									]
 								}
 							],
-							"id": "e17811b1-2969-4b5a-8940-b7abada6906e"
+							"id": "995870ed-9c23-4bcc-b55c-afee9941b141"
 						}
 					],
-					"id": "2bf07905-8026-4947-ad03-9d73f543f1d2"
+					"id": "9614de98-b14a-4049-a996-0c3c83227137"
+				},
+				{
+					"name": "absence-scan",
+					"item": [
+						{
+							"name": "{scan_id}",
+							"item": [
+								{
+									"name": "Get information about absence scan",
+									"id": "e25fb7db-0f32-43e9-9d1f-900a856927f9",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/absence-scan/:scan_id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"absence-scan",
+												":scan_id"
+											],
+											"variable": [
+												{
+													"key": "scan_id",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"id": "88549bb8-64b9-4753-866d-d19d41031b33",
+											"name": "An absence",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/absence-scan/:scan_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"absence-scan",
+														":scan_id"
+													],
+													"variable": [
+														{
+															"key": "scan_id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"user_id\": \"<string>\",\n  \"absence\": \"<number>\",\n  \"date\": \"<date>\"\n}"
+										},
+										{
+											"id": "37872ae3-db31-4b27-b07c-94524f79bed1",
+											"name": "Error",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/absence-scan/:scan_id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"absence-scan",
+														":scan_id"
+													],
+													"variable": [
+														{
+															"key": "scan_id"
+														}
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"errors\": {\n    \"aliquip1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Duis_1d\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ameteb\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fugiat_\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+										}
+									]
+								}
+							],
+							"id": "f472b304-46c9-485c-bc9b-b0d82fdcab53"
+						},
+						{
+							"name": "Get all absence scans",
+							"id": "901bf00e-6d16-419a-bf79-c8a2a948931e",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/absence-scan/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"absence-scan",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "e4e7e640-b93f-484e-b0b6-a9da74f80bbc",
+									"name": "Absence",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/absence-scan/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"absence-scan",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"user_id\": \"<string>\",\n    \"absence\": \"<number>\",\n    \"date\": \"<date>\"\n  },\n  {\n    \"user_id\": \"<string>\",\n    \"absence\": \"<number>\",\n    \"date\": \"<date>\"\n  }\n]"
+								},
+								{
+									"id": "64d80cad-6734-416d-96eb-575ad0473e73",
+									"name": "Error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/absence-scan/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"absence-scan",
+												""
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"errors\": {\n    \"aliquip1\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"Duis_1d\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"ameteb\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"fugiat_\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}"
+								}
+							]
+						}
+					],
+					"id": "122a8137-c3cf-48c3-8697-4e08d5520aaa"
 				}
 			],
-			"id": "2856ed27-9500-41e6-bc85-b09586040c8a"
+			"id": "dad1ee72-d5fd-45d5-afea-54b517ed23fa"
 		},
 		{
 			"name": "scan",
@@ -723,7 +935,7 @@
 							"item": [
 								{
 									"name": "Complete a scan",
-									"id": "2c13c2ce-433d-4dfd-8196-540db29f6130",
+									"id": "41718f4e-20d5-4272-8560-2122ae6edfa5",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -741,7 +953,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\n  \"absences\": [{\"user_id\":\"77c85432-eea6-41b1-a1f4-7389b2d5dc4e\", \"absence\": 9, \"date\": \"2023-04-05\"}]\n}",
+											"raw": "{\n  \"absences\": [\n    {\n      \"user_id\": \"<string>\",\n      \"absence\": \"<number>\",\n      \"date\": \"<date>\"\n    },\n    {\n      \"user_id\": \"<string>\",\n      \"absence\": \"<number>\",\n      \"date\": \"<date>\"\n    }\n  ]\n}",
 											"options": {
 												"raw": {
 													"headerFamily": "json",
@@ -750,20 +962,26 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/scan/complete/16855316-2806-41cf-b10d-5c55dac2c98a",
+											"raw": "{{baseUrl}}/scan/complete/:scan_id",
 											"host": [
 												"{{baseUrl}}"
 											],
 											"path": [
 												"scan",
 												"complete",
-												"16855316-2806-41cf-b10d-5c55dac2c98a"
+												":scan_id"
+											],
+											"variable": [
+												{
+													"key": "scan_id",
+													"value": "<string>"
+												}
 											]
 										}
 									},
 									"response": [
 										{
-											"id": "f8b31c77-7f3a-429e-b417-74bfaf81e54a",
+											"id": "ee52219a-ca7e-4b67-9c5b-ed27037fdb62",
 											"name": "Scan was succesfuly send to be completed",
 											"originalRequest": {
 												"method": "POST",
@@ -807,7 +1025,6 @@
 											"status": "OK",
 											"code": 200,
 											"_postman_previewlanguage": "json",
-											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -815,19 +1032,19 @@
 												}
 											],
 											"cookie": [],
-											"body": "{\n  \"status\": \"ERROR\",\n  \"message\": \"<string>\"\n}"
+											"body": "{\n  \"status\": \"OK\",\n  \"message\": \"<string>\"\n}"
 										}
 									]
 								}
 							],
-							"id": "955fda5a-60f9-49c9-839b-7ec650a7a597"
+							"id": "50fcef01-8aa8-4dd4-b50c-ab93a6767742"
 						}
 					],
-					"id": "49f59bb8-d441-4200-be19-f0a1f556f93d"
+					"id": "6b8d7201-d961-46c6-b5c2-0d91f89e5a7d"
 				},
 				{
 					"name": "Scan absence table",
-					"id": "c64061d9-d89c-474c-b8ec-a4e35aed0f2c",
+					"id": "dbd595fc-bfd0-477d-b2e6-b89f2b1a7d95",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -844,21 +1061,8 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "img",
-									"type": "file",
-									"src": [
-										"/home/tomaskebrle/Downloads/img1.jpg"
-									]
-								},
-								{
-									"key": "week_number",
-									"value": "4",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": "{\n  \"img\": \"<string>\",\n  \"week_number\": \"<integer>\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/scan",
@@ -872,7 +1076,7 @@
 					},
 					"response": [
 						{
-							"id": "045a19b4-f723-46e4-bec8-863499238184",
+							"id": "68b1a420-be2c-4c41-abd9-e784af8f38df",
 							"name": "The absence was successfully created",
 							"originalRequest": {
 								"method": "POST",
@@ -903,7 +1107,6 @@
 							"status": "OK",
 							"code": 200,
 							"_postman_previewlanguage": "json",
-							"_postman_previewtype": "html",
 							"header": [
 								{
 									"key": "Content-Type",
@@ -914,7 +1117,7 @@
 							"body": "{\n  \"scan_id\": \"<string>\"\n}"
 						},
 						{
-							"id": "e7561fb5-974c-4889-bd35-1650a026fcb4",
+							"id": "d190d79b-5c54-400c-99b7-ff85beabb8ff",
 							"name": "The request was invalid",
 							"originalRequest": {
 								"method": "POST",
@@ -945,7 +1148,6 @@
 							"status": "Bad Request",
 							"code": 400,
 							"_postman_previewlanguage": "json",
-							"_postman_previewtype": "html",
 							"header": [
 								{
 									"key": "Content-Type",
@@ -953,12 +1155,12 @@
 								}
 							],
 							"cookie": [],
-							"body": "[\n  \"scan/fail\",\n  \"scan/fail\"\n]"
+							"body": "[\n  \"rabbitmq/failed-to-publish\",\n  \"scan/fail\"\n]"
 						}
 					]
 				}
 			],
-			"id": "4ffd2999-36d0-4eaa-89b5-e6f0e5f9a3ef"
+			"id": "c593b8fc-f8f1-4d83-b569-8a5c7f3e8866"
 		},
 		{
 			"name": "ws",
@@ -971,7 +1173,7 @@
 							"item": [
 								{
 									"name": "Connect to websocket (will fail with 101 if not a websocket)",
-									"id": "cbb97abf-e02b-43aa-8043-72f700f5793f",
+									"id": "afc45ae3-f1ad-4f3a-ac8a-1d76663f952a",
 									"protocolProfileBehavior": {
 										"disableBodyPruning": true
 									},
@@ -1003,7 +1205,7 @@
 									},
 									"response": [
 										{
-											"id": "d0c93247-8efb-4ea7-b1e3-bcfb44844658",
+											"id": "e44162aa-3121-4b70-9804-8e2f004a17cb",
 											"name": "Switching protocols",
 											"originalRequest": {
 												"method": "GET",
@@ -1033,7 +1235,6 @@
 											"status": "Switching Protocols",
 											"code": 101,
 											"_postman_previewlanguage": "text",
-											"_postman_previewtype": "html",
 											"header": [
 												{
 													"key": "Content-Type",
@@ -1055,43 +1256,20 @@
 									]
 								}
 							],
-							"id": "9c1f85d7-c861-4d52-a6ce-32595c3ba7af"
+							"id": "0e996a9f-084f-4942-9263-6988faa67cc5"
 						}
 					],
-					"id": "65ff3d46-de64-4cc4-a0c0-ed552f94c6c7"
+					"id": "a7571044-6d5f-4c37-9379-128c3e013d90"
 				}
 			],
-			"id": "f9268704-c8bb-492a-b5e8-355e37a95660"
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "80ccda21-95d3-40c9-a095-bf73a25bc9ef",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "58abd5f5-eded-483b-8d50-f689716f611a",
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
+			"id": "e3348026-7a7e-43a4-acda-98e2c1ff70b9"
 		}
 	],
 	"variable": [
 		{
-			"id": "98d9964c-5838-4956-8225-057e4a836ff9",
+			"id": "d905a361-218a-44df-a0e5-2fe90a5e0531",
 			"key": "baseUrl",
-			"value": "localhost:5003",
-			"type": "any"
+			"value": "http://localhost:5003"
 		}
 	]
 }

@@ -9,7 +9,7 @@ id = bb9d0e15-2867-46aa-9da1-62650e2b45f6
 
 [config.relations.collections]
 rootDirectory = services/database/collections
-files[] = {"id":"27173972-a6154cb3-17bf-49ba-b5b1-2eb26ad41049","path":"Shift API.json","metaData":{}}
+files[] = {"id":"27173972-0c81817d-aa93-49d2-9b68-f2e3bd6f6c63","path":"Shift API(1).json","metaData":{"generateCollectionPreferences":"{\"requestNameSource\":\"Fallback\",\"indentCharacter\":\"Space\",\"parametersResolution\":\"Schema\",\"folderStrategy\":\"Paths\",\"includeAuthInfoInExample\":true,\"enableOptionalParameters\":true,\"keepImplicitHeaders\":false,\"includeDeprecated\":true,\"alwaysInheritAuthentication\":false,\"updateCollectionSync\":true,\"requestParametersResolution\":\"Schema\",\"exampleParametersResolution\":\"Schema\"}"}}
 
 [config.relations.collections.metaData]
 

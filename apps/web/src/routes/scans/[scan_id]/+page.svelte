@@ -23,11 +23,7 @@
 		{
 			scanId: data.scan.id ?? '',
 			scanCompleteScanIdPostRequest: {
-				absences: data.scan.absences?.map(({ name, id, absence, date }) => ({
-					date,
-					absence: parseInt(`${absence}`),
-					user_id: id ?? 'xd'
-				}))
+				absences: data.scan.absences
 			}
 		},
 		scanCompleteTE,

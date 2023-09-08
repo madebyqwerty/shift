@@ -11,22 +11,50 @@ package openapi
 
 import (
 	"context"
-	"testing"
-
-	openapiclient "github.com/madebyqwerty/shift/openapi"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"testing"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
 )
 
 func Test_openapi_DefaultAPIService(t *testing.T) {
 
-	t.Skip("skip test")
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test DefaultAPIService ApiAbsenceScanGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.DefaultAPI.ApiAbsenceScanGet(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test DefaultAPIService ApiAbsenceScanScanIdGet", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var scanId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.ApiAbsenceScanScanIdGet(context.Background(), scanId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test DefaultAPIService ApiAbsencesUserIdGet", func(t *testing.T) {
 
-		resp, httpRes, err := apiClient.DefaultAPI.ApiAbsencesUserIdGet(context.Background(), "ca740fad-7add-4e56-818b-29cfde87416f").Execute()
+		t.Skip("skip test")  // remove to run test
+
+		var userId string
+
+		resp, httpRes, err := apiClient.DefaultAPI.ApiAbsencesUserIdGet(context.Background(), userId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -36,7 +64,7 @@ func Test_openapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ApiAbsencesUserIdPost", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var userId string
 
@@ -50,7 +78,7 @@ func Test_openapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ApiUsersGet", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ApiUsersGet(context.Background()).Execute()
 
@@ -62,7 +90,7 @@ func Test_openapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ApiUsersPost", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ApiUsersPost(context.Background()).Execute()
 
@@ -74,7 +102,7 @@ func Test_openapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ApiUsersUserIdGet", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var userId string
 
@@ -88,20 +116,21 @@ func Test_openapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService ScanCompleteScanIdPost", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var scanId string
 
-		httpRes, err := apiClient.DefaultAPI.ScanCompleteScanIdPost(context.Background(), scanId).Execute()
+		resp, httpRes, err := apiClient.DefaultAPI.ScanCompleteScanIdPost(context.Background(), scanId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
 
 	t.Run("Test DefaultAPIService ScanPost", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.DefaultAPI.ScanPost(context.Background()).Execute()
 
@@ -113,7 +142,7 @@ func Test_openapi_DefaultAPIService(t *testing.T) {
 
 	t.Run("Test DefaultAPIService WsScanUserIdGet", func(t *testing.T) {
 
-		t.Skip("skip test") // remove to run test
+		t.Skip("skip test")  // remove to run test
 
 		var userId string
 

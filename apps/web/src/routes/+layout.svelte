@@ -59,7 +59,7 @@
 		<Toaster />
 		<Sidebar />
 		<main
-			class="p-6"
+			class="pt-6 px-32"
 			in:fly={{ x: 200, duration: 300, delay: 300 }}
 			out:fly={{ x: 200, duration: 300 }}
 		>

@@ -10,7 +10,10 @@ post:
           type: object
           properties:
             absences:
-              $ref: "../schemas/Absences.yml"
+              type: array
+              items:
+                $ref: "../schemas/Absences.yml"
+
   responses:
     "200":
       description: Scan was succesfuly send to be completed

@@ -28,10 +28,10 @@ import {
 export interface ScanCompleteScanIdPostRequest {
     /**
      * 
-     * @type {Absences}
+     * @type {Array<Absences>}
      * @memberof ScanCompleteScanIdPostRequest
      */
-    absences?: Absences;
+    absences?: Array<Absences>;
 }
 
 /**
@@ -53,7 +53,7 @@ export function ScanCompleteScanIdPostRequestFromJSONTyped(json: any, ignoreDisc
     }
     return {
         
-        'absences': !exists(json, 'absences') ? undefined : AbsencesFromJSON(json['absences']),
+        'absences': !exists(json, 'absences') ? undefined : ((json['absences'] as Array<any>).map(AbsencesFromJSON)),
     };
 }
 
@@ -66,7 +66,7 @@ export function ScanCompleteScanIdPostRequestToJSON(value?: ScanCompleteScanIdPo
     }
     return {
         
-        'absences': AbsencesToJSON(value.absences),
+        'absences': value.absences === undefined ? undefined : ((value.absences as Array<any>).map(AbsencesToJSON)),
     };
 }
 

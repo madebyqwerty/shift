@@ -24,6 +24,224 @@ import (
 // DefaultAPIService DefaultAPI service
 type DefaultAPIService service
 
+type ApiApiAbsenceScanGetRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+}
+
+func (r ApiApiAbsenceScanGetRequest) Execute() ([]ApiAbsenceScanScanIdGet200Response, *http.Response, error) {
+	return r.ApiService.ApiAbsenceScanGetExecute(r)
+}
+
+/*
+ApiAbsenceScanGet Get all absence scans
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiApiAbsenceScanGetRequest
+*/
+func (a *DefaultAPIService) ApiAbsenceScanGet(ctx context.Context) ApiApiAbsenceScanGetRequest {
+	return ApiApiAbsenceScanGetRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return []ApiAbsenceScanScanIdGet200Response
+func (a *DefaultAPIService) ApiAbsenceScanGetExecute(r ApiApiAbsenceScanGetRequest) ([]ApiAbsenceScanScanIdGet200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  []ApiAbsenceScanScanIdGet200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ApiAbsenceScanGet")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/absence-scan/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiApiAbsenceScanScanIdGetRequest struct {
+	ctx context.Context
+	ApiService *DefaultAPIService
+	scanId string
+}
+
+func (r ApiApiAbsenceScanScanIdGetRequest) Execute() (*ApiAbsenceScanScanIdGet200Response, *http.Response, error) {
+	return r.ApiService.ApiAbsenceScanScanIdGetExecute(r)
+}
+
+/*
+ApiAbsenceScanScanIdGet Get information about absence scan
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param scanId ID of the scan
+ @return ApiApiAbsenceScanScanIdGetRequest
+*/
+func (a *DefaultAPIService) ApiAbsenceScanScanIdGet(ctx context.Context, scanId string) ApiApiAbsenceScanScanIdGetRequest {
+	return ApiApiAbsenceScanScanIdGetRequest{
+		ApiService: a,
+		ctx: ctx,
+		scanId: scanId,
+	}
+}
+
+// Execute executes the request
+//  @return ApiAbsenceScanScanIdGet200Response
+func (a *DefaultAPIService) ApiAbsenceScanScanIdGetExecute(r ApiApiAbsenceScanScanIdGetRequest) (*ApiAbsenceScanScanIdGet200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ApiAbsenceScanScanIdGet200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ApiAbsenceScanScanIdGet")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/absence-scan/{scan_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"scan_id"+"}", url.PathEscape(parameterValueToString(r.scanId, "scanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Error
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiApiAbsencesUserIdGetRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
@@ -38,7 +256,7 @@ func (r ApiApiAbsencesUserIdGetRequest) Execute() ([]Absence, *http.Response, er
 ApiAbsencesUserIdGet List of all absences for a user
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userId ID of the user to get
+ @param userId ID of the user
  @return ApiApiAbsencesUserIdGetRequest
 */
 func (a *DefaultAPIService) ApiAbsencesUserIdGet(ctx context.Context, userId string) ApiApiAbsencesUserIdGetRequest {
@@ -65,7 +283,7 @@ func (a *DefaultAPIService) ApiAbsencesUserIdGetExecute(r ApiApiAbsencesUserIdGe
 	}
 
 	localVarPath := localBasePath + "/api/absences/{user_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"userId"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"user_id"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -155,7 +373,7 @@ func (r ApiApiAbsencesUserIdPostRequest) Execute() (*ApiAbsencesUserIdPost200Res
 ApiAbsencesUserIdPost Creates a new absence.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param userId ID of the user to get
+ @param userId ID of the user
  @return ApiApiAbsencesUserIdPostRequest
 */
 func (a *DefaultAPIService) ApiAbsencesUserIdPost(ctx context.Context, userId string) ApiApiAbsencesUserIdPostRequest {
@@ -182,7 +400,7 @@ func (a *DefaultAPIService) ApiAbsencesUserIdPostExecute(r ApiApiAbsencesUserIdP
 	}
 
 	localVarPath := localBasePath + "/api/absences/{user_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"userId"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"user_id"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -523,7 +741,7 @@ func (a *DefaultAPIService) ApiUsersUserIdGetExecute(r ApiApiUsersUserIdGetReque
 	}
 
 	localVarPath := localBasePath + "/api/users/{user_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"userId"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"user_id"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -608,15 +826,15 @@ type ApiScanCompleteScanIdPostRequest struct {
 	ctx context.Context
 	ApiService *DefaultAPIService
 	scanId string
-	scanComplete *ScanComplete
+	scanCompleteScanIdPostRequest *ScanCompleteScanIdPostRequest
 }
 
-func (r ApiScanCompleteScanIdPostRequest) ScanComplete(scanComplete ScanComplete) ApiScanCompleteScanIdPostRequest {
-	r.scanComplete = &scanComplete
+func (r ApiScanCompleteScanIdPostRequest) ScanCompleteScanIdPostRequest(scanCompleteScanIdPostRequest ScanCompleteScanIdPostRequest) ApiScanCompleteScanIdPostRequest {
+	r.scanCompleteScanIdPostRequest = &scanCompleteScanIdPostRequest
 	return r
 }
 
-func (r ApiScanCompleteScanIdPostRequest) Execute() (*http.Response, error) {
+func (r ApiScanCompleteScanIdPostRequest) Execute() (*ScanCompleteScanIdPost200Response, *http.Response, error) {
 	return r.ApiService.ScanCompleteScanIdPostExecute(r)
 }
 
@@ -636,26 +854,28 @@ func (a *DefaultAPIService) ScanCompleteScanIdPost(ctx context.Context, scanId s
 }
 
 // Execute executes the request
-func (a *DefaultAPIService) ScanCompleteScanIdPostExecute(r ApiScanCompleteScanIdPostRequest) (*http.Response, error) {
+//  @return ScanCompleteScanIdPost200Response
+func (a *DefaultAPIService) ScanCompleteScanIdPostExecute(r ApiScanCompleteScanIdPostRequest) (*ScanCompleteScanIdPost200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *ScanCompleteScanIdPost200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DefaultAPIService.ScanCompleteScanIdPost")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/scan/complete/{scan_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"scanId"+"}", url.PathEscape(parameterValueToString(r.scanId, "scanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"scan_id"+"}", url.PathEscape(parameterValueToString(r.scanId, "scanId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.scanComplete == nil {
-		return nil, reportError("scanComplete is required and must be specified")
+	if r.scanCompleteScanIdPostRequest == nil {
+		return localVarReturnValue, nil, reportError("scanCompleteScanIdPostRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -668,7 +888,7 @@ func (a *DefaultAPIService) ScanCompleteScanIdPostExecute(r ApiScanCompleteScanI
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -676,22 +896,22 @@ func (a *DefaultAPIService) ScanCompleteScanIdPostExecute(r ApiScanCompleteScanI
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.scanComplete
+	localVarPostBody = r.scanCompleteScanIdPostRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -699,10 +919,19 @@ func (a *DefaultAPIService) ScanCompleteScanIdPostExecute(r ApiScanCompleteScanI
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiScanPostRequest struct {
@@ -889,7 +1118,7 @@ func (a *DefaultAPIService) WsScanUserIdGetExecute(r ApiWsScanUserIdGetRequest) 
 	}
 
 	localVarPath := localBasePath + "/ws/scan/{user_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"userId"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"user_id"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

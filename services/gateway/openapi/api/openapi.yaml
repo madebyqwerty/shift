@@ -8,7 +8,7 @@ info:
   title: Database service API
   version: 0.0.1
 servers:
-- url: http://localhost:5003/
+- url: http://localhost:5003
 paths:
   /api/users:
     get:
@@ -54,7 +54,7 @@ paths:
       parameters:
       - description: ID of the user
         in: path
-        name: userId
+        name: user_id
         required: true
         schema:
           type: string
@@ -87,9 +87,9 @@ paths:
   /api/absences/{user_id}:
     get:
       parameters:
-      - description: ID of the user to get
+      - description: ID of the user
         in: path
-        name: userId
+        name: user_id
         required: true
         schema:
           type: string
@@ -111,9 +111,9 @@ paths:
       summary: List of all absences for a user
     post:
       parameters:
-      - description: ID of the user to get
+      - description: ID of the user
         in: path
-        name: userId
+        name: user_id
         required: true
         schema:
           type: string
@@ -169,7 +169,7 @@ paths:
       parameters:
       - description: ID of the user
         in: path
-        name: userId
+        name: user_id
         required: true
         schema:
           type: string
@@ -193,7 +193,7 @@ paths:
       parameters:
       - description: ID of the scan
         in: path
-        name: scanId
+        name: scan_id
         required: true
         schema:
           type: string
@@ -201,22 +201,70 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ScanComplete'
+              $ref: '#/components/schemas/_scan_complete__scan_id__post_request'
         required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_scan_complete__scan_id__post_200_response'
+          description: Scan was succesfuly send to be completed
       summary: Complete a scan
+  /api/absence-scan/{scan_id}:
+    get:
+      parameters:
+      - description: ID of the scan
+        in: path
+        name: scan_id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_api_absence_scan__scan_id__get_200_response'
+          description: An absence
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+      summary: Get information about absence scan
+  /api/absence-scan/:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/_api_absence_scan__scan_id__get_200_response'
+                type: array
+          description: Absence
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+      summary: Get all absence scans
 components:
   parameters:
     userId:
       description: ID of the user
       in: path
-      name: userId
+      name: user_id
       required: true
       schema:
         type: string
-    scanComplete:
+    scanId:
       description: ID of the scan
       in: path
-      name: scanId
+      name: scan_id
       required: true
       schema:
         type: string
@@ -282,6 +330,31 @@ components:
             type: array
           type: object
       type: object
+    Absences:
+      example:
+        date: 2020-01-01T00:00:00.000+00:00
+        absence: 0.8008281904610115
+        name: John Doe
+        id: id
+      properties:
+        id:
+          description: "When the user has more than one hour of absence, every hour\
+            \ of his absence will be in this array with a user_id."
+          type: string
+        name:
+          description: The name of the user.
+          example: John Doe
+          type: string
+        absence:
+          description: "Only one hour of absence, if he has another hour it will be\
+            \ in another item in this list."
+          type: number
+        date:
+          description: The date of the absence.
+          example: 2020-01-01
+          format: date
+          type: string
+      type: object
     Scan:
       properties:
         img:
@@ -295,21 +368,13 @@ components:
       - img
       - week_number
       type: object
-    ScanComplete:
-      example:
-        absences:
-        - date: 2020-01-01T00:00:00.000+00:00
-          user_id: user_id
-          absence: 0.8008281904610115
-        - date: 2020-01-01T00:00:00.000+00:00
-          user_id: user_id
-          absence: 0.8008281904610115
-      properties:
-        absences:
-          items:
-            $ref: '#/components/schemas/ScanComplete_absences_inner'
-          type: array
-      type: object
+    status:
+      enum:
+      - OK
+      - ERROR
+      - PROCCESED
+      - SAVED
+      type: string
     _api_users_post_request:
       properties:
         name:
@@ -354,23 +419,42 @@ components:
           example: 5f9b0a5a-0b0a-4c7a-8b0a-5a0b0a4c7a8b
           type: string
       type: object
-    ScanComplete_absences_inner:
-      example:
-        date: 2020-01-01T00:00:00.000+00:00
-        user_id: user_id
-        absence: 0.8008281904610115
+    _scan_complete__scan_id__post_request:
       properties:
-        user_id:
-          description: "When the user has more than one hour of absence, every hour\
-            \ of his absence will be in this array with a user_id."
+        absences:
+          items:
+            $ref: '#/components/schemas/Absences'
+          type: array
+      type: object
+    _scan_complete__scan_id__post_200_response:
+      example:
+        message: rabbitmq/send-to-scan-complete-queue
+        status: null
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        message:
+          example: rabbitmq/send-to-scan-complete-queue
           type: string
-        absence:
-          description: "Only one hour of absence, if he has another hour it will be\
-            \ in another item in this list."
-          type: number
-        date:
-          description: The date of the absence.
-          example: 2020-01-01
-          format: date
+      type: object
+    _api_absence_scan__scan_id__get_200_response:
+      example:
+        absences:
+        - date: 2020-01-01T00:00:00.000+00:00
+          absence: 0.8008281904610115
+          name: John Doe
+          id: id
+        - date: 2020-01-01T00:00:00.000+00:00
+          absence: 0.8008281904610115
+          name: John Doe
+          id: id
+        id: id
+      properties:
+        id:
+          description: The id of the absence scan.
           type: string
+        absences:
+          items:
+            $ref: '#/components/schemas/Absences'
+          type: array
       type: object

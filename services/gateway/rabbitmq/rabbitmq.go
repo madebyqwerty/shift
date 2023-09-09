@@ -10,13 +10,8 @@ var Conn *amqp.Connection
 
 func Init(docker bool) {
 	var err error
-	var connectionUrl string
 
-	if docker {
-		connectionUrl = "amqp://guest:guest@rabbitmq:5672/"
-	} else {
-		connectionUrl = "amqp://guest:guest@localhost:5672/"
-	}
+	connectionUrl := "amqp://guest:guest@localhost:5672/"
 
 	Conn, err = amqp.Dial(connectionUrl)
 	if err != nil {

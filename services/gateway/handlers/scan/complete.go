@@ -13,12 +13,12 @@ import (
 )
 
 type ScanCompleteWithScanId struct {
-	*openapi.ScanComplete
+	*openapi.ScanCompleteScanIdPostRequest
 	ScanId string `json:"scan_id"`
 }
 
 func ScanComplete(c *fiber.Ctx) error {
-	absenceData := new(openapi.ScanComplete)
+	absenceData := new(openapi.ScanCompleteScanIdPostRequest)
 	fmt.Println(string(c.Body()))
 	if err := c.BodyParser(absenceData); err != nil {
 		log.Println(flags.Fiber, err)
@@ -28,8 +28,8 @@ func ScanComplete(c *fiber.Ctx) error {
 	}
 
 	absenceDataWithScanId := &ScanCompleteWithScanId{
-		ScanComplete: absenceData,
-		ScanId:       c.Params("scan_id"),
+		ScanCompleteScanIdPostRequest: absenceData,
+		ScanId:                        c.Params("scan_id"),
 	}
 
 	absenceDataJSON, _ := json.Marshal(absenceDataWithScanId)

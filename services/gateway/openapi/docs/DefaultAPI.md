@@ -4,6 +4,8 @@ All URIs are relative to *http://localhost:5003*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ApiAbsenceScanGet**](DefaultAPI.md#ApiAbsenceScanGet) | **Get** /api/absence-scan/ | Get all absence scans
+[**ApiAbsenceScanScanIdGet**](DefaultAPI.md#ApiAbsenceScanScanIdGet) | **Get** /api/absence-scan/{scan_id} | Get information about absence scan
 [**ApiAbsencesUserIdGet**](DefaultAPI.md#ApiAbsencesUserIdGet) | **Get** /api/absences/{user_id} | List of all absences for a user
 [**ApiAbsencesUserIdPost**](DefaultAPI.md#ApiAbsencesUserIdPost) | **Post** /api/absences/{user_id} | Creates a new absence.
 [**ApiUsersGet**](DefaultAPI.md#ApiUsersGet) | **Get** /api/users | List of all users
@@ -13,6 +15,133 @@ Method | HTTP request | Description
 [**ScanPost**](DefaultAPI.md#ScanPost) | **Post** /scan | Scan absence table
 [**WsScanUserIdGet**](DefaultAPI.md#WsScanUserIdGet) | **Get** /ws/scan/{user_id} | Connect to websocket (will fail with 101 if not a websocket)
 
+
+
+## ApiAbsenceScanGet
+
+> []ApiAbsenceScanScanIdGet200Response ApiAbsenceScanGet(ctx).Execute()
+
+Get all absence scans
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultAPI.ApiAbsenceScanGet(context.Background()).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiAbsenceScanGet``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ApiAbsenceScanGet`: []ApiAbsenceScanScanIdGet200Response
+    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiAbsenceScanGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiAbsenceScanGetRequest struct via the builder pattern
+
+
+### Return type
+
+[**[]ApiAbsenceScanScanIdGet200Response**](ApiAbsenceScanScanIdGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ApiAbsenceScanScanIdGet
+
+> ApiAbsenceScanScanIdGet200Response ApiAbsenceScanScanIdGet(ctx, scanId).Execute()
+
+Get information about absence scan
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+    scanId := "scanId_example" // string | ID of the scan
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.DefaultAPI.ApiAbsenceScanScanIdGet(context.Background(), scanId).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ApiAbsenceScanScanIdGet``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ApiAbsenceScanScanIdGet`: ApiAbsenceScanScanIdGet200Response
+    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ApiAbsenceScanScanIdGet`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**scanId** | **string** | ID of the scan | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiApiAbsenceScanScanIdGetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ApiAbsenceScanScanIdGet200Response**](ApiAbsenceScanScanIdGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## ApiAbsencesUserIdGet
@@ -34,7 +163,7 @@ import (
 )
 
 func main() {
-    userId := "userId_example" // string | ID of the user to get
+    userId := "userId_example" // string | ID of the user
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -54,7 +183,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**userId** | **string** | ID of the user to get | 
+**userId** | **string** | ID of the user | 
 
 ### Other Parameters
 
@@ -102,7 +231,7 @@ import (
 )
 
 func main() {
-    userId := "userId_example" // string | ID of the user to get
+    userId := "userId_example" // string | ID of the user
     apiAbsencesUserIdPostRequest := *openapiclient.NewApiAbsencesUserIdPostRequest() // ApiAbsencesUserIdPostRequest | 
 
     configuration := openapiclient.NewConfiguration()
@@ -123,7 +252,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**userId** | **string** | ID of the user to get | 
+**userId** | **string** | ID of the user | 
 
 ### Other Parameters
 
@@ -346,7 +475,7 @@ No authorization required
 
 ## ScanCompleteScanIdPost
 
-> ScanCompleteScanIdPost(ctx, scanId).ScanComplete(scanComplete).Execute()
+> ScanCompleteScanIdPost200Response ScanCompleteScanIdPost(ctx, scanId).ScanCompleteScanIdPostRequest(scanCompleteScanIdPostRequest).Execute()
 
 Complete a scan
 
@@ -364,15 +493,17 @@ import (
 
 func main() {
     scanId := "scanId_example" // string | ID of the scan
-    scanComplete := *openapiclient.NewScanComplete() // ScanComplete | 
+    scanCompleteScanIdPostRequest := *openapiclient.NewScanCompleteScanIdPostRequest() // ScanCompleteScanIdPostRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    r, err := apiClient.DefaultAPI.ScanCompleteScanIdPost(context.Background(), scanId).ScanComplete(scanComplete).Execute()
+    resp, r, err := apiClient.DefaultAPI.ScanCompleteScanIdPost(context.Background(), scanId).ScanCompleteScanIdPostRequest(scanCompleteScanIdPostRequest).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `DefaultAPI.ScanCompleteScanIdPost``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
+    // response from `ScanCompleteScanIdPost`: ScanCompleteScanIdPost200Response
+    fmt.Fprintf(os.Stdout, "Response from `DefaultAPI.ScanCompleteScanIdPost`: %v\n", resp)
 }
 ```
 
@@ -392,11 +523,11 @@ Other parameters are passed through a pointer to a apiScanCompleteScanIdPostRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **scanComplete** | [**ScanComplete**](ScanComplete.md) |  | 
+ **scanCompleteScanIdPostRequest** | [**ScanCompleteScanIdPostRequest**](ScanCompleteScanIdPostRequest.md) |  | 
 
 ### Return type
 
- (empty response body)
+[**ScanCompleteScanIdPost200Response**](ScanCompleteScanIdPost200Response.md)
 
 ### Authorization
 
@@ -405,7 +536,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: application/json
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

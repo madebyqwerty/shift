@@ -16,29 +16,39 @@
 import * as runtime from '../runtime';
 import type {
   Absence,
+  ApiAbsenceScanScanIdGet200Response,
   ApiAbsencesUserIdPost200Response,
   ApiAbsencesUserIdPostRequest,
   ApiUsersPostRequest,
-  ScanComplete,
+  ScanCompleteScanIdPost200Response,
+  ScanCompleteScanIdPostRequest,
   ScanPost200Response,
   User,
 } from '../models/index';
 import {
     AbsenceFromJSON,
     AbsenceToJSON,
+    ApiAbsenceScanScanIdGet200ResponseFromJSON,
+    ApiAbsenceScanScanIdGet200ResponseToJSON,
     ApiAbsencesUserIdPost200ResponseFromJSON,
     ApiAbsencesUserIdPost200ResponseToJSON,
     ApiAbsencesUserIdPostRequestFromJSON,
     ApiAbsencesUserIdPostRequestToJSON,
     ApiUsersPostRequestFromJSON,
     ApiUsersPostRequestToJSON,
-    ScanCompleteFromJSON,
-    ScanCompleteToJSON,
+    ScanCompleteScanIdPost200ResponseFromJSON,
+    ScanCompleteScanIdPost200ResponseToJSON,
+    ScanCompleteScanIdPostRequestFromJSON,
+    ScanCompleteScanIdPostRequestToJSON,
     ScanPost200ResponseFromJSON,
     ScanPost200ResponseToJSON,
     UserFromJSON,
     UserToJSON,
 } from '../models/index';
+
+export interface ApiAbsenceScanScanIdGetRequest {
+    scanId: string;
+}
 
 export interface ApiAbsencesUserIdGetRequest {
     userId: string;
@@ -57,9 +67,9 @@ export interface ApiUsersUserIdGetRequest {
     userId: string;
 }
 
-export interface ScanCompleteScanIdPostRequest {
+export interface ScanCompleteScanIdPostOperationRequest {
     scanId: string;
-    scanComplete: ScanComplete;
+    scanCompleteScanIdPostRequest: ScanCompleteScanIdPostRequest;
 }
 
 export interface ScanPostRequest {
@@ -77,6 +87,62 @@ export interface WsScanUserIdGetRequest {
 export class DefaultApi extends runtime.BaseAPI {
 
     /**
+     * Get all absence scans
+     */
+    async apiAbsenceScanGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<ApiAbsenceScanScanIdGet200Response>>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/api/absence-scan/`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ApiAbsenceScanScanIdGet200ResponseFromJSON));
+    }
+
+    /**
+     * Get all absence scans
+     */
+    async apiAbsenceScanGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<ApiAbsenceScanScanIdGet200Response>> {
+        const response = await this.apiAbsenceScanGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get information about absence scan
+     */
+    async apiAbsenceScanScanIdGetRaw(requestParameters: ApiAbsenceScanScanIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ApiAbsenceScanScanIdGet200Response>> {
+        if (requestParameters.scanId === null || requestParameters.scanId === undefined) {
+            throw new runtime.RequiredError('scanId','Required parameter requestParameters.scanId was null or undefined when calling apiAbsenceScanScanIdGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/api/absence-scan/{scan_id}`.replace(`{${"scan_id"}}`, encodeURIComponent(String(requestParameters.scanId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ApiAbsenceScanScanIdGet200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get information about absence scan
+     */
+    async apiAbsenceScanScanIdGet(requestParameters: ApiAbsenceScanScanIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ApiAbsenceScanScanIdGet200Response> {
+        const response = await this.apiAbsenceScanScanIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * List of all absences for a user
      */
     async apiAbsencesUserIdGetRaw(requestParameters: ApiAbsencesUserIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Absence>>> {
@@ -89,7 +155,7 @@ export class DefaultApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/absences/{user_id}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
+            path: `/api/absences/{user_id}`.replace(`{${"user_id"}}`, encodeURIComponent(String(requestParameters.userId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -125,7 +191,7 @@ export class DefaultApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/api/absences/{user_id}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
+            path: `/api/absences/{user_id}`.replace(`{${"user_id"}}`, encodeURIComponent(String(requestParameters.userId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -215,7 +281,7 @@ export class DefaultApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/api/users/{user_id}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
+            path: `/api/users/{user_id}`.replace(`{${"user_id"}}`, encodeURIComponent(String(requestParameters.userId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -235,13 +301,13 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Complete a scan
      */
-    async scanCompleteScanIdPostRaw(requestParameters: ScanCompleteScanIdPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async scanCompleteScanIdPostRaw(requestParameters: ScanCompleteScanIdPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ScanCompleteScanIdPost200Response>> {
         if (requestParameters.scanId === null || requestParameters.scanId === undefined) {
             throw new runtime.RequiredError('scanId','Required parameter requestParameters.scanId was null or undefined when calling scanCompleteScanIdPost.');
         }
 
-        if (requestParameters.scanComplete === null || requestParameters.scanComplete === undefined) {
-            throw new runtime.RequiredError('scanComplete','Required parameter requestParameters.scanComplete was null or undefined when calling scanCompleteScanIdPost.');
+        if (requestParameters.scanCompleteScanIdPostRequest === null || requestParameters.scanCompleteScanIdPostRequest === undefined) {
+            throw new runtime.RequiredError('scanCompleteScanIdPostRequest','Required parameter requestParameters.scanCompleteScanIdPostRequest was null or undefined when calling scanCompleteScanIdPost.');
         }
 
         const queryParameters: any = {};
@@ -251,21 +317,22 @@ export class DefaultApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/scan/complete/{scan_id}`.replace(`{${"scanId"}}`, encodeURIComponent(String(requestParameters.scanId))),
+            path: `/scan/complete/{scan_id}`.replace(`{${"scan_id"}}`, encodeURIComponent(String(requestParameters.scanId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: ScanCompleteToJSON(requestParameters.scanComplete),
+            body: ScanCompleteScanIdPostRequestToJSON(requestParameters.scanCompleteScanIdPostRequest),
         }, initOverrides);
 
-        return new runtime.VoidApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => ScanCompleteScanIdPost200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Complete a scan
      */
-    async scanCompleteScanIdPost(requestParameters: ScanCompleteScanIdPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.scanCompleteScanIdPostRaw(requestParameters, initOverrides);
+    async scanCompleteScanIdPost(requestParameters: ScanCompleteScanIdPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ScanCompleteScanIdPost200Response> {
+        const response = await this.scanCompleteScanIdPostRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**
@@ -340,7 +407,7 @@ export class DefaultApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/ws/scan/{user_id}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
+            path: `/ws/scan/{user_id}`.replace(`{${"user_id"}}`, encodeURIComponent(String(requestParameters.userId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

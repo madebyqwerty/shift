@@ -14,70 +14,104 @@ import (
 	"encoding/json"
 )
 
-// checks if the ScanCompleteInner type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &ScanCompleteInner{}
+// checks if the Absences type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &Absences{}
 
-// ScanCompleteInner struct for ScanCompleteInner
-type ScanCompleteInner struct {
+// Absences struct for Absences
+type Absences struct {
 	// When the user has more than one hour of absence, every hour of his absence will be in this array with a user_id.
-	UserId *string `json:"user_id,omitempty"`
+	Id *string `json:"id,omitempty"`
+	// The name of the user.
+	Name *string `json:"name,omitempty"`
 	// Only one hour of absence, if he has another hour it will be in another item in this list.
 	Absence *float32 `json:"absence,omitempty"`
 	// The date of the absence.
 	Date *string `json:"date,omitempty"`
 }
 
-// NewScanCompleteInner instantiates a new ScanCompleteInner object
+// NewAbsences instantiates a new Absences object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewScanCompleteInner() *ScanCompleteInner {
-	this := ScanCompleteInner{}
+func NewAbsences() *Absences {
+	this := Absences{}
 	return &this
 }
 
-// NewScanCompleteInnerWithDefaults instantiates a new ScanCompleteInner object
+// NewAbsencesWithDefaults instantiates a new Absences object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewScanCompleteInnerWithDefaults() *ScanCompleteInner {
-	this := ScanCompleteInner{}
+func NewAbsencesWithDefaults() *Absences {
+	this := Absences{}
 	return &this
 }
 
-// GetUserId returns the UserId field value if set, zero value otherwise.
-func (o *ScanCompleteInner) GetUserId() string {
-	if o == nil || IsNil(o.UserId) {
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *Absences) GetId() string {
+	if o == nil || IsNil(o.Id) {
 		var ret string
 		return ret
 	}
-	return *o.UserId
+	return *o.Id
 }
 
-// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ScanCompleteInner) GetUserIdOk() (*string, bool) {
-	if o == nil || IsNil(o.UserId) {
+func (o *Absences) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
 		return nil, false
 	}
-	return o.UserId, true
+	return o.Id, true
 }
 
-// HasUserId returns a boolean if a field has been set.
-func (o *ScanCompleteInner) HasUserId() bool {
-	if o != nil && !IsNil(o.UserId) {
+// HasId returns a boolean if a field has been set.
+func (o *Absences) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
 		return true
 	}
 
 	return false
 }
 
-// SetUserId gets a reference to the given string and assigns it to the UserId field.
-func (o *ScanCompleteInner) SetUserId(v string) {
-	o.UserId = &v
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *Absences) SetId(v string) {
+	o.Id = &v
+}
+
+// GetName returns the Name field value if set, zero value otherwise.
+func (o *Absences) GetName() string {
+	if o == nil || IsNil(o.Name) {
+		var ret string
+		return ret
+	}
+	return *o.Name
+}
+
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Absences) GetNameOk() (*string, bool) {
+	if o == nil || IsNil(o.Name) {
+		return nil, false
+	}
+	return o.Name, true
+}
+
+// HasName returns a boolean if a field has been set.
+func (o *Absences) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
+func (o *Absences) SetName(v string) {
+	o.Name = &v
 }
 
 // GetAbsence returns the Absence field value if set, zero value otherwise.
-func (o *ScanCompleteInner) GetAbsence() float32 {
+func (o *Absences) GetAbsence() float32 {
 	if o == nil || IsNil(o.Absence) {
 		var ret float32
 		return ret
@@ -87,7 +121,7 @@ func (o *ScanCompleteInner) GetAbsence() float32 {
 
 // GetAbsenceOk returns a tuple with the Absence field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ScanCompleteInner) GetAbsenceOk() (*float32, bool) {
+func (o *Absences) GetAbsenceOk() (*float32, bool) {
 	if o == nil || IsNil(o.Absence) {
 		return nil, false
 	}
@@ -95,7 +129,7 @@ func (o *ScanCompleteInner) GetAbsenceOk() (*float32, bool) {
 }
 
 // HasAbsence returns a boolean if a field has been set.
-func (o *ScanCompleteInner) HasAbsence() bool {
+func (o *Absences) HasAbsence() bool {
 	if o != nil && !IsNil(o.Absence) {
 		return true
 	}
@@ -104,12 +138,12 @@ func (o *ScanCompleteInner) HasAbsence() bool {
 }
 
 // SetAbsence gets a reference to the given float32 and assigns it to the Absence field.
-func (o *ScanCompleteInner) SetAbsence(v float32) {
+func (o *Absences) SetAbsence(v float32) {
 	o.Absence = &v
 }
 
 // GetDate returns the Date field value if set, zero value otherwise.
-func (o *ScanCompleteInner) GetDate() string {
+func (o *Absences) GetDate() string {
 	if o == nil || IsNil(o.Date) {
 		var ret string
 		return ret
@@ -119,7 +153,7 @@ func (o *ScanCompleteInner) GetDate() string {
 
 // GetDateOk returns a tuple with the Date field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ScanCompleteInner) GetDateOk() (*string, bool) {
+func (o *Absences) GetDateOk() (*string, bool) {
 	if o == nil || IsNil(o.Date) {
 		return nil, false
 	}
@@ -127,7 +161,7 @@ func (o *ScanCompleteInner) GetDateOk() (*string, bool) {
 }
 
 // HasDate returns a boolean if a field has been set.
-func (o *ScanCompleteInner) HasDate() bool {
+func (o *Absences) HasDate() bool {
 	if o != nil && !IsNil(o.Date) {
 		return true
 	}
@@ -136,11 +170,11 @@ func (o *ScanCompleteInner) HasDate() bool {
 }
 
 // SetDate gets a reference to the given string and assigns it to the Date field.
-func (o *ScanCompleteInner) SetDate(v string) {
+func (o *Absences) SetDate(v string) {
 	o.Date = &v
 }
 
-func (o ScanCompleteInner) MarshalJSON() ([]byte, error) {
+func (o Absences) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -148,10 +182,13 @@ func (o ScanCompleteInner) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o ScanCompleteInner) ToMap() (map[string]interface{}, error) {
+func (o Absences) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.UserId) {
-		toSerialize["user_id"] = o.UserId
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
 	}
 	if !IsNil(o.Absence) {
 		toSerialize["absence"] = o.Absence
@@ -162,38 +199,38 @@ func (o ScanCompleteInner) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-type NullableScanCompleteInner struct {
-	value *ScanCompleteInner
+type NullableAbsences struct {
+	value *Absences
 	isSet bool
 }
 
-func (v NullableScanCompleteInner) Get() *ScanCompleteInner {
+func (v NullableAbsences) Get() *Absences {
 	return v.value
 }
 
-func (v *NullableScanCompleteInner) Set(val *ScanCompleteInner) {
+func (v *NullableAbsences) Set(val *Absences) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableScanCompleteInner) IsSet() bool {
+func (v NullableAbsences) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableScanCompleteInner) Unset() {
+func (v *NullableAbsences) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableScanCompleteInner(val *ScanCompleteInner) *NullableScanCompleteInner {
-	return &NullableScanCompleteInner{value: val, isSet: true}
+func NewNullableAbsences(val *Absences) *NullableAbsences {
+	return &NullableAbsences{value: val, isSet: true}
 }
 
-func (v NullableScanCompleteInner) MarshalJSON() ([]byte, error) {
+func (v NullableAbsences) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableScanCompleteInner) UnmarshalJSON(src []byte) error {
+func (v *NullableAbsences) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

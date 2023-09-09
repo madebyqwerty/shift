@@ -41,8 +41,11 @@ export class ScanCompleteQueueController implements CustomConsumerQueue {
 
         const message = uint8ArrayToJson<ScanComplete>(data);
 
+        console.log(message);
+
         const absences = message.absences.map((absence) => ({
-          user_id: absence.user_id,
+          // @ts-ignore
+          user_id: absence.id as string,
           lesson: absence.absence,
           date: absence.date,
         }));

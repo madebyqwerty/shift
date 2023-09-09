@@ -22,9 +22,15 @@ importers:
       daisyui:
         specifier: ^2.52.0
         version: 2.52.0(autoprefixer@10.4.15)(postcss@8.4.29)
+      fp-ts:
+        specifier: ^2.16.1
+        version: 2.16.1
       lucide-svelte:
         specifier: ^0.275.0-beta.0
         version: 0.275.0-beta.0(svelte@4.2.0)
+      svelte-device-info:
+        specifier: ^1.0.0
+        version: 1.0.0
       svelte-french-toast:
         specifier: ^1.2.0
         version: 1.2.0(svelte@4.2.0)
@@ -1385,6 +1391,10 @@ packages:
       tabbable: 6.2.0
     dev: false
 
+  /fp-ts@2.16.1:
+    resolution: {integrity: sha512-by7U5W8dkIzcvDofUcO42yl9JbnHTEDBrzu3pt5fKT+Z4Oy85I21K80EYJYdjQGC2qum4Vo55Ag57iiIK4FYuA==}
+    dev: false
+
   /fraction.js@4.3.6:
     resolution: {integrity: sha512-n2aZ9tNfYDwaHhvFTkhFErqOMIb8uyzSQ+vGJBjZyanAKZVbGUQ1sngfk9FdkBw7G26O7AgNjLcecLffD1c7eg==}
 
@@ -2222,6 +2232,10 @@ packages:
       - stylus
       - sugarss
     dev: true
+
+  /svelte-device-info@1.0.0:
+    resolution: {integrity: sha512-KL5/fXmhKVtM4ogoj9xrFTPjoWtTy/a8VFA5kEooIJiL48+aETCG2/owMvrsoyBRybUkzVf4ixkj+DncpNWMqw==}
+    dev: false
 
   /svelte-eslint-parser@0.33.0(svelte@4.2.0):
     resolution: {integrity: sha512-5awZ6Bs+Tb/zQwa41PSdcLynAVQTwW0HGyCBjtbAQ59taLZqDgQSMzRlDmapjZdDtzERm0oXDZNE0E+PKJ6ryg==}

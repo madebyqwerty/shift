@@ -6,7 +6,6 @@
 	import Scans from '$lib/components/scans/Scans.svelte';
 	import { browser } from '$app/environment';
 	import { Focus } from 'lucide-svelte';
-	import { api } from '$lib/api/client';
 
 	async function handleImageInput(event: InputEvent) {
 		const file = event.target.files[0];

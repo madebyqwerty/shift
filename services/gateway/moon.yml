@@ -19,7 +19,7 @@ tasks:
   generate-go:
     platform: "system"
     local: true
-    command: "openapi-generator-cli generate -i ./docs/openapi.yml -g go -o ./openapi && rm -rf ./openapi/go.mod ./openapi/go.sum ./openapi/.gitignore"
+    command: "openapi-generator-cli generate -i ../database/docs/openapi.yml -g go -o ./openapi && rm -rf ./openapi/go.mod ./openapi/go.sum ./openapi/.gitignore"
     inputs:
       - "docs/openapi.yml"
     outputs:

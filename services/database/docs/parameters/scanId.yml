@@ -1,0 +1,6 @@
+name: scan_id
+in: path
+description: ID of the scan
+required: true
+schema:
+  type: string

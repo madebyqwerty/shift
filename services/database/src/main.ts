@@ -8,6 +8,7 @@ import { Meta, log } from "./logger.ts";
 import { AbsenceQueueController } from "./queues/absence-queue.ts";
 import { ScanQueue } from "./queues/scan-queue.ts";
 import { ScanCompleteQueueController } from "./queues/scan-complete-queue.ts";
+import { scanRouter } from "./routes/scans.ts";
 
 // Oak stuff
 export const app = new Application();
@@ -35,6 +36,8 @@ app.use(userRouter.routes());
 app.use(userRouter.allowedMethods());
 app.use(absenceRouter.routes());
 app.use(absenceRouter.allowedMethods());
+app.use(scanRouter.routes());
+app.use(scanRouter.allowedMethods());
 
 app.addEventListener("listen", () => {
   log.info(`LAUNCHING on http://localhost:${port}`, Meta.oak);

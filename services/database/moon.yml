@@ -20,6 +20,14 @@ tasks:
   prisma/generate:
     command: "npx prisma generate"
     local: true
+  generate:
+    platform: "system"
+    local: true
+    command: "openapi-generator-cli generate -i ./docs/openapi.yml -g typescript-fetch -o ../../packages/database-service-client"
+    inputs:
+      - "docs/openapi.yml"
+    outputs:
+      - "/packages/database-service-client"
   seed:
     command: "deno run --allow-read --allow-net --allow-env --allow-write src/utils/seed.ts"
     local: true

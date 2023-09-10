@@ -77,6 +77,8 @@ All URIs are relative to *http://localhost:5003*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultAPI* | [**ApiAbsenceScanGet**](docs/DefaultAPI.md#apiabsencescanget) | **Get** /api/absence-scan/ | Get all absence scans
+*DefaultAPI* | [**ApiAbsenceScanScanIdGet**](docs/DefaultAPI.md#apiabsencescanscanidget) | **Get** /api/absence-scan/{scan_id} | Get information about absence scan
 *DefaultAPI* | [**ApiAbsencesUserIdGet**](docs/DefaultAPI.md#apiabsencesuseridget) | **Get** /api/absences/{user_id} | List of all absences for a user
 *DefaultAPI* | [**ApiAbsencesUserIdPost**](docs/DefaultAPI.md#apiabsencesuseridpost) | **Post** /api/absences/{user_id} | Creates a new absence.
 *DefaultAPI* | [**ApiUsersGet**](docs/DefaultAPI.md#apiusersget) | **Get** /api/users | List of all users
@@ -90,14 +92,17 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [Absence](docs/Absence.md)
+ - [Absences](docs/Absences.md)
+ - [ApiAbsenceScanScanIdGet200Response](docs/ApiAbsenceScanScanIdGet200Response.md)
  - [ApiAbsencesUserIdPost200Response](docs/ApiAbsencesUserIdPost200Response.md)
  - [ApiAbsencesUserIdPostRequest](docs/ApiAbsencesUserIdPostRequest.md)
  - [ApiUsersPostRequest](docs/ApiUsersPostRequest.md)
  - [Error](docs/Error.md)
  - [Scan](docs/Scan.md)
- - [ScanComplete](docs/ScanComplete.md)
- - [ScanCompleteAbsencesInner](docs/ScanCompleteAbsencesInner.md)
+ - [ScanCompleteScanIdPost200Response](docs/ScanCompleteScanIdPost200Response.md)
+ - [ScanCompleteScanIdPostRequest](docs/ScanCompleteScanIdPostRequest.md)
  - [ScanPost200Response](docs/ScanPost200Response.md)
+ - [Status](docs/Status.md)
  - [User](docs/User.md)
 
 

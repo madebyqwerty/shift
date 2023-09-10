@@ -1,0 +1,21 @@
+get:
+  summary: Get all absence scans
+  responses:
+    "200":
+      description: "Absence"
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: The id of the absence scan.
+                absences:
+                  type: array
+                  items:
+                    $ref: "../schemas/Absences.yml"
+    "400":
+      $ref: "../responses/error.yml"

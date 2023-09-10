@@ -30,7 +30,7 @@ export class AbsenceQueueController implements CustomConsumerQueue {
     await this.channel.consume(this.queue, async (args, _props, data) => {
       const message = uint8ArrayToJson<AbsenceScan>(data);
       log.debug("Received request to create a new absenceScan", Meta.rabbit);
-      const scan_id = message.user_id;
+      const scan_id = message.scan_id;
 
       if (!("absences" in message)) {
         log.error(

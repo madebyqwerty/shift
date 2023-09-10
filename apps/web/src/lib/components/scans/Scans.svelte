@@ -1,6 +1,8 @@
 <script lang="ts">
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import * as Card from '$lib/components/ui/card';
+	import * as Separator from '$lib/components/ui/separator';
+
 	import { ChevronsDownUp, ChevronsUpDown, FileScan, Scan } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { scanStore, type WebSocketEvent } from '$lib/stores/scanWebsocket';
@@ -55,13 +57,25 @@
 			</Card.Root>
 		</Collapsible.Trigger>
 		<Collapsible.Content class="space-y-2">
-			{#each Object.entries($scanStore) as [id, scan], i (id)}
-				<Card.Root>
-					<Card.Content class="flex items-center justify-between p-4 py-2">
+			<Card.Root class="overflow-scroll bg-gray-50">
+				{#each Object.entries($scanStore) as [id, scan], i (id)}
+					<Card.Content
+						class="flex items-center justify-between transition-all p-4 py-2  hover:bg-gray-100/80"
+					>
 						<HoverCard.Root>
 							<HoverCard.Trigger>
-								<span class="inline-flex items-center gap-2">
-									<Scan size={18} />
+								<span
+									class="inline-flex items-center gap-2 {scan.status === 'STARTED' &&
+										'text-gray-500'}"
+								>
+									<Scan
+										size={18}
+										strokeWidth={2.5}
+										class="text-gray-700 {scan.status === 'STARTED' &&
+											'!text-gray-400'} {scan.status === 'PROCCESED' &&
+											'!text-gray-600'} {scan.status === 'ERROR' &&
+											'!text-red-700'} {scan.status === 'SAVED' && '!text-green-700'}"
+									/>
 									Sken {i + 1}
 								</span>
 							</HoverCard.Trigger>
@@ -72,21 +86,23 @@
 								<BarLoader size={100} color="rgb(34 197 94)" />
 							</div>
 						{:else if scan.status === 'SAVED'}
-							<Button variant="link" class="p-0" href="/scans/{id}">Zobrazit</Button>
+							<Button variant="link" class="p-0 h-auto" href="/scans/{id}">Zobrazit</Button>
 						{:else if scan.status === 'ERROR'}
-							<span class="text-red-500 p-2">Něco se pokazilo</span>
+							<span class="text-red-600 text-sm font-medium">Něco se pokazilo</span>
 						{:else if scan.status === 'PROCCESED'}
-							<span class="text-foreground/70 px-3.5 font-medium text-sm">Ukládání</span>
+							<span class="text-foreground/70 font-medium text-sm">Ukládání</span>
 						{/if}
 					</Card.Content>
-				</Card.Root>
-			{:else}
-				<Card.Root>
+
+					{#if i !== Object.entries($scanStore).length - 1}
+						<Separator.Root />
+					{/if}
+				{:else}
 					<Card.Content class="flex items-center justify-between p-4">
 						<span class="inline-flex items-center gap-2"> Momentálně neprobíhájí žádné skeny </span>
 					</Card.Content>
-				</Card.Root>
-			{/each}
+				{/each}
+			</Card.Root>
 		</Collapsible.Content>
 	</Collapsible.Root>
 </div>

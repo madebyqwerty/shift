@@ -12,6 +12,7 @@ if args.docker_mode: RABBITMQ_HOST = "rabbitmq"
 else: RABBITMQ_HOST = "127.0.0.1"
 
 def send_error(channel, error, scan_id):
+    print("Error occured", error)
     channel.queue_declare(queue=f"scan:shift")
     channel.basic_publish(exchange='',
                         routing_key=f"scan:shift",
@@ -23,12 +24,17 @@ def main():
     channel = connection.channel()
 
     def callback(ch, method, properties, body):
+        print("Received data from ocr_queue")
+
         data = json.loads(body)
         nparr = np.frombuffer(base64.b64decode(data["img"]), np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
         try:
             out = Engine.process(img, int(data["week_number"]), connection2, data["id"])
+
+            print(out)
+
             channel.queue_declare(queue=f"scan:shift")
             
             if len(out) == 0:

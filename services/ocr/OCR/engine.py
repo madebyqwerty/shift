@@ -171,7 +171,7 @@ class Engine():
                                 date = datetime.datetime.strptime(f"{year}-W{week_number}-{1+day}", "%Y-W%W-%w").strftime('%Y-%m-%d')
                                 for student in students:
                                     if student["name"] == data[0]:
-                                        record = {"id": student["id"], "lesson": absence-(day*10), "date": date}
+                                        record = {"user_id": student["id"], "name": student["name"], "absence": absence-(day*10), "date": date}
                                 if not record in records: 
                                     records.append(record)
                         if not last_valid_name == data[0]:

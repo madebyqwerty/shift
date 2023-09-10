@@ -14,8 +14,12 @@
 	export let data: PageData;
 
 	const deleteAbsence = (absence: Absences) => {
-		data.scan.absences = data.scan.absences?.filter((_absence) => _absence.id !== absence.id);
+		data.scan.absences = data.scan.absences?.filter(
+			(_absence) => _absence.absenceId !== absence.absenceId
+		);
 	};
+
+	console.log(data.scan.absences);
 
 	const scanCompleteTE = TE.tryCatchK(client.scanCompleteScanIdPost.bind(client), toError);
 
@@ -23,7 +27,10 @@
 		{
 			scanId: data.scan.id ?? '',
 			scanCompleteScanIdPostRequest: {
-				absences: data.scan.absences
+				absences: data.scan.absences?.map((absence) => ({
+					...absence,
+					absence: parseInt(`${absence.absence}`)
+				}))
 			}
 		},
 		scanCompleteTE,
@@ -54,7 +61,7 @@
 		</Table.Row>
 	</Table.Header>
 	<Table.Body>
-		{#each data.scan.absences ?? [] as absence}
+		{#each data.scan.absences ?? [] as absence (absence.absenceId)}
 			<ScanRow {absence} onDelete={deleteAbsence} />
 		{/each}
 	</Table.Body>

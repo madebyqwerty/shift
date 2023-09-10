@@ -43,12 +43,20 @@ export class ScanCompleteQueueController implements CustomConsumerQueue {
 
         console.log(message);
 
-        const absences = message.absences.map((absence) => ({
+        const absences = message.absences?.map((absence) => ({
           // @ts-ignore
-          user_id: absence.id as string,
+          user_id: absence.user_id,
           lesson: absence.absence,
           date: absence.date,
         }));
+
+        await db
+          .deleteFrom("AbsenceScan")
+          .where("AbsenceScan.id", "=", message.scan_id)
+          .execute()
+          .then(() => {
+            log.debug("Deleted scan from database", Meta.db);
+          });
 
         await db
           .insertInto("Absence")

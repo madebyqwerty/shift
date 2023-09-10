@@ -333,13 +333,17 @@ components:
     Absences:
       example:
         date: 2020-01-01T00:00:00.000+00:00
+        user_id: user_id
         absence: 0.8008281904610115
+        absence_id: absence_id
         name: John Doe
-        id: id
       properties:
-        id:
+        user_id:
           description: "When the user has more than one hour of absence, every hour\
             \ of his absence will be in this array with a user_id."
+          type: string
+        absence_id:
+          description: The id of the absence.
           type: string
         name:
           description: The name of the user.
@@ -441,13 +445,15 @@ components:
       example:
         absences:
         - date: 2020-01-01T00:00:00.000+00:00
+          user_id: user_id
           absence: 0.8008281904610115
+          absence_id: absence_id
           name: John Doe
-          id: id
         - date: 2020-01-01T00:00:00.000+00:00
+          user_id: user_id
           absence: 0.8008281904610115
+          absence_id: absence_id
           name: John Doe
-          id: id
         id: id
       properties:
         id:

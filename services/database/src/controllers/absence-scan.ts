@@ -6,9 +6,11 @@ import { success } from "../utils/oakify.ts";
 export type AbsenceScan = {
   scan_id: string;
   absences: Array<{
-    id: string;
+    absence_id: string;
+    user_id: string;
     absence: number;
     date: string;
+    name: string;
   }>;
 };
 

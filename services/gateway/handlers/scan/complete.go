@@ -12,14 +12,8 @@ import (
 	"github.com/madebyqwerty/shift/utils/flags"
 )
 
-type ScanCompleteWithScanId struct {
-	*openapi.ScanCompleteScanIdPostRequest
-	ScanId string `json:"scan_id"`
-}
-
 func ScanComplete(c *fiber.Ctx) error {
 	absenceData := new(openapi.ScanCompleteScanIdPostRequest)
-	fmt.Println(string(c.Body()))
 	if err := c.BodyParser(absenceData); err != nil {
 		log.Println(flags.Fiber, err)
 		return c.Status(400).JSON(fiber.Map{
@@ -27,10 +21,16 @@ func ScanComplete(c *fiber.Ctx) error {
 		})
 	}
 
-	absenceDataWithScanId := &ScanCompleteWithScanId{
-		ScanCompleteScanIdPostRequest: absenceData,
-		ScanId:                        c.Params("scan_id"),
-	}
+	fmt.Println(flags.Fiber, "scan_id:", c.Params("scan_id"))
+
+	scanId := c.Params("scan_id")
+
+	absenceDataWithScanId := make(map[string]interface{})
+
+	absenceDataWithScanId["absences"] = absenceData.Absences
+	absenceDataWithScanId["scan_id"] = scanId
+
+	fmt.Printf("%#v\n", absenceDataWithScanId)
 
 	absenceDataJSON, _ := json.Marshal(absenceDataWithScanId)
 

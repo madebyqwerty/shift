@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | Pointer to **string** | When the user has more than one hour of absence, every hour of his absence will be in this array with a user_id. | [optional] 
+**UserId** | Pointer to **string** | When the user has more than one hour of absence, every hour of his absence will be in this array with a user_id. | [optional] 
+**AbsenceId** | Pointer to **string** | The id of the absence. | [optional] 
 **Name** | Pointer to **string** | The name of the user. | [optional] 
 **Absence** | Pointer to **float32** | Only one hour of absence, if he has another hour it will be in another item in this list. | [optional] 
 **Date** | Pointer to **string** | The date of the absence. | [optional] 
@@ -28,30 +29,55 @@ NewAbsencesWithDefaults instantiates a new Absences object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetId
+### GetUserId
 
-`func (o *Absences) GetId() string`
+`func (o *Absences) GetUserId() string`
 
-GetId returns the Id field if non-nil, zero value otherwise.
+GetUserId returns the UserId field if non-nil, zero value otherwise.
 
-### GetIdOk
+### GetUserIdOk
 
-`func (o *Absences) GetIdOk() (*string, bool)`
+`func (o *Absences) GetUserIdOk() (*string, bool)`
 
-GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+GetUserIdOk returns a tuple with the UserId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetId
+### SetUserId
 
-`func (o *Absences) SetId(v string)`
+`func (o *Absences) SetUserId(v string)`
 
-SetId sets Id field to given value.
+SetUserId sets UserId field to given value.
 
-### HasId
+### HasUserId
 
-`func (o *Absences) HasId() bool`
+`func (o *Absences) HasUserId() bool`
 
-HasId returns a boolean if a field has been set.
+HasUserId returns a boolean if a field has been set.
+
+### GetAbsenceId
+
+`func (o *Absences) GetAbsenceId() string`
+
+GetAbsenceId returns the AbsenceId field if non-nil, zero value otherwise.
+
+### GetAbsenceIdOk
+
+`func (o *Absences) GetAbsenceIdOk() (*string, bool)`
+
+GetAbsenceIdOk returns a tuple with the AbsenceId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAbsenceId
+
+`func (o *Absences) SetAbsenceId(v string)`
+
+SetAbsenceId sets AbsenceId field to given value.
+
+### HasAbsenceId
+
+`func (o *Absences) HasAbsenceId() bool`
+
+HasAbsenceId returns a boolean if a field has been set.
 
 ### GetName
 

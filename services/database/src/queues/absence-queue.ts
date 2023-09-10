@@ -52,6 +52,12 @@ export class AbsenceQueueController implements CustomConsumerQueue {
         return;
       }
 
+      message.absences = message.absences.map((absence) => ({
+        ...absence,
+        absence_id: crypto.randomUUID(),
+      }));
+      console.log(message);
+
       const result = await createAbsenceScan(message);
 
       if (isUndefined(result)) {

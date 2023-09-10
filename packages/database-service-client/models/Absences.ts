@@ -24,7 +24,13 @@ export interface Absences {
      * @type {string}
      * @memberof Absences
      */
-    id?: string;
+    userId?: string;
+    /**
+     * The id of the absence.
+     * @type {string}
+     * @memberof Absences
+     */
+    absenceId?: string;
     /**
      * The name of the user.
      * @type {string}
@@ -64,7 +70,8 @@ export function AbsencesFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
+        'userId': !exists(json, 'user_id') ? undefined : json['user_id'],
+        'absenceId': !exists(json, 'absence_id') ? undefined : json['absence_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'absence': !exists(json, 'absence') ? undefined : json['absence'],
         'date': !exists(json, 'date') ? undefined : (new Date(json['date'])),
@@ -80,7 +87,8 @@ export function AbsencesToJSON(value?: Absences | null): any {
     }
     return {
         
-        'id': value.id,
+        'user_id': value.userId,
+        'absence_id': value.absenceId,
         'name': value.name,
         'absence': value.absence,
         'date': value.date === undefined ? undefined : (value.date.toISOString().substring(0,10)),

@@ -38,7 +38,7 @@
 			</Sheet.Description>
 		</Sheet.Header>
 		<div class="flex flex-col gap-4 my-4">
-			<Input bind:value={absence.date} placeholder="Datum" />
+			<!-- <Input bind:value={absence.date} placeholder="Datum" type="date" /> -->
 			<Input bind:value={absence.absence} placeholder="Hodina" type="number" />
 		</div>
 		<Sheet.Footer>

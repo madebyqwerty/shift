@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="w-screen h-screen hidden sm:flex flex-col justify-center items-center">
+<div class="w-screen h-screen flex sm:hidden flex-col justify-center items-center">
 	<label for="img" class="cursor-pointer select-none p-[3vw] rounded-[4vw] bg-green-200">
 		<input
 			type="file"
@@ -48,7 +48,7 @@
 </div>
 
 <div
-	class="w-full min-h-screen bg-background text-base-950 grid grid-cols-[255px_1fr] grid-rows-1 font-nunito-sans sm:hidden"
+	class="w-full min-h-screen bg-background text-base-950 grid-cols-[255px_1fr] grid-rows-1 font-nunito-sans hidden sm:grid"
 >
 	<Toaster />
 	<Sidebar />

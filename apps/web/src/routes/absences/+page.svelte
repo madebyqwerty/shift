@@ -13,7 +13,7 @@
 
 	import { X } from 'lucide-svelte';
 	export let data;
-	console.log(data.students);
+
 	data.students = data.students
 		.map((student) => {
 			return {
@@ -33,7 +33,7 @@
 			};
 		})
 		.filter((student) => student !== undefined);
-	console.log(data.students);
+
 	let currentDate = new Date();
 	let currentWeekStart = new Date(
 		currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1)
@@ -61,7 +61,7 @@
 		}
 		return days;
 	}
-	console.log(currentWeekStart);
+
 
 	function updateTable(weekStart: Date) {
 		currentWeekStart = new Date(weekStart);
@@ -87,8 +87,7 @@
 			return absence !== undefined;
 		});
 
-	console.log(students);
-	console.log(absences);
+
 </script>
 
 <h1>Absence</h1>

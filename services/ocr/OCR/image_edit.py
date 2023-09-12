@@ -1,4 +1,5 @@
 
+from OCR.better_print import better_print
 import numpy as np
 import cv2
 
@@ -34,10 +35,10 @@ class Image():
         x, y, w, h = cv2.boundingRect(contours[0])
 
         if h < (img.shape[0]/3) or w < (img.shape[1]/3): #If too small, probably poorly defined edges
-            print("Using default paper size")
+            better_print("🐍 Python > Using default paper size")
             return img
 
-        print(f"Using cropped paper image {[y, y+h, x, x+w]}")
+        better_print(f"🐍 Python > Using cropped paper image {[y, y+h, x, x+w]}")
         return img[y:y+h, x:x+w] #Crop
 
     def crop_table(img):
@@ -53,7 +54,7 @@ class Image():
         inverted_img = cv2.bitwise_not(filtered_img)
 
         contours, _ = cv2.findContours(inverted_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        print("Detect edges")
+        better_print("🐍 Python > Detect edges")
 
         max_area = 0
         best_rect = None
@@ -66,7 +67,7 @@ class Image():
 
         x, y, w, h = best_rect
 
-        print(f"Crop image to {[y-25, y+h+250, x-25, x+w+25]}")
+        better_print(f"🐍 Python > Crop image to {[y-25, y+h+250, x-25, x+w+25]}")
 
         img = img[y-25:y+h+25, x-25:x+w+25]
         return Image.fix_rotation(img)
@@ -75,7 +76,7 @@ class Image():
         """
         Fix image rotation
         """
-        print("Image loaded to rotaion fix")
+        better_print("🐍 Python > Image loaded to rotaion fix")
         gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         blur_gray = cv2.GaussianBlur(gray_img, (5, 5), 0)
         edges = cv2.Canny(blur_gray, 50, 150)
@@ -104,13 +105,13 @@ class Image():
         fix_rad = np.arctan2(fix, img.shape[1]) #Calculate rotation
         fix_deg = np.degrees(fix_rad)
 
-        print(f"Rotate fix = {int(fix_deg*1000)/1000}")
+        better_print(f"🐍 Python > Rotate fix = {int(fix_deg*1000)/1000}")
         
         height, width = img.shape[:2]
         rotation = cv2.getRotationMatrix2D((width / 2, height / 2), fix_deg, 1)
         fixed_img = cv2.warpAffine(img, rotation, (width, height))
 
-        print("Rotation done")
+        better_print("🐍 Python > Rotation done")
         return fixed_img
     
     def slice_and_process(img):
@@ -120,7 +121,7 @@ class Image():
         height = img.shape[0]
         width = img.shape[1]   
 
-        print("Calculate line height")
+        better_print("🐍 Python > Calculate line height")
 
         SCALE = 750
         lines = []
@@ -150,7 +151,7 @@ class Image():
         line_height = int(avrg_height/scale)-5
         location = starter_point
 
-        print(f"Line height is {line_height}px")
+        better_print(f"🐍 Python > Line height is {line_height}px")
         
         lines = []
         while location < height:

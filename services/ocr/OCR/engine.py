@@ -1,4 +1,5 @@
 
+from OCR.better_print import better_print
 from OCR.db import db
 from OCR.image_edit import Image
 from OCR.ocr import OCR, Qr
@@ -78,7 +79,7 @@ class Engine():
         name = Engine.is_name_here(students, data)
         if name == None: return None, None, cords
         
-        print(f"OCR scanning...")
+        better_print(f"👀 Tesseract (OCR) > OCR scanning...")
         
         absence_cut_img = img[0:img.shape[0], int(img.shape[1]/7):img.shape[1]]
         binary_img = Image.convert_to_binary(absence_cut_img, 130, 255)
@@ -179,7 +180,7 @@ class Engine():
                             last_fix += new_fix + fix
                             break
 
-        print(f"Recognized {len(names)} names")
+        better_print(f"🐍 Python > Recognized {len(names)} names")
 
         return records
 
@@ -189,15 +190,15 @@ class Engine():
         """
         start = time.time()
 
-        print("Load image")
+        better_print("🐍 Python > Load image")
 
         paper_img = Image.crop_paper(input_img)
         filtered_img = cv2.medianBlur(paper_img, 3)
 
-        print("Filter image")
+        better_print("🐍 Python > Filter image")
 
         if filtered_img.shape[0] > filtered_img.shape[1]: #Turn horizontal
-            print("Rotate image 90 degrees")
+            better_print("🐍 Python > Rotate image 90 degrees")
             filtered_img = cv2.rotate(filtered_img, cv2.ROTATE_90_CLOCKWISE) 
 
         img, qr_data = Qr.process(filtered_img, Image) #Get qr data, flip if needed
@@ -207,15 +208,15 @@ class Engine():
     
         lines, line_height = Image.slice_and_process(table_img)
 
-        print("OCR processing started")
+        better_print("👀 Tesseract (OCR) > OCR processing started")
 
         data = Engine.process_slices(table_img, lines, line_height, students, week_number)
 
-        print("Save to database")
+        better_print("🐰 RabbitMQ > Save to database")
 
         db.save_absence_scan(data, connection, scan_id)
 
-        print(f"Done in {int((time.time()-start)*100)/100}")
+        better_print(f"🐍 Python > Done in {int((time.time()-start)*100)/100}")
 
         return data
 

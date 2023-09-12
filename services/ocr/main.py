@@ -1,18 +1,14 @@
 
+from OCR.better_print import better_print
 from OCR.engine import Engine
 from OCR.errors import *
 import numpy as np
-import pika, sys, os, json, base64, cv2, argparse
+import pika, sys, os, json, base64, cv2
 
-parser = argparse.ArgumentParser(description='OCR service')
-parser.add_argument('--docker_mode', action="store_true")
-args = parser.parse_args()
-
-if args.docker_mode: RABBITMQ_HOST = "rabbitmq"
-else: RABBITMQ_HOST = "127.0.0.1"
+RABBITMQ_HOST = "127.0.0.1"
 
 def send_error(channel, error, scan_id):
-    print("Error occured", error)
+    better_print("🐰 RabbitMQ > Error occured", error)
     channel.queue_declare(queue=f"scan:shift")
     channel.basic_publish(exchange='',
                         routing_key=f"scan:shift",
@@ -24,7 +20,7 @@ def main():
     channel = connection.channel()
 
     def callback(ch, method, properties, body):
-        print("Received data from ocr_queue")
+        better_print("🐰 RabbitMQ > Received data from ocr_queue")
 
         data = json.loads(body)
         nparr = np.frombuffer(base64.b64decode(data["img"]), np.uint8)
@@ -32,8 +28,6 @@ def main():
 
         try:
             out = Engine.process(img, int(data["week_number"]), connection2, data["id"])
-
-            print(out)
 
             channel.queue_declare(queue=f"scan:shift")
             
@@ -51,14 +45,14 @@ def main():
     channel.queue_declare(queue=f"ocr-queue")
     channel.basic_consume(queue='ocr-queue', on_message_callback=callback, auto_ack=True)
 
-    print('Consuming from ocr_queue')
+    better_print('🐰 RabbitMQ > Consuming from ocr_queue')
     channel.start_consuming()
 
 if __name__ == '__main__':
     try:
         main()
     except KeyboardInterrupt:
-        print('Interrupted')
+        better_print('🐍 Python > Interrupted')
         try:
             sys.exit(0)
         except SystemExit:

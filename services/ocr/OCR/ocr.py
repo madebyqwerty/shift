@@ -1,5 +1,5 @@
 
-from OCR.log import log
+from log.log import log
 from OCR.errors import *
 import cv2, qrcode, pytesseract, ast
 

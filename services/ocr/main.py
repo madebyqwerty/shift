@@ -1,5 +1,5 @@
 
-from OCR.log import log
+from log.log import log
 from OCR.engine import Engine
 from OCR.errors import *
 import numpy as np

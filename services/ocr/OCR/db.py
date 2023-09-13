@@ -1,5 +1,5 @@
 
-from OCR.log import log
+from log.log import log
 import json
 
 class db():

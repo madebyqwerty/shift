@@ -1,5 +1,5 @@
 
-from OCR.log import log
+from log.log import log
 from OCR.db import db
 from OCR.image_edit import Image
 from OCR.ocr import OCR, Qr

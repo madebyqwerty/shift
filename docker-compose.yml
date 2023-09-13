@@ -29,8 +29,6 @@ services:
     container_name: gateway
     build: services/gateway/
     restart: always
-    ports:
-      - 5003:5003
     network_mode: "host"
     depends_on:
       postgres:
@@ -43,10 +41,7 @@ services:
     build: services/ocr/
     restart: always
     env_file: .env
-    ports:
-      - 5001:5001
-    networks:
-      - shift-infra
+    network_mode: "host"
     depends_on:
       postgres:
         condition: service_healthy

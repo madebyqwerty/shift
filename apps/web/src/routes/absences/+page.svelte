@@ -2,7 +2,6 @@
 	import {
 		Table,
 		TableBody,
-		TableCaption,
 		TableCell,
 		TableHead,
 		TableHeader,
@@ -10,11 +9,11 @@
 	} from '$lib/components/ui/table';
 	import { Button } from '$lib/components/ui/button';
 	import { Checkbox } from '$lib/components/ui/checkbox';
+	import { isDefined, getDaysOfWeek } from '$lib/utils';
 
-	import { X } from 'lucide-svelte';
 	export let data;
 
-	data.students = data.students
+	const students = data.students
 		.map((student) => {
 			return {
 				...student,
@@ -43,25 +42,6 @@
 	);
 	let days = getDaysOfWeek(currentWeekStart, currentWeekEnd);
 	let lessons = [0, 1, 2, 3, 4, 5, 6];
-	let students = data.students;
-
-	function getDaysOfWeek(start, end) {
-		let days = [];
-		const beginning = new Date(start);
-		for (let date = beginning; date <= end; date.setDate(date.getDate() + 1)) {
-			days.push(
-				date
-					.toLocaleDateString('cs-CZ', {
-						weekday: 'long',
-						day: 'numeric',
-						month: 'numeric'
-					})
-					.replace('. ', '.')
-			);
-		}
-		return days;
-	}
-
 
 	function updateTable(weekStart: Date) {
 		currentWeekStart = new Date(weekStart);
@@ -76,7 +56,7 @@
 	function nextWeek() {
 		updateTable(new Date(new Date(currentWeekStart).setDate(currentWeekStart.getDate() + 7)));
 	}
-
+	/*
 	const absences = students
 		.flatMap((student) => {
 			if (student.absences.length > 0) {
@@ -86,8 +66,7 @@
 		.filter((absence) => {
 			return absence !== undefined;
 		});
-
-
+	*/
 </script>
 
 <h1>Absence</h1>
@@ -128,7 +107,11 @@
 					{#each lessons as lesson}
 						<TableCell class="text-center p-0">
 							<Checkbox
-								checked={student.absences.find((a) => a.dateString === day && a.lesson === lesson)}
+								checked={isDefined(
+									student.absences.find(
+										(absence) => absence.dateString === day && absence.lesson === lesson
+									)
+								)}
 							/>
 						</TableCell>
 					{/each}

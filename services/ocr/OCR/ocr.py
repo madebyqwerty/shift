@@ -1,4 +1,5 @@
 
+from log.log import log
 from OCR.errors import *
 import cv2, qrcode, pytesseract, ast
 
@@ -21,17 +22,17 @@ class Qr():
         qr_data, x, y = None, None, None
         binary_img = Image.convert_to_binary(img, 130, 255)
 
-        print("QR processing...")
+        log("👀 Tesseract (OCR) > QR processing...")
         qr_decoder = cv2.QRCodeDetector()
         data, bbox, _ = qr_decoder.detectAndDecode(binary_img)
 
         if bbox is None: #If qr not decoded try flip
-            print("QR processing... (2. try)")
+            log("👀 Tesseract (OCR) > QR processing... (2. try)")
             rotated_img = cv2.rotate(binary_img, cv2.ROTATE_180)
             data, bbox, _ = qr_decoder.detectAndDecode(rotated_img)
             if bbox is not None:
                 qr_data = data
-                print("Flip the image")
+                log("👀 Tesseract (OCR) > Flip the image")
                 img = cv2.rotate(img, cv2.ROTATE_180)
                 x, y = bbox[0][0] #qrcode cords
 
@@ -41,12 +42,12 @@ class Qr():
 
         if qr_data:
             if x > img.shape[1]/2 or y > img.shape[0]/2: #if not in top right corner, flip it
-                print("Flip the image")
+                log("👀 Tesseract (OCR) > Flip the image")
                 img = cv2.rotate(img, cv2.ROTATE_180)
 
             return img, ast.literal_eval(qr_data) #Convert to dict
         
-        print(f"QR error: {data}, {bbox}")
+        log(f"🐍 Python > QR error: {data}, {bbox}")
         raise QRCodeError("QRCode is not readable") #No readable qrcode on img
 
 class OCR():

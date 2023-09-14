@@ -20,7 +20,9 @@ var _ MappedNullable = &Absences{}
 // Absences struct for Absences
 type Absences struct {
 	// When the user has more than one hour of absence, every hour of his absence will be in this array with a user_id.
-	Id *string `json:"id,omitempty"`
+	UserId *string `json:"user_id,omitempty"`
+	// The id of the absence.
+	AbsenceId *string `json:"absence_id,omitempty"`
 	// The name of the user.
 	Name *string `json:"name,omitempty"`
 	// Only one hour of absence, if he has another hour it will be in another item in this list.
@@ -46,36 +48,68 @@ func NewAbsencesWithDefaults() *Absences {
 	return &this
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
-func (o *Absences) GetId() string {
-	if o == nil || IsNil(o.Id) {
+// GetUserId returns the UserId field value if set, zero value otherwise.
+func (o *Absences) GetUserId() string {
+	if o == nil || IsNil(o.UserId) {
 		var ret string
 		return ret
 	}
-	return *o.Id
+	return *o.UserId
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetUserIdOk returns a tuple with the UserId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Absences) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
+func (o *Absences) GetUserIdOk() (*string, bool) {
+	if o == nil || IsNil(o.UserId) {
 		return nil, false
 	}
-	return o.Id, true
+	return o.UserId, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *Absences) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
+// HasUserId returns a boolean if a field has been set.
+func (o *Absences) HasUserId() bool {
+	if o != nil && !IsNil(o.UserId) {
 		return true
 	}
 
 	return false
 }
 
-// SetId gets a reference to the given string and assigns it to the Id field.
-func (o *Absences) SetId(v string) {
-	o.Id = &v
+// SetUserId gets a reference to the given string and assigns it to the UserId field.
+func (o *Absences) SetUserId(v string) {
+	o.UserId = &v
+}
+
+// GetAbsenceId returns the AbsenceId field value if set, zero value otherwise.
+func (o *Absences) GetAbsenceId() string {
+	if o == nil || IsNil(o.AbsenceId) {
+		var ret string
+		return ret
+	}
+	return *o.AbsenceId
+}
+
+// GetAbsenceIdOk returns a tuple with the AbsenceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Absences) GetAbsenceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.AbsenceId) {
+		return nil, false
+	}
+	return o.AbsenceId, true
+}
+
+// HasAbsenceId returns a boolean if a field has been set.
+func (o *Absences) HasAbsenceId() bool {
+	if o != nil && !IsNil(o.AbsenceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetAbsenceId gets a reference to the given string and assigns it to the AbsenceId field.
+func (o *Absences) SetAbsenceId(v string) {
+	o.AbsenceId = &v
 }
 
 // GetName returns the Name field value if set, zero value otherwise.
@@ -184,8 +218,11 @@ func (o Absences) MarshalJSON() ([]byte, error) {
 
 func (o Absences) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
+	if !IsNil(o.UserId) {
+		toSerialize["user_id"] = o.UserId
+	}
+	if !IsNil(o.AbsenceId) {
+		toSerialize["absence_id"] = o.AbsenceId
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name

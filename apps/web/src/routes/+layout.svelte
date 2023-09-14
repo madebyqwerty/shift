@@ -48,7 +48,7 @@
 </div>
 
 <div
-	class="w-full min-h-screen bg-background text-base-950 hidden grid-cols-[255px_1fr] grid-rows-1 font-nunito-sans sm:grid"
+	class="w-full min-h-screen bg-background text-base-950 grid-cols-[255px_1fr] grid-rows-1 font-nunito-sans hidden sm:grid"
 >
 	<Toaster />
 	<Sidebar />

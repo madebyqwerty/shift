@@ -1,8 +1,11 @@
 type: object
 properties:
-  id:
+  user_id:
     type: string
     description: When the user has more than one hour of absence, every hour of his absence will be in this array with a user_id.
+  absence_id:
+    type: string
+    description: The id of the absence.
   name:
     type: string
     description: The name of the user.

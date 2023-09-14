@@ -23,7 +23,7 @@
 		currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 5)
 	);
 	let days = getDaysOfWeek(currentWeekStart, currentWeekEnd);
-	console.log(days);
+	$: console.log(days, students, lessons);
 	let lessons = [0, 1, 2, 3, 4, 5, 6];
 
 	function updateTable(weekStart: Date) {
@@ -80,11 +80,12 @@
 						<TableCell class="text-center p-0">
 							<Checkbox
 								checked={isDefined(
-									student.absences.find(
-										(absence) =>
-											new Date(absence.date).toISOString() === day.toISOString() &&
+									student.absences.find((absence) => {
+										return (
+											new Date(absence.date).toDateString() == day.toDateString() &&
 											absence.lesson === lesson
-									)
+										);
+									})
 								)}
 							/>
 						</TableCell>

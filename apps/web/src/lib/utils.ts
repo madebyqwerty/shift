@@ -60,3 +60,27 @@ export const flyAndScale = (
         easing: cubicOut
     };
 };
+
+export function isDefined<T>(thing:T|undefined){
+    return typeof thing !== "undefined"
+}
+export function isUndefined<T>(thing:T|undefined){
+    return typeof thing === "undefined"
+}
+
+export function getDaysOfWeek(start:Date, end:Date) {
+    const days:string[] = [];
+    const beginning = new Date(start);
+    for (let date = beginning; date <= end; date.setDate(date.getDate() + 1)) {
+        days.push(
+            date
+                .toLocaleDateString('cs-CZ', {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'numeric'
+                })
+                .replace('. ', '.')
+        );
+    }
+    return days;
+}

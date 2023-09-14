@@ -9,29 +9,11 @@
 	} from '$lib/components/ui/table';
 	import { Button } from '$lib/components/ui/button';
 	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { isDefined, getDaysOfWeek } from '$lib/utils';
+	import { isDefined, getDaysOfWeek, localizeDate } from '$lib/utils';
 
 	export let data;
 
-	const students = data.students
-		.map((student) => {
-			return {
-				...student,
-				absences: student.absences.map((absence) => {
-					return {
-						...absence,
-						dateString: new Date(absence.date)
-							.toLocaleDateString('cs-CZ', {
-								weekday: 'long',
-								day: 'numeric',
-								month: 'numeric'
-							})
-							.replace('. ', '.')
-					};
-				})
-			};
-		})
-		.filter((student) => student !== undefined);
+	$: students = data.students;
 
 	let currentDate = new Date();
 	let currentWeekStart = new Date(
@@ -41,6 +23,7 @@
 		currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 5)
 	);
 	let days = getDaysOfWeek(currentWeekStart, currentWeekEnd);
+	console.log(days);
 	let lessons = [0, 1, 2, 3, 4, 5, 6];
 
 	function updateTable(weekStart: Date) {
@@ -56,17 +39,6 @@
 	function nextWeek() {
 		updateTable(new Date(new Date(currentWeekStart).setDate(currentWeekStart.getDate() + 7)));
 	}
-	/*
-	const absences = students
-		.flatMap((student) => {
-			if (student.absences.length > 0) {
-				return student.absences;
-			}
-		})
-		.filter((absence) => {
-			return absence !== undefined;
-		});
-	*/
 </script>
 
 <h1>Absence</h1>
@@ -81,7 +53,7 @@
 			{#each days as day}
 				<TableHead
 					colspan={lessons.length + 2}
-					class="text-center capitalize text-xl text-gray-900 px-2">{day}</TableHead
+					class="text-center capitalize text-xl text-gray-900 px-2">{localizeDate(day)}</TableHead
 				>
 			{/each}
 		</TableRow>
@@ -109,7 +81,9 @@
 							<Checkbox
 								checked={isDefined(
 									student.absences.find(
-										(absence) => absence.dateString === day && absence.lesson === lesson
+										(absence) =>
+											new Date(absence.date).toISOString() === day.toISOString() &&
+											absence.lesson === lesson
 									)
 								)}
 							/>

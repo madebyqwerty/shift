@@ -15,8 +15,9 @@ def send_error(channel, error, scan_id):
                         body=json.dumps({"status": "ERROR", "errors": [error], "scan_id": scan_id}))
 
 def main():
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
-    connection2 = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
+    params = pika.ConnectionParameters(host=RABBITMQ_HOST, heartbeat=600, blocked_connection_timeout=300)
+    connection = pika.BlockingConnection(params)
+    connection2 = pika.BlockingConnection(params)
     channel = connection.channel()
 
     def callback(ch, method, properties, body):

@@ -1,0 +1,3 @@
+alias moon='/home/codespace/.moon/bin/moon'
+
+# Run "source ./.codespace-bashrc" in your codespace

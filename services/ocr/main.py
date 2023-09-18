@@ -2,6 +2,7 @@
 from log.log import log
 from OCR.engine import Engine
 from OCR.errors import *
+from OCR.db import db
 import numpy as np
 import pika, sys, os, json, base64, cv2
 
@@ -30,8 +31,9 @@ def main():
         try:
             out = Engine.process(img, int(data["week_number"]), connection2, data["id"])
 
+            db.save_absence_scan(out, connection2, data["id"])
+
             channel.queue_declare(queue=f"scan:shift")
-            
             if len(out) == 0:
                 channel.basic_publish(exchange='', routing_key=f"scan:shift", body=json.dumps({"status": "ERROR", "errors": ["scan/empty-absences"], "scan_id": data["id"]}))
             else:

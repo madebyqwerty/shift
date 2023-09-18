@@ -214,7 +214,7 @@ class Engine():
 
         log("🐰 RabbitMQ > Save to database")
 
-        db.save_absence_scan(data, connection, scan_id)
+        #db.save_absence_scan(data, connection, scan_id)
 
         log(f"🐍 Python > Done in {int((time.time()-start)*100)/100}")
 

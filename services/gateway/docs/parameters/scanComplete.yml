@@ -1,6 +1,0 @@
-name: scanId
-in: path
-description: ID of the scan
-required: true
-schema:
-  type: string

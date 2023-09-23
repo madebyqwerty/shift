@@ -9,12 +9,13 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/madebyqwerty/shift/models"
 	"github.com/madebyqwerty/shift/utils"
 	"github.com/madebyqwerty/shift/utils/flags"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-type OcrResponse struct {
+type OcrMessage struct {
 	Id         string `json:"id"`
 	WeekNumber int64  `json:"week_number"`
 	File       string `json:"img"`
@@ -25,23 +26,33 @@ type ScanResponse struct {
 	ScanId string `json:"scan_id"`
 }
 
+// Scan
+// @Summary Scan an image and start OCR processing
+// @Description Scan an image and start OCR processing
+// @Accept multipart/form-data
+// @Produce json
+// @Param img formData file true "Image file to be scanned"
+// @Param week_number formData int true "Week number"
+// @Success 200 {object} ScanResponse
+// @Failure 400 {object} models.Error
+// @Router /scan [post]
 func Scan(c *fiber.Ctx) error {
 	file, err := c.FormFile("img")
 
 	if err != nil {
 		log.Println(flags.Fiber, err)
-		return c.Status(400).JSON(fiber.Map{
-			"errors": []string{"fiber/failed-to-parse-file"},
+		return c.Status(400).JSON(models.Error{
+			Error: models.FailedToParseFile,
 		})
 	}
 
-	res := new(OcrResponse)
+	res := new(OcrMessage)
 	res.Id = uuid.NewString()
 
 	if val, err := utils.FileToBase64(file); err != nil {
 		log.Println(flags.Fiber, err)
-		return c.Status(400).JSON(fiber.Map{
-			"errors": []string{"fiber/failed-to-convert-to-base64"},
+		return c.Status(400).JSON(models.Error{
+			Error: models.FailedToConvertFile,
 		})
 	} else {
 		res.File = val
@@ -49,8 +60,8 @@ func Scan(c *fiber.Ctx) error {
 
 	if val, err := strconv.ParseInt(c.FormValue("week_number"), 0, 8); err != nil {
 		log.Println(flags.Fiber, err)
-		return c.Status(400).JSON(fiber.Map{
-			"errors": []string{"form/week_number-missing"},
+		return c.Status(400).JSON(models.Error{
+			Error: models.FormWeekNumberMissing,
 		})
 	} else {
 		res.WeekNumber = val
@@ -66,8 +77,8 @@ func Scan(c *fiber.Ctx) error {
 		Body:        bodyJson,
 	}); err != nil {
 		log.Println(flags.RabbitMQ, err)
-		return c.JSON(fiber.Map{
-			"errors": []string{"rabbimq/failed-to-publish-to-orc-queue"},
+		return c.JSON(models.Error{
+			Error: models.FailedToPublisToOcrQueue,
 		})
 	} else {
 		log.Println(flags.RabbitMQ, "Sent image to be proccesed to OCR")
@@ -82,8 +93,8 @@ func Scan(c *fiber.Ctx) error {
 		Body:        scanResJson,
 	}); err != nil {
 		log.Println(flags.RabbitMQ, err)
-		return c.JSON(fiber.Map{
-			"errors": []string{"rabbitmq/failed-to-publish-to-scan-queue"},
+		return c.JSON(models.Error{
+			Error: models.FailedToPublisToScanQueue,
 		})
 	} else {
 		log.Println(flags.RabbitMQ, "Notified scan:shift of new scan")

@@ -8,8 +8,6 @@ services:
     restart: always
     ports:
       - 5002:5002
-    networks:
-      - shift-infra
 
   database-service:
     container_name: database-service
@@ -22,8 +20,6 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
-    networks:
-      - shift-infra
 
   gateway:
     container_name: gateway
@@ -60,8 +56,6 @@ services:
       - 5432:5432
     volumes:
       - database_postgres:/var/lib/postgresql/data
-    networks:
-      - shift-infra
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -72,21 +66,30 @@ services:
     container_name: rabbitmq
     image: rabbitmq:3-management
     restart: always
+    network_mode: "host"
     ports:
       - 5672:5672
       - 15672:15672
-    networks:
-      - shift-infra
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
       timeout: 30s
       retries: 3
 
-networks:
-  shift-infra:
-    attachable: true
-    name: shift-infra
+  mongo:
+    image: mongo:latest
+    restart: always
+    network_mode: "host"
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.runCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 volumes:
   database_postgres:
+  mongo_data:

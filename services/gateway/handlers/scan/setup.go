@@ -82,7 +82,7 @@ func SetupScan(app *fiber.App) {
 
 	scan := app.Group("/scan")
 	scan.Post("/", Scan)
-	scan.Post("/complete/:scan_id", ScanComplete)
+	scan.Post("/:scan_id/complete", ScanComplete)
 
 	// WebSockets
 	go RunHub()

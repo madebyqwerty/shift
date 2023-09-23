@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/madebyqwerty/shift/handlers/scan"
+	"github.com/madebyqwerty/shift/mongo"
 	"github.com/madebyqwerty/shift/rabbitmq"
 
 	"flag"
@@ -14,6 +15,8 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/gofiber/fiber/v2/middleware/proxy"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/swagger"
+	_ "github.com/madebyqwerty/shift/docs"
 )
 
 var (
@@ -22,6 +25,11 @@ var (
 	docker = flag.Bool("docker", false, "Enable docker mode")
 )
 
+// @title Shift API
+// @version 1.0
+// @description API for the Shift backend
+// @BasePath /
+// @host localhost:5003
 func main() {
 	// Parse command-line flags
 	flag.Parse()
@@ -36,6 +44,7 @@ func main() {
 	app.Use(recover.New())
 	app.Use(logger.New())
 	app.Use(cors.New())
+	app.Get("/swagger/*", swagger.New())
 
 	// Setup websockets
 	// @see https://docs.gofiber.io/contrib/websocket/#example
@@ -51,9 +60,11 @@ func main() {
 	rabbitmq.Init(*docker)
 	defer rabbitmq.Conn.Close()
 
+	// MongoDB
+	mongo.ConnectDB()
+
 	// Routes
 	app.Get("/status", monitor.New())
-	app.Static("/docs", "./docs")
 
 	// Temporarily rewrite all request to /api to localhost:5000 until moved to gateway
 	app.All("api/*", func(c *fiber.Ctx) error {

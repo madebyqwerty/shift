@@ -1,0 +1,196 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API for the Shift backend",
+        "title": "Shift API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:5003",
+    "basePath": "/",
+    "paths": {
+        "/scan": {
+            "post": {
+                "description": "Scan an image and start OCR processing",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Scan an image and start OCR processing",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Image file to be scanned",
+                        "name": "img",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Week number",
+                        "name": "week_number",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/scan.ScanResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/scan/{scan_id}/complete": {
+            "post": {
+                "description": "Completes a scan by inserting the scan's absences into a MongoDB collection.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Complete a scan",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Scan ID",
+                        "name": "scan_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Request body",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Scan"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Absence": {
+            "type": "object",
+            "properties": {
+                "absence_id": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "lesson": {
+                    "type": "integer"
+                },
+                "student": {
+                    "$ref": "#/definitions/models.Student"
+                }
+            }
+        },
+        "models.Error": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/models.ErrorMessage"
+                },
+                "errors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.ErrorMessage"
+                    }
+                }
+            }
+        },
+        "models.ErrorMessage": {
+            "type": "string",
+            "enum": [
+                "rabbitmq/failed-to-publish-to-scan-queue",
+                "fiber/failed-to-parse-file",
+                "fiber/failed-to-convert-to-base64",
+                "form/week_number-missing",
+                "rabbitmq/failed-to-publish-to-ocr-queue",
+                "fiber/failed-to-parse-body"
+            ],
+            "x-enum-varnames": [
+                "FailedToPublisToScanQueue",
+                "FailedToParseFile",
+                "FailedToConvertFile",
+                "FormWeekNumberMissing",
+                "FailedToPublisToOcrQueue",
+                "FailedToParseBody"
+            ]
+        },
+        "models.Scan": {
+            "type": "object",
+            "properties": {
+                "absences": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Absence"
+                    }
+                },
+                "scan_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Student": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "student_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "scan.ScanResponse": {
+            "type": "object",
+            "properties": {
+                "scan_id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

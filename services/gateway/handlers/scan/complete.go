@@ -1,48 +1,50 @@
 package scan
 
 import (
-	"encoding/json"
-	"fmt"
+	"context"
 	"log"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/madebyqwerty/shift/handlers"
-	openapi "github.com/madebyqwerty/shift/openapi"
-	"github.com/madebyqwerty/shift/rabbitmq"
+	"github.com/madebyqwerty/shift/models"
+	"github.com/madebyqwerty/shift/mongo"
 	"github.com/madebyqwerty/shift/utils/flags"
 )
 
+// ScanComplete completes a scan by inserting the scan's absences into a MongoDB collection.
+// @Summary Complete a scan
+// @Description Completes a scan by inserting the scan's absences into a MongoDB collection.
+// @Accept json
+// @Produce json
+// @Param scan_id path string true "Scan ID"
+// @Param body body models.Scan true "Request body"
+// @Success 200 {object} interface{}
+// @Failure 400 {object} models.Error
+// @Failure 500 {object} models.Error
+// @Router /scan/{scan_id}/complete [post]
 func ScanComplete(c *fiber.Ctx) error {
-	absenceData := new(openapi.ScanCompleteScanIdPostRequest)
+	// scanId is declared but not used, so we can remove it
+	// scanId := c.Params("scan_id")
+
+	absenceData := new(models.Scan)
 	if err := c.BodyParser(absenceData); err != nil {
 		log.Println(flags.Fiber, err)
-		return c.Status(400).JSON(fiber.Map{
-			"errors": []string{"fiber/failed-to-parse-body"},
+		return c.Status(400).JSON(models.Error{
+			Error: models.FailedToParseBody,
 		})
 	}
 
-	fmt.Println(flags.Fiber, "scan_id:", c.Params("scan_id"))
-
-	scanId := c.Params("scan_id")
-
-	absenceDataWithScanId := make(map[string]interface{})
-
-	absenceDataWithScanId["absences"] = absenceData.Absences
-	absenceDataWithScanId["scan_id"] = scanId
-
-	fmt.Printf("%#v\n", absenceDataWithScanId)
-
-	absenceDataJSON, _ := json.Marshal(absenceDataWithScanId)
-
-	err := rabbitmq.PublishToQueue(Channel, ScanCompleteQueue, absenceDataJSON)
-	if err != nil {
-		return handlers.SendError(c, 500, err)
+	absencesCollection := mongo.GetCollection(mongo.DB, "absences")
+	var absencesInterface []interface{}
+	for _, absence := range absenceData.Absences {
+		absencesInterface = append(absencesInterface, absence)
 	}
-
-	c.JSON(fiber.Map{
-		"status":  "OK",
-		"message": "rabbitmq/send-to-scan-complete-queue",
-	})
+	_, err := absencesCollection.InsertMany(context.Background(), absencesInterface)
+	if err != nil {
+		log.Println("Failed to insert data into MongoDB:", err)
+		return c.Status(500).JSON(models.Error{
+			Error: "Failed to insert data into MongoDB",
+		})
+	}
 
 	return nil
 }

@@ -1,0 +1,133 @@
+basePath: /
+definitions:
+  models.Absence:
+    properties:
+      absence_id:
+        type: string
+      date:
+        type: string
+      lesson:
+        type: integer
+      student:
+        $ref: '#/definitions/models.Student'
+    type: object
+  models.Error:
+    properties:
+      error:
+        $ref: '#/definitions/models.ErrorMessage'
+      errors:
+        items:
+          $ref: '#/definitions/models.ErrorMessage'
+        type: array
+    type: object
+  models.ErrorMessage:
+    enum:
+    - rabbitmq/failed-to-publish-to-scan-queue
+    - fiber/failed-to-parse-file
+    - fiber/failed-to-convert-to-base64
+    - form/week_number-missing
+    - rabbitmq/failed-to-publish-to-ocr-queue
+    - fiber/failed-to-parse-body
+    type: string
+    x-enum-varnames:
+    - FailedToPublisToScanQueue
+    - FailedToParseFile
+    - FailedToConvertFile
+    - FormWeekNumberMissing
+    - FailedToPublisToOcrQueue
+    - FailedToParseBody
+  models.Scan:
+    properties:
+      absences:
+        items:
+          $ref: '#/definitions/models.Absence'
+        type: array
+      scan_id:
+        type: string
+    type: object
+  models.Student:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      student_id:
+        type: string
+    type: object
+  scan.ScanResponse:
+    properties:
+      scan_id:
+        type: string
+      status:
+        type: string
+    type: object
+host: localhost:5003
+info:
+  contact: {}
+  description: API for the Shift backend
+  title: Shift API
+  version: "1.0"
+paths:
+  /scan:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Scan an image and start OCR processing
+      parameters:
+      - description: Image file to be scanned
+        in: formData
+        name: img
+        required: true
+        type: file
+      - description: Week number
+        in: formData
+        name: week_number
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/scan.ScanResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Scan an image and start OCR processing
+  /scan/{scan_id}/complete:
+    post:
+      consumes:
+      - application/json
+      description: Completes a scan by inserting the scan's absences into a MongoDB
+        collection.
+      parameters:
+      - description: Scan ID
+        in: path
+        name: scan_id
+        required: true
+        type: string
+      - description: Request body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Scan'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Error'
+      summary: Complete a scan
+swagger: "2.0"

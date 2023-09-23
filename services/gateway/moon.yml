@@ -3,7 +3,7 @@ language: "go"
 
 tasks:
   start:
-    command: "go run app.go"
+    command: "go run main.go"
     local: true
   dev:
     command: "air ."
@@ -24,3 +24,9 @@ tasks:
       - "docs/openapi.yml"
     outputs:
       - "openapi/"
+  swagger:
+    platform: "system"
+    local: true
+    command: "swag i"
+    inputs:
+      - "docs/openapi.yml"

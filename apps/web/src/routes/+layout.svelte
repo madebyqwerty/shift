@@ -6,6 +6,7 @@
 	import Scans from '$lib/components/scans/Scans.svelte';
 	import { browser } from '$app/environment';
 	import { Focus } from 'lucide-svelte';
+	import { getWeekNumber } from '$lib/helpers/getWeekNumber';
 
 	async function handleImageInput(event: InputEvent) {
 		const file = event.target.files[0];
@@ -22,7 +23,7 @@
 
 		const formData = new FormData();
 		formData.append('img', event.target.files[0]);
-		formData.append('week_number', '4');
+		formData.append('week_number', getWeekNumber().toString());
 		await fetch('http://localhost:5003/scan', {
 			method: 'POST',
 			body: formData

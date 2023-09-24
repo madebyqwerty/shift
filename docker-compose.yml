@@ -13,8 +13,7 @@ services:
     container_name: database-service
     build: services/database/
     restart: always
-    ports:
-      - 5000:5000
+    network_mode: "host"
     depends_on:
       postgres:
         condition: service_healthy
@@ -26,6 +25,7 @@ services:
     build: services/gateway/
     restart: always
     network_mode: "host"
+    env_file: .env
     depends_on:
       postgres:
         condition: service_healthy
@@ -48,12 +48,11 @@ services:
     image: postgres:latest
     restart: always
     env_file: .env
+    network_mode: "host"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
-    ports:
-      - 5432:5432
     volumes:
       - database_postgres:/var/lib/postgresql/data
     healthcheck:
@@ -67,9 +66,6 @@ services:
     image: rabbitmq:3-management
     restart: always
     network_mode: "host"
-    ports:
-      - 5672:5672
-      - 15672:15672
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
@@ -80,15 +76,20 @@ services:
     image: mongo:latest
     restart: always
     network_mode: "host"
-    ports:
-      - 27017:27017
     volumes:
       - mongo_data:/data/db
     healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.runCommand('ping').ok"]
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
       interval: 10s
       timeout: 5s
       retries: 3
+
+  mongo-seed:
+    build: ./mongo
+    network_mode: "host"
+    depends_on:
+      mongo:
+        condition: service_healthy
 
 volumes:
   database_postgres:

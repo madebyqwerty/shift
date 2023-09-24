@@ -17,14 +17,11 @@ import (
 // @Produce json
 // @Param scan_id path string true "Scan ID"
 // @Param body body models.Scan true "Request body"
-// @Success 200 {object} interface{}
+// @Success 200 {object} models.Success
 // @Failure 400 {object} models.Error
 // @Failure 500 {object} models.Error
 // @Router /scan/{scan_id}/complete [post]
 func ScanComplete(c *fiber.Ctx) error {
-	// scanId is declared but not used, so we can remove it
-	// scanId := c.Params("scan_id")
-
 	absenceData := new(models.Scan)
 	if err := c.BodyParser(absenceData); err != nil {
 		log.Println(flags.Fiber, err)
@@ -45,6 +42,10 @@ func ScanComplete(c *fiber.Ctx) error {
 			Error: "Failed to insert data into MongoDB",
 		})
 	}
+
+	return c.Status(200).JSON(models.Success{
+		Message: models.SucccesMessage,
+	})
 
 	return nil
 }

@@ -52,3 +52,4 @@ _testmain.go
 *.exe
 *.test
 *.prof
+students.json

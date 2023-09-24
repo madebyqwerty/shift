@@ -54,6 +54,17 @@ definitions:
       student_id:
         type: string
     type: object
+  models.Success:
+    properties:
+      message:
+        $ref: '#/definitions/models.SuccessMessage'
+    type: object
+  models.SuccessMessage:
+    enum:
+    - SUCCESS
+    type: string
+    x-enum-varnames:
+    - SucccesMessage
   scan.ScanResponse:
     properties:
       scan_id:
@@ -120,7 +131,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: object
+            $ref: '#/definitions/models.Success'
         "400":
           description: Bad Request
           schema:

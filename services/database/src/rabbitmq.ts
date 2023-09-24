@@ -11,14 +11,11 @@ export class RabbitMQ {
 
   static async init() {
     try {
-      const hostname = log.debug(
-        Deno.args.includes("-docker") ? "rabbitmq" : "localhost",
-        Meta.rabbit,
-        "Connecting to RabbitMQ on hostname"
-      );
+      const hostname = "localhost";
+      log.info(`Connecting to RabbitMQ on ${hostname}`, Meta.rabbit);
 
       const connection = await amqp.connect({
-        hostname: hostname,
+        hostname,
       });
       log.info(`Connected to RabbitMQ`, Meta.rabbit);
 

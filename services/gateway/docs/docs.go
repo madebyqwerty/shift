@@ -89,7 +89,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object"
+                            "$ref": "#/definitions/models.Success"
                         }
                     },
                     "400": {
@@ -186,6 +186,23 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "models.Success": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "$ref": "#/definitions/models.SuccessMessage"
+                }
+            }
+        },
+        "models.SuccessMessage": {
+            "type": "string",
+            "enum": [
+                "SUCCESS"
+            ],
+            "x-enum-varnames": [
+                "SucccesMessage"
+            ]
         },
         "scan.ScanResponse": {
             "type": "object",

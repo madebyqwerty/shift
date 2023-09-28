@@ -1,5 +1,5 @@
 
-from log.log import log
+from services.ocr.src.log.log import log
 import numpy as np
 import cv2
 
@@ -82,31 +82,33 @@ class Image():
         edges = cv2.Canny(blur_gray, 50, 150)
 
         threshold = 300
-        min_line_length = int(img.shape[1]/8) 
-        max_line_gap = int(min_line_length/15) 
+        min_line_length = int(img.shape[1]/8)
+        max_line_gap = min_line_length // 15
         #Detect lines on image
         raw_lines = cv2.HoughLinesP(edges, 1, np.pi / 180, threshold, 
                                     np.array([]), min_line_length, max_line_gap)
 
         lines = []
         for line in raw_lines:
-            for x1,y1,x2,y2 in line:
-                if y1+20 > y2 and y1-20 < y2:
-                    if x1 > img.shape[1]/6 and y1 > img.shape[0]/8:
-                        lines.append([x1, x2, y1, y2]) #Filter lines
+            lines.extend(
+                [x1, x2, y1, y2]
+                for x1, y1, x2, y2 in line
+                if y1 + 20 > y2
+                and y1 - 20 < y2
+                and (x1 > img.shape[1] / 6 and y1 > img.shape[0] / 8)
+            )
 
         fix = 0
         for line in lines:
-            x1, x2, y1, y2 = line
-            if fix == 0: fix = y2-y1
-            else: fix = (fix + (y2-y1))/2
+            _, _, y1, y2 = line
+            fix = y2-y1 if fix == 0 else (fix + (y2-y1))/2
         fix = int(fix)
 
         fix_rad = np.arctan2(fix, img.shape[1]) #Calculate rotation
         fix_deg = np.degrees(fix_rad)
 
         log(f"🐍 Python > Rotate fix = {int(fix_deg*1000)/1000}")
-        
+
         height, width = img.shape[:2]
         rotation = cv2.getRotationMatrix2D((width / 2, height / 2), fix_deg, 1)
         fixed_img = cv2.warpAffine(img, rotation, (width, height))
@@ -138,21 +140,20 @@ class Image():
                 pixel_value = binary_img[row_index, column_index]
                 if pixel_value < 100:
                     row_pixels += 1
-            
-            if row_pixels > binary_img.shape[1]/3:
-                if row_index > last_line+20:
-                    if starter_point == 0 and row_index/scale > int(height/16): starter_point = int(row_index/scale)
-                    if not last_line == 0:
-                        calc_height = row_index - last_line
-                        if avrg_height == 0: avrg_height = calc_height
-                        else: avrg_height = (avrg_height + calc_height) / 2
-                    last_line = row_index
+
+            if row_pixels > binary_img.shape[1]/3 and row_index > last_line+20:
+                if starter_point == 0 and row_index/scale > int(height/16): starter_point = int(row_index/scale)
+                if last_line != 0:
+                    calc_height = row_index - last_line
+                    if avrg_height == 0: avrg_height = calc_height
+                    else: avrg_height = (avrg_height + calc_height) / 2
+                last_line = row_index
 
         line_height = int(avrg_height/scale)-5
         location = starter_point
 
         log(f"🐍 Python > Line height is {line_height}px")
-        
+
         lines = []
         while location < height:
             line = [0, width, location, location]

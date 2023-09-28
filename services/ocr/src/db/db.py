@@ -1,5 +1,5 @@
 
-from log.log import log
+from src.log.log import log
 import json
 
 class db():

@@ -3,7 +3,13 @@ from src.log.log import log
 import json
 
 class db():
+    """
+    Manage RabbitMQ connections to database
+    """
     def get_class(id, connection):
+        """
+        Get class infor from database using class_id
+        """
         log("🐰 RabbitMQ > Connecting to user_request_queue")
 
         channel = connection.channel()
@@ -29,6 +35,9 @@ class db():
         return data
 
     def save_absence_scan(records, connection, scan_id):
+        """
+        Save absence scan to database
+        """
         if len(records) > 0:
             log("🐰 RabbitMQ > Connecting to absence_queue")
             channel = connection.channel()

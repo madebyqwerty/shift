@@ -31,6 +31,7 @@ class Scanner():
 
         qrcode_cords, qrcode_data = QrScanner(imageProcessor.image, ImageOperations).scan()
         imageProcessor.flip_if_needed(qrcode_cords)
+        imageProcessor.crop_table()
 
         log("🐍 Python > Image ready for scanning")
 
@@ -41,6 +42,6 @@ class Scanner():
         slicer = Slicer(imageProcessor.image, student_class)
         data = slicer.get_data_from_image()
 
-        log(f"🐍 Python > Done in {int((time.time()-start)*100)/100}")
+        log(f"🐍 Python > Done in {int((time.time()-start)*1000)}ms")
 
         return data

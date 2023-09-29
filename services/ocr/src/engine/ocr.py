@@ -26,7 +26,7 @@ class OCR():
             for char in BANNED_CHARS:
                 raw_text = raw_text.replace(char, "")
 
-            if not raw_text == "" and len(raw_text) > 3:
+            if raw_text != "" and len(raw_text) > 3:
                 text.append(data["text"][i])
                 cords.append([data["top"][i], data["height"][i]])
 

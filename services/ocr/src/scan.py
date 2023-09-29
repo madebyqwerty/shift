@@ -34,7 +34,7 @@ class Scanner():
 
         log("🐍 Python > Image ready for scanning")
 
-        student_class = db.get_class(qrcode_data["class_id"], self.connection)
+        student_class = self.db.get_class(qrcode_data["class_id"], self.connection)
 
         log("👀 Tesseract (OCR) > OCR processing started")
 

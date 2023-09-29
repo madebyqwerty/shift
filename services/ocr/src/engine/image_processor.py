@@ -29,12 +29,13 @@ class ImageProcessor:
     """
     def __init__(self, image) -> None:
         self.image = image
+        self.binary_image = None
 
     def crop_paper(self):
         """
         Crop the paper from the image
         """
-        thresh_img = ImageOperations.convert_to_binary(self.image, 120, 255)
+        thresh_img = ImageOperations.convert_to_binary(self.image, 140, 255)
         filtered_img = cv2.medianBlur(thresh_img, 81) #Filter showing approximate shape of the paper
         edges_img = cv2.Canny(filtered_img, 100, 200) #Edge detection
         contours, _ = cv2.findContours(edges_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
